@@ -157,9 +157,13 @@ KV_READ_METRICS=true --prune.mode=full --prune.distance.blocks=10000000 --extern
 
 ![Disk read bytes per second](images/disk_read_bytes.png)
 
-### Disk read latency (r_await)
+### SSD read latency (r_await)
 
-![Disk read latency (r_await)](images/disk_r_await.png)
+![SSD read latency (r_await)](images/disk_r_await_ssd.png)
+
+### HDD read latency (r_await)
+
+![HDD read latency (r_await)](images/disk_r_await_hdd.png)
 
 ### Disk utilization
 
