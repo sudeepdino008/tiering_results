@@ -57,8 +57,6 @@ KV_READ_METRICS=true --prune.mode=full --prune.distance.blocks=10000000 --extern
 | free space on / (end) | 651.58 GB |
 | free space on /backup (end) | 5.00 TB |
 
-Notes: state cache on (--exec.state-cache=true). Demotion is off in a baseline, so the movement-lag rows carry no meaning. The log has one 'wrong trie root' line for block 25,407,927, 7 ms after the SIGINT at the end of the window: the shutdown cancelled that block (it was not committed); it is not a real wrong root.
-
 ## Marks
 
 - 2026-10-23T05:12:40Z start baseline_allssd_merged_6mo_w25400000_2026-10-23-2
