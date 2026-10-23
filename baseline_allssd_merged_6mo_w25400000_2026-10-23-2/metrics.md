@@ -42,7 +42,7 @@ KV_READ_METRICS=true --prune.mode=full --prune.distance.blocks=10000000 --extern
 | commitment data size on SSD (end) | 310.63 GB |
 | commitment index size on SSD (end) | 6.72 GB |
 | commitment data + index size, SSD + HDD (end) | 317.34 GB |
-| SSD saved by movement (end) | 0 B |
+| SSD space saved (commitment data on HDD) (end) | 0 B |
 | duplicate bytes (max) | 0 B |
 | movement lag, straddling_file (blocks: max / end) | 20,047 / 20,047 |
 | movement lag, copy_pending (blocks: max / end) | 24,091,854 / 24,091,854 |
@@ -114,9 +114,9 @@ KV_READ_METRICS=true --prune.mode=full --prune.distance.blocks=10000000 --extern
 
 ![Commitment index size per tier](images/commitment_index_size.png)
 
-### SSD saved and duplicate bytes
+### SSD space saved and duplicate size
 
-![SSD saved and duplicate bytes](images/ssd_saved_duplicate.png)
+![SSD space saved and duplicate size](images/ssd_saved_duplicate.png)
 
 ### Cold data still on SSD (commitment)
 
