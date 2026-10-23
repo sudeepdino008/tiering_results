@@ -38,10 +38,10 @@ KV_READ_METRICS=true --prune.mode=full --prune.distance.blocks=10000000 --extern
 | SSD probe latency p50 / p90 / p95 / p99 (sampled) | 1.9 µs / 141.9 µs / 218.6 µs / 441.2 µs |
 | HDD probes per lookup that reached HDD: mean / share > 1 / share > 4 | — / — / — |
 | existence-filter false positives (HDD / SSD) | 0 / 0 |
-| commitment kv bytes on HDD (end) | 0 B |
-| commitment kv bytes on SSD (end) | 310.63 GB |
-| commitment accessor bytes on SSD (end) | 6.72 GB |
-| commitment bytes SSD + HDD (end) | 317.34 GB |
+| commitment data bytes on HDD (end) | 0 B |
+| commitment data bytes on SSD (end) | 310.63 GB |
+| commitment index bytes on SSD (end) | 6.72 GB |
+| commitment data + index bytes, SSD + HDD (end) | 317.34 GB |
 | SSD saved by movement (end) | 0 B |
 | duplicate bytes (max) | 0 B |
 | movement lag, straddling_file (blocks: max / end) | 20,047 / 20,047 |
@@ -106,13 +106,13 @@ KV_READ_METRICS=true --prune.mode=full --prune.distance.blocks=10000000 --extern
 
 ![HDD probes per lookup (lookups that reached HDD)](images/probes_per_lookup_hdd.png)
 
-### Commitment .kv bytes per tier
+### Commitment data bytes per tier
 
-![Commitment .kv bytes per tier](images/commitment_bytes.png)
+![Commitment data bytes per tier](images/commitment_data_bytes.png)
 
-### Commitment accessor bytes per tier
+### Commitment index bytes per tier
 
-![Commitment accessor bytes per tier](images/commitment_accessor_bytes.png)
+![Commitment index bytes per tier](images/commitment_index_bytes.png)
 
 ### SSD saved and duplicate bytes
 
