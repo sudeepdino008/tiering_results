@@ -69,108 +69,108 @@ Note: demotion is off in a baseline, so the movement-lag rows (straddling_file, 
 
 ### Execution block
 
-![Execution block](baseline_allssd_merged_6mo_w25400000_2026-10-23-1_exec_height.png)
+![Execution block](images/exec_height.png)
 
 ### Blocks per second
 
-![Blocks per second](baseline_allssd_merged_6mo_w25400000_2026-10-23-1_blk_s.png)
+![Blocks per second](images/blk_s.png)
 
 ### Mgas/s
 
-![Mgas/s](baseline_allssd_merged_6mo_w25400000_2026-10-23-1_mgas_s.png)
+![Mgas/s](images/mgas_s.png)
 
 ### Exec time per block (exec + commitment)
 
-![Exec time per block (exec + commitment)](baseline_allssd_merged_6mo_w25400000_2026-10-23-1_exec_block_seconds.png)
+![Exec time per block (exec + commitment)](images/exec_block_seconds.png)
 
 ### Commitment time per block
 
-![Commitment time per block](baseline_allssd_merged_6mo_w25400000_2026-10-23-1_commitment_seconds.png)
+![Commitment time per block](images/commitment_seconds.png)
 
 ### Commitment file probes per block
 
-![Commitment file probes per block](baseline_allssd_merged_6mo_w25400000_2026-10-23-1_probes_per_block.png)
+![Commitment file probes per block](images/probes_per_block.png)
 
 ### Share of probes and lookups on HDD
 
-![Share of probes and lookups on HDD](baseline_allssd_merged_6mo_w25400000_2026-10-23-1_hdd_probe_share.png)
+![Share of probes and lookups on HDD](images/hdd_probe_share.png)
 
 ### Slow probes (> 1 ms) per second
 
-![Slow probes (> 1 ms) per second](baseline_allssd_merged_6mo_w25400000_2026-10-23-1_slow_probes.png)
+![Slow probes (> 1 ms) per second](images/slow_probes.png)
 
 ### HDD probe latency
 
-![HDD probe latency](baseline_allssd_merged_6mo_w25400000_2026-10-23-1_probe_latency_hdd.png)
+![HDD probe latency](images/probe_latency_hdd.png)
 
 ### SSD probe latency (sampled)
 
-![SSD probe latency (sampled)](baseline_allssd_merged_6mo_w25400000_2026-10-23-1_probe_latency_ssd.png)
+![SSD probe latency (sampled)](images/probe_latency_ssd.png)
 
 ### HDD probes per lookup (lookups that reached HDD)
 
-![HDD probes per lookup (lookups that reached HDD)](baseline_allssd_merged_6mo_w25400000_2026-10-23-1_probes_per_lookup_hdd.png)
+![HDD probes per lookup (lookups that reached HDD)](images/probes_per_lookup_hdd.png)
 
 ### Commitment bytes per tier
 
-![Commitment bytes per tier](baseline_allssd_merged_6mo_w25400000_2026-10-23-1_commitment_bytes.png)
+![Commitment bytes per tier](images/commitment_bytes.png)
 
 ### SSD saved and duplicate bytes
 
-![SSD saved and duplicate bytes](baseline_allssd_merged_6mo_w25400000_2026-10-23-1_ssd_saved_duplicate.png)
+![SSD saved and duplicate bytes](images/ssd_saved_duplicate.png)
 
 ### Cold data still on SSD (commitment)
 
-![Cold data still on SSD (commitment)](baseline_allssd_merged_6mo_w25400000_2026-10-23-1_lag_bytes.png)
+![Cold data still on SSD (commitment)](images/lag_bytes.png)
 
 ### Movement lag behind the cold boundary (commitment)
 
-![Movement lag behind the cold boundary (commitment)](baseline_allssd_merged_6mo_w25400000_2026-10-23-1_lag_blocks.png)
+![Movement lag behind the cold boundary (commitment)](images/lag_blocks.png)
 
 ### Tier edges (steps)
 
-![Tier edges (steps)](baseline_allssd_merged_6mo_w25400000_2026-10-23-1_tier_steps.png)
+![Tier edges (steps)](images/tier_steps.png)
 
 ### Demotions (commitment)
 
-![Demotions (commitment)](baseline_allssd_merged_6mo_w25400000_2026-10-23-1_demotions.png)
+![Demotions (commitment)](images/demotions.png)
 
 ### Demoted bytes and copy rate
 
-![Demoted bytes and copy rate](baseline_allssd_merged_6mo_w25400000_2026-10-23-1_demotion_bytes.png)
+![Demoted bytes and copy rate](images/demotion_bytes.png)
 
 ### Demotion time and pauses
 
-![Demotion time and pauses](baseline_allssd_merged_6mo_w25400000_2026-10-23-1_demotion_seconds.png)
+![Demotion time and pauses](images/demotion_seconds.png)
 
 ### Cold merges (commitment, HDD)
 
-![Cold merges (commitment, HDD)](baseline_allssd_merged_6mo_w25400000_2026-10-23-1_cold_merge.png)
+![Cold merges (commitment, HDD)](images/cold_merge.png)
 
 ### Cold merge bytes
 
-![Cold merge bytes](baseline_allssd_merged_6mo_w25400000_2026-10-23-1_cold_merge_bytes.png)
+![Cold merge bytes](images/cold_merge_bytes.png)
 
 ### Major page faults per second
 
-![Major page faults per second](baseline_allssd_merged_6mo_w25400000_2026-10-23-1_major_faults.png)
+![Major page faults per second](images/major_faults.png)
 
 ### Disk reads per second
 
-![Disk reads per second](baseline_allssd_merged_6mo_w25400000_2026-10-23-1_disk_reads.png)
+![Disk reads per second](images/disk_reads.png)
 
 ### Disk read bytes per second
 
-![Disk read bytes per second](baseline_allssd_merged_6mo_w25400000_2026-10-23-1_disk_read_bytes.png)
+![Disk read bytes per second](images/disk_read_bytes.png)
 
 ### Disk read latency (r_await)
 
-![Disk read latency (r_await)](baseline_allssd_merged_6mo_w25400000_2026-10-23-1_disk_r_await.png)
+![Disk read latency (r_await)](images/disk_r_await.png)
 
 ### Disk utilization
 
-![Disk utilization](baseline_allssd_merged_6mo_w25400000_2026-10-23-1_disk_util.png)
+![Disk utilization](images/disk_util.png)
 
 ### Free space
 
-![Free space](baseline_allssd_merged_6mo_w25400000_2026-10-23-1_fs_free.png)
+![Free space](images/fs_free.png)

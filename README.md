@@ -1,9 +1,14 @@
 # tiering_results
 
-Erigon state-tiering v2 run results. Flat layout: one `.md` per run, PNGs next to it with the same prefix.
+Erigon state-tiering v2 run results. One folder per run:
 
-File name (most distinguishing first):
-`<kind>_<tiering>_<commitment files>_<lookback>_<variant>_<YYYY-MM-DD>-<n>.md`
+```
+<run>/<run>.md
+<run>/images/<panel>.png
+```
+
+Run name (most distinguishing first):
+`<kind>_<tiering>_<commitment files>_<lookback>_<variant>_<YYYY-MM-DD>-<n>`
 
 - kind: `baseline` | `demote`
 - tiering: `allssd` | `hdd0` (0-8192 commitment on HDD) | `tiered` (demotion on)
@@ -13,5 +18,6 @@ File name (most distinguishing first):
 - date + run sequence number on that day (`2026-10-22-1`): last
 
 Block range, flags, datadir, commit and all other details go inside the `.md`.
+The folder name is `<run>` from the pattern above.
 
-PNG: `<same prefix>_<panel>.png`. The prefix is also the `run` label in the metrics store.
+`<run>` is also the `run` label in the metrics store, unless the `.md` names a different `metrics run label`.
