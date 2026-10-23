@@ -72,9 +72,9 @@ KV_READ_METRICS=true --prune.mode=full --prune.distance.blocks=10000000 --extern
 
 ![Blocks per second](images/blk_s.png)
 
-### Mgas/s
+### Mgas/s per block
 
-![Mgas/s](images/mgas_s.png)
+![Mgas/s per block](images/mgas_s.png)
 
 ### Exec time per block (exec + commitment)
 
