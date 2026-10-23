@@ -55,11 +55,6 @@ KV_READ_METRICS=true --prune.mode=full --prune.distance.blocks=10000000 --extern
 | ssd reads per block / read bytes per block | 940.78 / 4.72 MB |
 | ssd r_await (mean) / utilization (mean) | 146.2 µs / 36.60% |
 
-## Marks
-
-- 2026-10-23T10:08:48Z start baseline_allssd_merged_6mo_w25400000_2026-10-23-3
-- 2026-10-23T10:59:24Z stop baseline_allssd_merged_6mo_w25400000_2026-10-23-3 rc=0
-
 ## Graphs
 
 ### Execution block
