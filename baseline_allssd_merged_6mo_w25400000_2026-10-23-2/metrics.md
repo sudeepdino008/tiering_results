@@ -46,16 +46,14 @@ KV_READ_METRICS=true --prune.mode=full --prune.distance.blocks=10000000 --extern
 | duplicate bytes (max) | 0 B |
 | movement lag, straddling_file (blocks: max / end) | 20,047 / 20,047 |
 | movement lag, copy_pending (blocks: max / end) | 24,091,854 / 24,091,854 |
-| HDD end step / SSD start step (end) | 0 / 0 |
+| HDD end block / SSD start block (end) | — / — |
 | cold merges: count / total seconds / paused seconds | 0 / 0.0 µs / 0.0 µs |
 | cold merges: bytes read / written | 0 B / 0 B |
 | major page faults per block | 1,015 |
-| sda reads per block / read bytes per block | 0 / 0 B |
-| sda r_await (mean) / utilization (mean) | — / 0.00% |
-| nvme0n1 reads per block / read bytes per block | 1,016 / 5.11 MB |
-| nvme0n1 r_await (mean) / utilization (mean) | 139.9 µs / 36.55% |
-| free space on / (end) | 651.58 GB |
-| free space on /backup (end) | 5.00 TB |
+| hdd reads per block / read bytes per block | 0 / 0 B |
+| hdd r_await (mean) / utilization (mean) | — / 0.00% |
+| ssd reads per block / read bytes per block | 1,016 / 5.11 MB |
+| ssd r_await (mean) / utilization (mean) | 139.9 µs / 36.55% |
 
 ## Marks
 
@@ -128,9 +126,9 @@ KV_READ_METRICS=true --prune.mode=full --prune.distance.blocks=10000000 --extern
 
 ![Movement lag behind the cold boundary (commitment)](images/lag_blocks.png)
 
-### Tier edges (steps)
+### Tier edges (blocks)
 
-![Tier edges (steps)](images/tier_steps.png)
+![Tier edges (blocks)](images/tier_edges.png)
 
 ### Demotions (commitment)
 
@@ -171,7 +169,3 @@ KV_READ_METRICS=true --prune.mode=full --prune.distance.blocks=10000000 --extern
 ### Disk utilization
 
 ![Disk utilization](images/disk_util.png)
-
-### Free space
-
-![Free space](images/fs_free.png)
