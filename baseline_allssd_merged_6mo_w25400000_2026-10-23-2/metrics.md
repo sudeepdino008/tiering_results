@@ -108,9 +108,13 @@ KV_READ_METRICS=true --prune.mode=full --prune.distance.blocks=10000000 --extern
 
 ![HDD probes per lookup (lookups that reached HDD)](images/probes_per_lookup_hdd.png)
 
-### Commitment bytes per tier
+### Commitment .kv bytes per tier
 
-![Commitment bytes per tier](images/commitment_bytes.png)
+![Commitment .kv bytes per tier](images/commitment_bytes.png)
+
+### Commitment accessor bytes per tier
+
+![Commitment accessor bytes per tier](images/commitment_accessor_bytes.png)
 
 ### SSD saved and duplicate bytes
 
