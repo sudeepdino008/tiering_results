@@ -27,6 +27,9 @@ def legend(fmt_, labels):
 
 
 def panel_series(expr, run, t0, t1):
+    # The execution height gauge reads 0 for one scrape at startup; rate() over that jump is ~25M blk/s.
+    expr = expr.replace('rate(sync{stage="execution",run=~"$run"}[$__rate_interval])',
+                        'rate((sync{stage="execution",run=~"$run"} > 0)[$__rate_interval:10s])')
     q = expr.replace('$run', run).replace('$__rate_interval', RATE)
     return prom('query_range', query=q, start=t0, end=t1, step=STEP)
 
