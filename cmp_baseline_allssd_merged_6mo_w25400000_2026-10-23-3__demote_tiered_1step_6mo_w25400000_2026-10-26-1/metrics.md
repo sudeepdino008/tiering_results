@@ -92,13 +92,19 @@ Solid/dashed styles are series; color is the run (blue = baseline, orange = 2c-6
 
 ![Commitment file probes per block](images/probes_per_block.png)
 
+*probe = one file checked during a key lookup, newest file first; more files, more probes per lookup.*
+
 ### Share of probes and lookups on HDD
 
 ![Share of probes and lookups on HDD](images/hdd_probe_share.png)
 
+*lookup = one commitment key read; probe = one file checked in it, newest file first, until the key is found. A lookup reaches HDD when no SSD file has the key.*
+
 ### Slow probes (> 1 ms) per second
 
 ![Slow probes (> 1 ms) per second](images/slow_probes.png)
+
+*HDD: every probe timed (actual count). SSD: only 1 in 16 lookups timed, so the real SSD count is ~16x.*
 
 ### Commitment data size per tier
 

@@ -16,6 +16,12 @@ import json
 STEP = 30
 RATE = '2m'
 OMIT = {'commitment_index_size'}
+PANEL_NOTES = {
+    'hdd_probe_share': 'lookup = one commitment key read; probe = one file checked in it, newest file first, until the key '
+                       'is found. A lookup reaches HDD when no SSD file has the key.',
+    'probes_per_block': 'probe = one file checked during a key lookup, newest file first; more files, more probes per lookup.',
+    'slow_probes': 'HDD: every probe timed (actual count). SSD: only 1 in 16 lookups timed, so the real SSD count is ~16x.',
+}
 LEGEND = dict(fontsize=7, ncol=2, loc='upper center', bbox_to_anchor=(0.5, -0.2), frameon=False)
 YLABEL = {'exec_height': 'block', 'blk_s': 'blocks/s', 'mgas_s': 'Mgas/s', 'probes_per_block': 'probes per block',
           'hdd_probe_share': 'share', 'slow_probes': 'probes/s', 'lag_blocks': 'blocks', 'tier_edges': 'block',
@@ -179,6 +185,8 @@ def main():
             if plot_panel(p, runs, os.path.join(outdir, png)):
                 n += 1
                 lines += [f'### {p["title"]}', '', f'![{p["title"]}]({png})', '']
+                if p['description'] in PANEL_NOTES:
+                    lines += [f'*{PANEL_NOTES[p["description"]]}*', '']
             else:
                 os.remove(os.path.join(outdir, png))
                 skipped.append(p['title'])
