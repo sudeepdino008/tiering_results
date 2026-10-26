@@ -16,6 +16,10 @@ import json
 STEP = 30
 RATE = '2m'
 OMIT = {'commitment_index_size'}
+YLABEL = {'exec_height': 'block', 'blk_s': 'blocks/s', 'mgas_s': 'Mgas/s', 'probes_per_block': 'probes per block',
+          'hdd_probe_share': 'share', 'slow_probes': 'probes/s', 'lag_blocks': 'blocks', 'tier_edges': 'block',
+          'demotions': 'demotions (count)', 'cold_merge': 'share / steps / count', 'major_faults': 'faults/s',
+          'disk_reads': 'reads/s'}
 
 
 def ratio(a, b):
@@ -41,11 +45,19 @@ def height_at(run, t0, t1):
     return {float(t): float(v) for t, v in res[0]['values']} if res else {}
 
 
+def tick(v, unit):
+    if v == 0:
+        return '0'
+    if unit == '' and abs(v) >= 1e4:
+        return f'{v / 1e3:.0f}k'
+    return re.sub(r'\.0+(?=\D|$)', '', fmt(v, unit))
+
+
 def plot_panel(p, runs, path):
     by_block = p['description'] != 'exec_height'
     fig, ax = plt.subplots(figsize=(10, 4))
     styles = ['-', '--', ':', '-.']
-    peaks = []
+    peaks, drawn = [], 0
     for color, (label, run, t0, t1, height) in zip(('tab:blue', 'tab:orange'), runs):
         i, peak = 0, 0.0
         for t in p.get('targets', []):
@@ -55,27 +67,33 @@ def plot_panel(p, runs, path):
                 if not pts:
                     continue
                 xs, ys = zip(*pts)
-                peak = max(peak, max(abs(y) for y in ys))
                 name = legend(t.get('legendFormat'), s['metric']) or t['expr'][:30]
+                if not any(ys):
+                    ax.plot([], [], ' ', label=f'{label}: {name} (all 0, not drawn)')
+                    continue
+                peak = max(peak, max(abs(y) for y in ys))
                 ax.plot(xs, ys, styles[i % len(styles)], color=color, lw=1, label=f'{label}: {name}')
                 i += 1
         peaks.append(peak)
+        drawn += i
     nonzero = [x for x in peaks if x > 0]
     if nonzero and max(nonzero) > 20 * min(nonzero):
         ax.set_yscale('symlog', linthresh=min(nonzero) / 10)
     unit = p.get('fieldConfig', {}).get('defaults', {}).get('unit', '')
     tick_unit, suffix = {'bytes': ('B', ''), 'Bps': ('B', '/s'), 's': ('s', ''), 'percentunit': ('%', '')}.get(unit, ('', ''))
-    ax.yaxis.set_major_formatter(FuncFormatter(lambda v, _: '0' if v == 0 else re.sub(r'\.0+(?=\D|$)', '', fmt(v, tick_unit)) + suffix))
+    ax.yaxis.set_major_formatter(FuncFormatter(lambda v, _: tick(v, tick_unit) + suffix))
+    if by_block:
+        ax.xaxis.set_major_formatter(FuncFormatter(lambda v, _: tick(v, '')))
     ax.set_title(p['title'])
     ax.set_xlabel('execution block' if by_block else 'minutes since run start')
-    ax.ticklabel_format(axis='x', style='plain', useOffset=False)
+    ax.set_ylabel(YLABEL.get(p['description'], ''))
     ax.grid(alpha=0.3)
     if ax.lines:
         ax.legend(fontsize=7, ncol=2)
     fig.tight_layout()
     fig.savefig(path, dpi=100)
     plt.close(fig)
-    return bool(ax.lines)
+    return drawn > 0
 
 
 def main():
