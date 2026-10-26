@@ -16,6 +16,7 @@ import json
 STEP = 30
 RATE = '2m'
 OMIT = {'commitment_index_size'}
+LEGEND = dict(fontsize=7, ncol=2, loc='upper center', bbox_to_anchor=(0.5, -0.2), frameon=False)
 YLABEL = {'exec_height': 'block', 'blk_s': 'blocks/s', 'mgas_s': 'Mgas/s', 'probes_per_block': 'probes per block',
           'hdd_probe_share': 'share', 'slow_probes': 'probes/s', 'lag_blocks': 'blocks', 'tier_edges': 'block',
           'demotions': 'demotions (count)', 'cold_merge': 'share / steps / count', 'major_faults': 'faults/s',
@@ -48,7 +49,7 @@ def height_at(run, t0, t1):
 def tick(v, unit):
     if v == 0:
         return '0'
-    if unit == '' and abs(v) >= 1e4:
+    if unit == '' and abs(v) >= 1e3:
         return f'{v / 1e3:.0f}k'
     return re.sub(r'\.0+(?=\D|$)', '', fmt(v, unit))
 
@@ -100,12 +101,12 @@ def plot_panel(p, runs, path):
         rax.set_ylim(bottom=0)
         h, l = ax.get_legend_handles_labels()
         rh, rl = rax.get_legend_handles_labels()
-        ax.legend(h + rh, l + rl, fontsize=7, ncol=2)
+        ax.legend(h + rh, l + rl, **LEGEND)
     ax.grid(alpha=0.3)
     if ax.lines and not rax:
-        ax.legend(fontsize=7, ncol=2)
+        ax.legend(**LEGEND)
     fig.tight_layout()
-    fig.savefig(path, dpi=100)
+    fig.savefig(path, dpi=100, bbox_inches='tight')
     plt.close(fig)
     return drawn > 0
 
