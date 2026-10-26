@@ -85,7 +85,7 @@ def plot_panel(p, runs, path):
     nonzero = [x for x in peaks if x > 0]
     if nonzero and max(nonzero) > 20 * min(nonzero):
         ax.set_yscale('symlog', linthresh=min(nonzero) / 10)
-    elif drawn and ax.get_ylim()[0] > 0:
+    elif drawn and 0 < ax.get_ylim()[0] < ax.get_ylim()[1] / 2:
         ax.set_ylim(bottom=0)
     unit = p.get('fieldConfig', {}).get('defaults', {}).get('unit', '')
     tick_unit, suffix = {'bytes': ('B', ''), 'Bps': ('B', '/s'), 's': ('s', ''), 'percentunit': ('%', '')}.get(unit, ('', ''))
