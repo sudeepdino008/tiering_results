@@ -104,10 +104,6 @@ Solid/dashed styles are series; color is the run (blue = baseline, orange = 2c-6
 
 ![Commitment data size per tier](images/commitment_data_size.png)
 
-### Commitment index size per tier
-
-![Commitment index size per tier](images/commitment_index_size.png)
-
 ### SSD space saved and duplicate size
 
 ![SSD space saved and duplicate size](images/ssd_saved_duplicate.png)

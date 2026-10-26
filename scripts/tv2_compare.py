@@ -9,11 +9,13 @@ import matplotlib
 
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+from matplotlib.ticker import FuncFormatter
 from tv2_report import M, fmt, iso, prom, push, run_range, summary
 import json
 
 STEP = 30
 RATE = '2m'
+OMIT = {'commitment_index_size'}
 
 
 def ratio(a, b):
@@ -43,8 +45,9 @@ def plot_panel(p, runs, path):
     by_block = p['description'] != 'exec_height'
     fig, ax = plt.subplots(figsize=(10, 4))
     styles = ['-', '--', ':', '-.']
+    peaks = []
     for color, (label, run, t0, t1, height) in zip(('tab:blue', 'tab:orange'), runs):
-        i = 0
+        i, peak = 0, 0.0
         for t in p.get('targets', []):
             for s in panel_series(t['expr'], run, t0, t1):
                 pts = [(height.get(float(ts)) if by_block else (float(ts) - t0) / 60, float(v)) for ts, v in s['values']]
@@ -52,14 +55,19 @@ def plot_panel(p, runs, path):
                 if not pts:
                     continue
                 xs, ys = zip(*pts)
+                peak = max(peak, max(abs(y) for y in ys))
                 name = legend(t.get('legendFormat'), s['metric']) or t['expr'][:30]
                 ax.plot(xs, ys, styles[i % len(styles)], color=color, lw=1, label=f'{label}: {name}')
                 i += 1
+        peaks.append(peak)
+    nonzero = [x for x in peaks if x > 0]
+    if nonzero and max(nonzero) > 20 * min(nonzero):
+        ax.set_yscale('symlog', linthresh=min(nonzero) / 10)
     unit = p.get('fieldConfig', {}).get('defaults', {}).get('unit', '')
+    tick_unit, suffix = {'bytes': ('B', ''), 'Bps': ('B', '/s'), 's': ('s', ''), 'percentunit': ('%', '')}.get(unit, ('', ''))
+    ax.yaxis.set_major_formatter(FuncFormatter(lambda v, _: '0' if v == 0 else re.sub(r'\.0+(?=\D|$)', '', fmt(v, tick_unit)) + suffix))
     ax.set_title(p['title'])
     ax.set_xlabel('execution block' if by_block else 'minutes since run start')
-    if unit and unit != 'none':
-        ax.set_ylabel(unit)
     ax.ticklabel_format(axis='x', style='plain', useOffset=False)
     ax.grid(alpha=0.3)
     if ax.lines:
@@ -129,6 +137,8 @@ def main():
         lines += ['## Graphs', '', f'Solid/dashed styles are series; color is the run (blue = {la}, orange = {lb}).', '']
         skipped = []
         for p in dash['panels']:
+            if p['description'] in OMIT:
+                continue
             if p['type'] != 'timeseries':
                 skipped.append(p['title'])
                 continue
