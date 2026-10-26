@@ -48,7 +48,7 @@ B/A is the ratio of each value, in the same order as the values. Notes come from
 | HDD probes per lookup that reached HDD: mean / share > 1 / share > 4 | — / — / — | 3.70 / 99.65% / 17.95% | — / — / — |  |
 | existence-filter false positives (HDD / SSD) | 0 / 0 | 0 / 0 | — / — |  |
 | commitment data size on HDD (end) | 0 B | 189.28 GB | — |  |
-| commitment data size on SSD (end) | 311.67 GB | 729.37 GB | 2.34× | 1-step files not merged; same branch nodes repeat in every step (~6x per 256 steps) |
+| commitment data size on SSD (end) | 311.67 GB | 729.37 GB | 2.34× | data supposed to be in SSD = 120 GB; 1-step files actually remaining = 729 GB => 6x amplification due to no merge |
 | commitment index size on SSD (end) | 6.73 GB | 12.93 GB | 1.92× |  |
 | commitment data + index size, SSD + HDD (end) | 318.40 GB | 931.58 GB | 2.93× |  |
 | SSD space saved (commitment data on HDD) (end) | 0 B | 189.28 GB | — |  |

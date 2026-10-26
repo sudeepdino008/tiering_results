@@ -20,7 +20,7 @@
  "HDD probes per lookup that reached HDD: mean / share > 1 / share > 4": "",
  "existence-filter false positives (HDD / SSD)": "",
  "commitment data size on HDD (end)": "",
- "commitment data size on SSD (end)": "1-step files not merged; same branch nodes repeat in every step (~6x per 256 steps)",
+ "commitment data size on SSD (end)": "data supposed to be in SSD = 120 GB; 1-step files actually remaining = 729 GB => 6x amplification due to no merge",
  "commitment index size on SSD (end)": "",
  "commitment data + index size, SSD + HDD (end)": "",
  "SSD space saved (commitment data on HDD) (end)": "",
