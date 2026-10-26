@@ -96,7 +96,8 @@ def main():
                     ('blocks', lambda r, s, l, h, t0, t1: f'{fmt(h[0])} → {fmt(h[1])}'),
                     ('time', lambda r, s, l, h, t0, t1: f'{iso(t0)} → {iso(t1)}')):
         lines.append(f'| {item} | ' + ' | '.join(f(r, s, l, (h0, h1), t0, t1) for r, t0, t1, s, _, l, h0, h1 in info) + ' |')
-    lines.append('')
+    report = lambda r: f'[{r}/metrics.md](../{r}/metrics.md)' if os.path.exists(os.path.join(a.out, r, 'metrics.md')) else '—'
+    lines += [f'| report | {report(a.run_a)} | {report(a.run_b)} |', '']
     for lab, s in ((la, sa), (lb, sb)):
         if s and s.get('flags'):
             lines += [f'Flags {lab}:', '', '```', s['flags'], '```', '']

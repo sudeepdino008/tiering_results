@@ -7,6 +7,7 @@
 | commit | `57539c60f9` | `005d3099` |
 | blocks | 25,400,000 → 25,410,000 | 25,400,000 → 25,409,993 |
 | time | 2026-10-23T10:08:48Z → 2026-10-23T10:59:24Z | 2026-10-26T03:57:00Z → 2026-10-26T06:11:30Z |
+| report | [baseline_allssd_merged_6mo_w25400000_2026-10-23-3/metrics.md](../baseline_allssd_merged_6mo_w25400000_2026-10-23-3/metrics.md) | [demote_tiered_1step_6mo_w25400000_2026-10-26-1/metrics.md](../demote_tiered_1step_6mo_w25400000_2026-10-26-1/metrics.md) |
 
 Flags baseline:
 
