@@ -48,7 +48,7 @@ B/A is the ratio of each value, in the same order as the values. Notes come from
 | HDD probes per lookup that reached HDD: mean / share > 1 / share > 4 | — / — / — | 3.70 / 99.65% / 17.95% | — / — / — |  |
 | existence-filter false positives (HDD / SSD) | 0 / 0 | 0 / 0 | — / — |  |
 | commitment data size on HDD (end) | 0 B | 189.28 GB | — |  |
-| commitment data size on SSD (end) | 311.67 GB | 729.37 GB | 2.34× |  |
+| commitment data size on SSD (end) | 311.67 GB | 729.37 GB | 2.34× | Not compaction: 1-step files are not merged. Each step file re-stores every branch node changed in that step, so hot (upper-trie) nodes repeat in each file; a merge keeps only the newest value. ~6x per 256 steps (8192-8448: 256 one-step files 193.5 GB vs merged 31.0 GB). |
 | commitment index size on SSD (end) | 6.73 GB | 12.93 GB | 1.92× |  |
 | commitment data + index size, SSD + HDD (end) | 318.40 GB | 931.58 GB | 2.93× |  |
 | SSD space saved (commitment data on HDD) (end) | 0 B | 189.28 GB | — |  |
@@ -58,7 +58,7 @@ B/A is the ratio of each value, in the same order as the values. Notes come from
 | HDD end block / SSD start block (end) | 0 / 0 | 24,113,651 / 24,113,651 | — / — |  |
 | cold merges: count / total seconds / paused seconds | 0 / 0.0 µs / 0.0 µs | 3.00 / 122.74 s / 26.09 s | — / — / — |  |
 | cold merges: bytes read / written | 0 B / 0 B | 13.08 GB / 9.86 GB | — / — |  |
-| major page faults per block | 930.03 | 1,659 | 1.78× |  |
+| major page faults per block | 930.03 | 1,659 | 1.78× | Every lookup checks the existence filter of each LSM level (file); more files (1,043 one-step vs 8 merged) means more filter checks and a greater chance of a false-positive penalty (a .kv read). |
 | hdd reads per block / read bytes per block | 0 / 0 B | 50.64 / 705.93 KB | — / — |  |
 | hdd r_await (mean) / utilization (mean) | — / 0.00% | 10.4 ms / 35.10% | — / — |  |
 | ssd reads per block / read bytes per block | 940.78 / 4.72 MB | 1,630 / 8.47 MB | 1.73× / 1.79× |  |
