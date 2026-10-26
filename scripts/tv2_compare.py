@@ -101,13 +101,23 @@ def main():
     for lab, s in ((la, sa), (lb, sb)):
         if s and s.get('flags'):
             lines += [f'Flags {lab}:', '', '```', s['flags'], '```', '']
-    lines += ['## Summary', '', 'B/A is the ratio of each value, in the same order as the values.', '',
-              f'| Metric | A: {la} | B: {lb} | B/A |', '|---|---|---|---|']
+    outdir = os.path.join(a.out, name)
+    notes_path = os.path.join(outdir, 'notes.json')
+    os.makedirs(outdir, exist_ok=True)
+    if not os.path.exists(notes_path):
+        json.dump({item: '' for item, _, _ in ra}, open(notes_path, 'w'), indent=1, ensure_ascii=False)
+    notes = json.load(open(notes_path))
+    lines += ['## Summary', '', 'B/A is the ratio of each value, in the same order as the values. Notes come from `notes.json` '
+              '(metric name -> note) in this folder.', '',
+              f'| Metric | A: {la} | B: {lb} | B/A | Notes |', '|---|---|---|---|---|']
     for (item, va, da), (_, vb, db) in zip(ra, rb):
-        lines.append(f'| {item} | {da} | {db} | {" / ".join(ratio(x[0], y[0]) for x, y in zip(va, vb))} |')
+        note = notes.get(item, '').replace('|', '\\|').replace('\n', '<br>')
+        lines.append(f'| {item} | {da} | {db} | {" / ".join(ratio(x[0], y[0]) for x, y in zip(va, vb))} | {note} |')
+    unknown = sorted(set(notes) - {item for item, _, _ in ra})
+    if unknown:
+        print('notes.json keys that match no metric:', *unknown, sep='\n  ')
     lines.append('')
 
-    outdir = os.path.join(a.out, name)
     os.makedirs(os.path.join(outdir, 'images'), exist_ok=True)
     n = 0
     if not a.no_png:
