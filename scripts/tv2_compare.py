@@ -56,6 +56,7 @@ def tick(v, unit):
 def plot_panel(p, runs, path):
     by_block = p['description'] != 'exec_height'
     fig, ax = plt.subplots(figsize=(10, 4))
+    rax = None
     styles = ['-', '--', ':', '-.']
     peaks, drawn = [], 0
     for color, (label, run, t0, t1, height) in zip(('tab:blue', 'tab:orange'), runs):
@@ -71,6 +72,11 @@ def plot_panel(p, runs, path):
                 if not any(ys):
                     ax.plot([], [], ' ', label=f'{label}: {name} (all 0, not drawn)')
                     continue
+                if '(B/s)' in name:
+                    rax = rax or ax.twinx()
+                    rax.plot(xs, ys, styles[i % len(styles)], color=color, lw=1, label=f'{label}: {name} (right axis)')
+                    i += 1
+                    continue
                 peak = max(peak, max(abs(y) for y in ys))
                 ax.plot(xs, ys, styles[i % len(styles)], color=color, lw=1, label=f'{label}: {name}')
                 i += 1
@@ -79,6 +85,8 @@ def plot_panel(p, runs, path):
     nonzero = [x for x in peaks if x > 0]
     if nonzero and max(nonzero) > 20 * min(nonzero):
         ax.set_yscale('symlog', linthresh=min(nonzero) / 10)
+    elif drawn and ax.get_ylim()[0] > 0:
+        ax.set_ylim(bottom=0)
     unit = p.get('fieldConfig', {}).get('defaults', {}).get('unit', '')
     tick_unit, suffix = {'bytes': ('B', ''), 'Bps': ('B', '/s'), 's': ('s', ''), 'percentunit': ('%', '')}.get(unit, ('', ''))
     ax.yaxis.set_major_formatter(FuncFormatter(lambda v, _: tick(v, tick_unit) + suffix))
@@ -87,8 +95,14 @@ def plot_panel(p, runs, path):
     ax.set_title(p['title'])
     ax.set_xlabel('execution block' if by_block else 'minutes since run start')
     ax.set_ylabel(YLABEL.get(p['description'], ''))
+    if rax:
+        rax.yaxis.set_major_formatter(FuncFormatter(lambda v, _: '0' if v == 0 else tick(v, 'B') + '/s'))
+        rax.set_ylim(bottom=0)
+        h, l = ax.get_legend_handles_labels()
+        rh, rl = rax.get_legend_handles_labels()
+        ax.legend(h + rh, l + rl, fontsize=7, ncol=2)
     ax.grid(alpha=0.3)
-    if ax.lines:
+    if ax.lines and not rax:
         ax.legend(fontsize=7, ncol=2)
     fig.tight_layout()
     fig.savefig(path, dpi=100)
