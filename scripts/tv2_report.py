@@ -7,6 +7,12 @@ import argparse, json, math, os, statistics, subprocess, time, urllib.parse, url
 M = '/erigon-data/tv2_metrics'
 PROM = 'http://127.0.0.1:9091'
 GRAFANA = 'http://127.0.0.1:3000'
+PANEL_NOTES = {
+    'hdd_probe_share': 'lookup = one commitment key read that missed the state cache and the DB; probe = one file checked '
+                       'in it, newest file first, until the key is found. A lookup reaches HDD when no SSD file has the key.',
+    'probes_per_block': 'probe = one file checked during a key lookup, newest file first; more files, more probes per lookup.',
+    'slow_probes': 'HDD: every probe timed (actual count). SSD: only 1 in 16 lookups timed; the line is that sample x16.',
+}
 
 
 def prom(path, **params):
@@ -200,6 +206,8 @@ def main():
                 f.write(urllib.request.urlopen(req, timeout=120).read())
             pngs.append(png)
             lines += [f'### {p["title"]}', '', f'![{p["title"]}]({png})', '']
+            if p['description'] in PANEL_NOTES:
+                lines += [f'*{PANEL_NOTES[p["description"]]}*', '']
 
     md = os.path.join(rundir, 'metrics.md')
     open(md, 'w').write('\n'.join(lines))

@@ -10,18 +10,12 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib.ticker import FuncFormatter
-from tv2_report import M, fmt, iso, prom, push, run_range, summary
+from tv2_report import M, PANEL_NOTES, fmt, iso, prom, push, run_range, summary
 import json
 
 STEP = 30
 RATE = '2m'
 OMIT = {'commitment_index_size'}
-PANEL_NOTES = {
-    'hdd_probe_share': 'lookup = one commitment key read; probe = one file checked in it, newest file first, until the key '
-                       'is found. A lookup reaches HDD when no SSD file has the key.',
-    'probes_per_block': 'probe = one file checked during a key lookup, newest file first; more files, more probes per lookup.',
-    'slow_probes': 'HDD: every probe timed (actual count). SSD: only 1 in 16 lookups timed, so the real SSD count is ~16x.',
-}
 LEGEND = dict(fontsize=7, ncol=2, loc='upper center', bbox_to_anchor=(0.5, -0.2), frameon=False)
 YLABEL = {'exec_height': 'block', 'blk_s': 'blocks/s', 'mgas_s': 'Mgas/s', 'probes_per_block': 'probes per block',
           'hdd_probe_share': 'share', 'slow_probes': 'probes/s', 'lag_blocks': 'blocks', 'tier_edges': 'block',
@@ -40,9 +34,6 @@ def legend(fmt_, labels):
 
 
 def panel_series(expr, run, t0, t1):
-    # The execution height gauge reads 0 for one scrape at startup; rate() over that jump is ~25M blk/s.
-    expr = expr.replace('rate(sync{stage="execution",run=~"$run"}[$__rate_interval])',
-                        'rate((sync{stage="execution",run=~"$run"} > 0)[$__rate_interval:10s])')
     q = expr.replace('$run', run).replace('$__rate_interval', RATE)
     return prom('query_range', query=q, start=t0, end=t1, step=STEP)
 

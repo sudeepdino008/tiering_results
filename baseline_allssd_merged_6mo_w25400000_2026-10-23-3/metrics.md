@@ -21,7 +21,7 @@ KV_READ_METRICS=true --prune.mode=full --prune.distance.blocks=10000000 --extern
 | blocks executed | 10,000 |
 | wall time | 0.84 h |
 | blocks per second (mean) | 3.29 |
-| Mgas/s per block p50 / p5 (mean) | 272.02 / 128.63 (277.00) |
+| Mgas/s per block mean / p50 / p5 | 277.00 / 272.02 / 128.63 |
 | Mgas/s wall clock (all-in) | 100.11 |
 | exec time per block (exec + commitment) p50 / p90 / p95 / p99 | 99.0 ms / 198.8 ms / 258.4 ms / 391.0 ms |
 | exec time per block (exec + commitment) worst | 1.26 s |
@@ -29,9 +29,9 @@ KV_READ_METRICS=true --prune.mode=full --prune.distance.blocks=10000000 --extern
 | commitment time per block p50 / p90 / p95 / p99 | 22.4 ms / 49.9 ms / 73.4 ms / 135.6 ms |
 | commitment time per block worst | 392.6 ms |
 | commitment time per block mean ± 95% CI (30 s windows) | 31.2 ms ± 3.2 ms (n=100) |
-| ssd probes per block mean (p50 / p90 / p95 / p99) | 3,934 (5,547 / 9,688 / 15,958 / 27,934) |
-| hdd probes per block mean (p50 / p90 / p95 / p99) | 0 (0 / 0 / 0 / 0) |
-| hdd slow probes per block mean (p50 / p90 / p95 / p99) | 0 (0 / 0 / 0 / 0) |
+| ssd probes per block mean / p50 / p90 / p95 / p99 | 3,934 / 5,547 / 9,688 / 15,958 / 27,934 |
+| hdd probes per block mean / p50 / p90 / p95 / p99 | 0 / 0 / 0 / 0 / 0 |
+| hdd slow probes per block mean / p50 / p90 / p95 / p99 | 0 / 0 / 0 / 0 / 0 |
 | share of probes on HDD | 0.00% |
 | share of lookups that reached HDD | 0.00% |
 | HDD probe latency p50 / p90 / p95 / p99 | — / — / — / — |
@@ -81,13 +81,19 @@ KV_READ_METRICS=true --prune.mode=full --prune.distance.blocks=10000000 --extern
 
 ![Commitment file probes per block](images/probes_per_block.png)
 
+*probe = one file checked during a key lookup, newest file first; more files, more probes per lookup.*
+
 ### Share of probes and lookups on HDD
 
 ![Share of probes and lookups on HDD](images/hdd_probe_share.png)
 
+*lookup = one commitment key read that missed the state cache and the DB; probe = one file checked in it, newest file first, until the key is found. A lookup reaches HDD when no SSD file has the key.*
+
 ### Slow probes (> 1 ms) per second
 
 ![Slow probes (> 1 ms) per second](images/slow_probes.png)
+
+*HDD: every probe timed (actual count). SSD: only 1 in 16 lookups timed; the line is that sample x16.*
 
 ### HDD probe latency
 
