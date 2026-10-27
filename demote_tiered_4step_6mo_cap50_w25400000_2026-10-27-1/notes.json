@@ -1,0 +1,5 @@
+{
+ "commitment data size on SSD (end)": "4-step merges on SSD: 512 GB at start vs ~720 GB 1-step (0.71x); fully merged would be ~120 GB",
+ "cold merges: count / total seconds / paused seconds": "merges capped too (cold-io-max-mbps=50): 8192-8200 took 263 s (16a: 76 s); wall Mgas/s during merge 65.7 vs 68.0 around (-3%; 16a: -19%)",
+ "hdd r_await (mean) / utilization (mean)": "during copies (cap 50): wall Mgas/s 62.5 vs 68.0 around (-8%)"
+}
