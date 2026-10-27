@@ -161,8 +161,11 @@ def main():
     if not os.path.exists(notes_path):
         json.dump({item: '' for item, _, _ in ra}, open(notes_path, 'w'), indent=1, ensure_ascii=False)
     notes = json.load(open(notes_path))
+    major = notes.pop('major result', '')
+    if major:
+        lines[1:1] = ['', '## Major result', '', major]
     lines += ['## Summary', '', 'B/A is the ratio of each value, in the same order as the values. Notes come from `notes.json` '
-              '(metric name -> note) in this folder.', '',
+              '(metric name -> note; key "major result" -> the section at the top) in this folder.', '',
               f'| Metric | A: {la} | B: {lb} | B/A | Notes |', '|---|---|---|---|---|']
     for (item, va, da), (_, vb, db) in zip(ra, rb):
         note = notes.get(item, '').replace('|', '\\|').replace('\n', '<br>')

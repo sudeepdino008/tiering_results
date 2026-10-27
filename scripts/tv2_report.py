@@ -186,10 +186,19 @@ def main():
              f'| time | {iso(t0)} → {iso(t1)} |', '']
     if start and start.get('flags'):
         lines += ['Flags:', '', '```', start['flags'], '```', '']
-    lines += ['## Summary', '', '| Metric | Value |', '|---|---|'] + [f'| {i} | {d} |' for i, _, d in rows] + ['']
-
     name = a.name or a.run
     rundir = os.path.join(a.out, name)
+    notes_path = os.path.join(rundir, 'notes.json')
+    notes = json.load(open(notes_path)) if os.path.exists(notes_path) else None
+    if notes is None:
+        lines += ['## Summary', '', '| Metric | Value |', '|---|---|'] + [f'| {i} | {d} |' for i, _, d in rows] + ['']
+    else:
+        cell = lambda i: notes.get(i, '').replace('|', '\\|').replace('\n', '<br>')
+        lines += ['## Summary', '', 'Notes come from `notes.json` (metric name -> note) in this folder.', '',
+                  '| Metric | Value | Notes |', '|---|---|---|'] + [f'| {i} | {d} | {cell(i)} |' for i, _, d in rows] + ['']
+        unknown = sorted(set(notes) - {i for i, _, _ in rows})
+        if unknown:
+            print('notes.json keys that match no metric:', *unknown, sep='\n  ')
     os.makedirs(os.path.join(rundir, 'images'), exist_ok=True)
     pngs = []
     if not a.no_png:
