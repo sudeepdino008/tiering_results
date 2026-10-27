@@ -1,8 +1,9 @@
 #!/erigon-data/tv2_scripts/.venv/bin/python
 """Compare two tiering v2 runs: summary table side by side with B/A ratios, and each dashboard panel with both runs
 on one graph (x = execution block, so runs over the same blocks line up).
-usage: tv2_compare.py <run A> <run B> [--label-a A] [--label-b B] [--name NAME] [--out DIR] [--push] [--no-png]"""
-import argparse, os, re, sys
+usage: tv2_compare.py <run A> <run B> [--label-a A] [--label-b B] [--name NAME] [--out DIR] [--gist ID] [--push] [--no-png]
+--gist: write into a clone of that gist (flat files, absolute links), --push commits and pushes it."""
+import argparse, glob, os, re, subprocess, sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import matplotlib
@@ -12,6 +13,9 @@ import matplotlib.pyplot as plt
 from matplotlib.ticker import FuncFormatter
 from tv2_report import M, PANEL_NOTES, fmt, iso, prom, push, run_range, summary
 import json
+
+RESULTS = 'https://github.com/sudeepdino008/tiering_results/blob/main/'
+GISTS = '/erigon-data/tv2_scripts/gists'
 
 STEP = 30
 RATE = '2m'
@@ -116,6 +120,7 @@ def main():
     ap.add_argument('--label-b')
     ap.add_argument('--name', help='folder name (default: cmp_<A>__<B>)')
     ap.add_argument('--out', default=os.path.expanduser('~/tiering_results'))
+    ap.add_argument('--gist', help='gist id: write the report into a clone of this gist')
     ap.add_argument('--push', action='store_true')
     ap.add_argument('--no-png', action='store_true')
     a = ap.parse_args()
@@ -137,12 +142,20 @@ def main():
                     ('blocks', lambda r, s, l, h, t0, t1: f'{fmt(h[0])} → {fmt(h[1])}'),
                     ('time', lambda r, s, l, h, t0, t1: f'{iso(t0)} → {iso(t1)}')):
         lines.append(f'| {item} | ' + ' | '.join(f(r, s, l, (h0, h1), t0, t1) for r, t0, t1, s, _, l, h0, h1 in info) + ' |')
-    report = lambda r: f'[{r}/metrics.md](../{r}/metrics.md)' if os.path.exists(os.path.join(a.out, r, 'metrics.md')) else '—'
+    base = RESULTS if a.gist else '../'
+    report = lambda r: f'[{r}/metrics.md]({base}{r}/metrics.md)' if os.path.exists(os.path.join(a.out, r, 'metrics.md')) else '—'
     lines += [f'| report | {report(a.run_a)} | {report(a.run_b)} |', '']
     for lab, s in ((la, sa), (lb, sb)):
         if s and s.get('flags'):
             lines += [f'Flags {lab}:', '', '```', s['flags'], '```', '']
-    outdir = os.path.join(a.out, name)
+    outdir, imgdir, imgref = os.path.join(a.out, name), 'images', 'images/'
+    if a.gist:
+        outdir, imgdir = os.path.join(GISTS, a.gist), ''
+        if not os.path.exists(outdir):
+            subprocess.run(['gh', 'gist', 'clone', a.gist, outdir], check=True)
+        subprocess.run(['git', '-C', outdir, 'pull', '-q'], check=True)
+        owner = subprocess.run(['gh', 'api', f'gists/{a.gist}', '-q', '.owner.login'], check=True, capture_output=True, text=True).stdout.strip()
+        imgref = f'https://gist.githubusercontent.com/{owner}/{a.gist}/raw/'
     notes_path = os.path.join(outdir, 'notes.json')
     os.makedirs(outdir, exist_ok=True)
     if not os.path.exists(notes_path):
@@ -159,7 +172,7 @@ def main():
         print('notes.json keys that match no metric:', *unknown, sep='\n  ')
     lines.append('')
 
-    os.makedirs(os.path.join(outdir, 'images'), exist_ok=True)
+    os.makedirs(os.path.join(outdir, imgdir), exist_ok=True)
     n = 0
     if not a.no_png:
         dash = json.load(open(f'{M}/dashboards/tv2.json'))
@@ -172,22 +185,24 @@ def main():
             if p['type'] != 'timeseries':
                 skipped.append(p['title'])
                 continue
-            png = f'images/{p["description"]}.png'
-            if plot_panel(p, runs, os.path.join(outdir, png)):
+            png = f'{p["description"]}.png'
+            if plot_panel(p, runs, os.path.join(outdir, imgdir, png)):
                 n += 1
-                lines += [f'### {p["title"]}', '', f'![{p["title"]}]({png})', '']
+                lines += [f'### {p["title"]}', '', f'![{p["title"]}]({imgref}{png})', '']
                 if p['description'] in PANEL_NOTES:
                     lines += [f'*{PANEL_NOTES[p["description"]]}*', '']
             else:
-                os.remove(os.path.join(outdir, png))
+                os.remove(os.path.join(outdir, imgdir, png))
                 skipped.append(p['title'])
         if skipped:
             lines += ['Not drawn (heatmaps or no data in both runs): ' + ', '.join(skipped) + '.', '']
 
-    md = os.path.join(outdir, 'metrics.md')
+    md = (glob.glob(os.path.join(outdir, '*.md')) + [os.path.join(outdir, f'{name}.md')])[0] if a.gist else os.path.join(outdir, 'metrics.md')
     open(md, 'w').write('\n'.join(lines))
     print(f'wrote {md} and {n} PNGs')
-    if a.push:
+    if a.push and a.gist:
+        push(outdir, '.')
+    elif a.push:
         push(a.out, name)
 
 
