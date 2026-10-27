@@ -1,0 +1,4 @@
+{
+ "hdd r_await (mean) / utilization (mean)": "copy cap 50 MB/s: HDD fault latency during copies 14.2 ms vs 10.2 around (1.4x); 2c no cap: 147 vs 10.3 ms (14x). Wall Mgas/s during copies 38.8 vs 39.5 around (2c: 34.8 vs 39.4). rate limiter works",
+ "cold merges: count / total seconds / paused seconds": "merges not rate-capped: wall Mgas/s during merges 31.8 vs 39.5 around (-19%, same in 2c)"
+}
