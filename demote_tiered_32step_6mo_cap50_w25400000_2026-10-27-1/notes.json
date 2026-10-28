@@ -1,4 +1,5 @@
 {
+ "about": "32-step = SSD commitment files merged up to 32 steps ≈ 1 week of chain (7.6 days; 1 step = 390,625 txns ≈ 1,700 blocks ≈ 5.7 h at the chain tip).",
  "commitment data size on SSD (end)": "32-step merges on SSD: 265 GB (16b 4-step 511, 2c 1-step 729, baseline merged 312)",
  "movement lag, copy_pending (blocks: max / end)": "no demotion: a 32-step file goes cold only when its whole range is past the boundary; the run moves it ~1.4 steps"
 }

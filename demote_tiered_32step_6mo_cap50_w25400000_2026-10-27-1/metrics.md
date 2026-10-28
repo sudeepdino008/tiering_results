@@ -1,5 +1,7 @@
 # demote_tiered_32step_6mo_cap50_w25400000_2026-10-27-1
 
+32-step = SSD commitment files merged up to 32 steps ≈ 1 week of chain (7.6 days; 1 step = 390,625 txns ≈ 1,700 blocks ≈ 5.7 h at the chain tip).
+
 | | |
 |---|---|
 | kind | demotion |
