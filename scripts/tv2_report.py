@@ -190,6 +190,9 @@ def main():
     rundir = os.path.join(a.out, name)
     notes_path = os.path.join(rundir, 'notes.json')
     notes = json.load(open(notes_path)) if os.path.exists(notes_path) else None
+    about = (notes or {}).pop('about', '')
+    if about:
+        lines[1:1] = ['', about]
     if notes is None:
         lines += ['## Summary', '', '| Metric | Value |', '|---|---|'] + [f'| {i} | {d} |' for i, _, d in rows] + ['']
     else:

@@ -164,11 +164,20 @@ def main():
     major = notes.pop('major result', '')
     if major:
         lines[1:1] = ['', '## Major result', '', major]
+    about = notes.pop('about', '')
+    if about:
+        lines[1:1] = ['', about]
     lines += ['## Summary', '', 'B/A is the ratio of each value, in the same order as the values. Notes come from `notes.json` '
               '(metric name -> note; key "major result" -> the section at the top) in this folder.', '',
               f'| Metric | A: {la} | B: {lb} | B/A | Notes |', '|---|---|---|---|---|']
+    ssd = {r: dict((i, v) for i, v, _ in rows)['commitment data size on SSD (end)'][0][0] for r, rows in (('a', ra), ('b', rb))}
     for (item, va, da), (_, vb, db) in zip(ra, rb):
         note = notes.get(item, '').replace('|', '\\|').replace('\n', '<br>')
+        if item == 'SSD space saved (commitment data on HDD) (end)':
+            d = None if None in ssd.values() else ssd['b'] - ssd['a']
+            delta = '—' if d is None else ('+' if d >= 0 else '−') + fmt(abs(d), 'B')
+            lines.append(f'| SSD used for commitment, B − A (end) | — | {delta} | — | {note} |')
+            continue
         lines.append(f'| {item} | {da} | {db} | {" / ".join(ratio(x[0], y[0]) for x, y in zip(va, vb))} | {note} |')
     unknown = sorted(set(notes) - {item for item, _, _ in ra})
     if unknown:
