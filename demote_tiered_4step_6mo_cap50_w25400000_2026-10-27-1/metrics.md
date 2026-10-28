@@ -1,5 +1,7 @@
 # demote_tiered_4step_6mo_cap50_w25400000_2026-10-27-1
 
+4-step = SSD commitment files merged up to 4 steps ≈ 1 day of chain (1 step = 390,625 txns ≈ 1,700 blocks ≈ 5.7 h at the chain tip).
+
 | | |
 |---|---|
 | kind | demotion |
