@@ -1,0 +1,5 @@
+{
+ "about": "3mo lookback (648,000 blocks) + 4-step = SSD commitment files merged up to 4 steps ≈ 1 day of chain (1 step = 390,625 txns ≈ 1,700 blocks ≈ 5.7 h at the chain tip). Cold files were merged on SSD in prep, then moved to HDD.",
+ "hdd probes per block mean / p50 / p90 / p95 / p99": "3mo puts 3-6mo old data on HDD: 2.8x the HDD probes of 16b (6mo, 4-step)",
+ "commitment data size on SSD (end)": "4-step, 3mo hot: 239 GB (16b 6mo hot: 511 GB)"
+}
