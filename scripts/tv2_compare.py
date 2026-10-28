@@ -174,9 +174,9 @@ def main():
     for (item, va, da), (_, vb, db) in zip(ra, rb):
         note = notes.get(item, '').replace('|', '\\|').replace('\n', '<br>')
         if item == 'SSD space saved (commitment data on HDD) (end)':
-            d = None if None in ssd.values() else ssd['b'] - ssd['a']
+            d = None if None in ssd.values() else ssd['a'] - ssd['b']
             delta = '—' if d is None else ('+' if d >= 0 else '−') + fmt(abs(d), 'B')
-            lines.append(f'| SSD used for commitment, B − A (end) | — | {delta} | — | {note} |')
+            lines.append(f'| SSD saved by B, A − B (commitment, end) | — | {delta} | — | {note} |')
             continue
         lines.append(f'| {item} | {da} | {db} | {" / ".join(ratio(x[0], y[0]) for x, y in zip(va, vb))} | {note} |')
     unknown = sorted(set(notes) - {item for item, _, _ in ra})
