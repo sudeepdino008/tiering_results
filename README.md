@@ -22,6 +22,23 @@ commitment files `1step`|`merged`). The run name is also the `run` label in the 
 | HDD (cold tier) | HGST HUS726060AL, 6 TB SATA 7200 rpm, ext4 `rw,relatime`, scheduler `mq-deadline`, read-ahead 128 KB, mounted at `/backup` |
 | OS | Ubuntu 24.04.3 LTS, kernel 6.8.0-90-generic |
 
+### RAM limit
+
+The machine has 125 GiB RAM, but the runs confine erigon to 64 GiB with a systemd scope (cgroup v2):
+
+```
+systemd-run --user --scope -p MemoryMax=64G -p MemorySwapMax=0 erigon ...
+```
+
+The limit includes the page cache that erigon's file reads fill, so at most 64 GiB of snapshot data stays cached.
+Runs before this change had no limit (all of RAM was free for the page cache).
+
+To check the limit of a running erigon:
+
+```
+cat /sys/fs/cgroup$(cut -d: -f3 /proc/$(pgrep -x erigon)/cgroup)/memory.max
+```
+
 ### Kernel settings (sysctl) for the runs
 
 ```
