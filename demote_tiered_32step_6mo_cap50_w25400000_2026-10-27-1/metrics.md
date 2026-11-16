@@ -46,7 +46,6 @@ Notes come from `notes.json` (metric name -> note) in this folder.
 | commitment data size on SSD (end) | 264.99 GB | 32-step merges on SSD: 265 GB (16b 4-step 511, 2c 1-step 729, baseline merged 312) |
 | commitment index size on SSD (end) | 8.57 GB |  |
 | commitment data + index size, SSD + HDD (end) | 459.18 GB |  |
-| SSD space saved (commitment data on HDD) (end) | 185.62 GB |  |
 | duplicate bytes (max) | 0 B |  |
 | movement lag, straddling_file (blocks: max / end) | 10,338 / 10,338 |  |
 | movement lag, copy_pending (blocks: max / end) | 0 / 0 | no demotion: a 32-step file goes cold only when its whole range is past the boundary; the run moves it ~1.4 steps |

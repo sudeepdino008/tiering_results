@@ -176,6 +176,7 @@ def main():
 
     t0, t1, start = run_range(a.run, a.frm, a.to)
     rows, labels, h0, h1 = summary(a.run, t0, t1)
+    rows = [r for r in rows if r[0] != 'SSD space saved (commitment data on HDD) (end)']
     lines = [f'# {a.name or a.run}', '',
              '| | |', '|---|---|',
              f'| kind | {labels.get("run_kind", "—")} |',

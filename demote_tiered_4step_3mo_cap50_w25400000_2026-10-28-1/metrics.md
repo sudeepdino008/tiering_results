@@ -46,7 +46,6 @@ Notes come from `notes.json` (metric name -> note) in this folder.
 | commitment data size on SSD (end) | 238.94 GB | 4-step, 3mo hot: 239 GB (16b 6mo hot: 511 GB) |
 | commitment index size on SSD (end) | 8.44 GB |  |
 | commitment data + index size, SSD + HDD (end) | 495.59 GB |  |
-| SSD space saved (commitment data on HDD) (end) | 248.21 GB |  |
 | duplicate bytes (max) | 1.56 GB |  |
 | movement lag, straddling_file (blocks: max / end) | 4,513 / 4,513 |  |
 | movement lag, copy_pending (blocks: max / end) | 4,083 / 0 |  |

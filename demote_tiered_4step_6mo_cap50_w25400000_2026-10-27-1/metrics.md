@@ -46,7 +46,6 @@ Notes come from `notes.json` (metric name -> note) in this folder.
 | commitment data size on SSD (end) | 510.85 GB | 4-step merges on SSD: 512 GB at start vs ~720 GB 1-step (0.71x); fully merged would be ~120 GB |
 | commitment index size on SSD (end) | 10.52 GB |  |
 | commitment data + index size, SSD + HDD (end) | 709.77 GB |  |
-| SSD space saved (commitment data on HDD) (end) | 188.40 GB |  |
 | duplicate bytes (max) | 3.28 GB |  |
 | movement lag, straddling_file (blocks: max / end) | 6,948 / 1,848 |  |
 | movement lag, copy_pending (blocks: max / end) | 6,956 / 0 |  |

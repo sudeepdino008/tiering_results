@@ -42,7 +42,6 @@ KV_READ_METRICS=true --prune.mode=full --prune.distance.blocks=10000000 --extern
 | commitment data size on SSD (end) | 729.37 GB |
 | commitment index size on SSD (end) | 12.93 GB |
 | commitment data + index size, SSD + HDD (end) | 931.58 GB |
-| SSD space saved (commitment data on HDD) (end) | 189.28 GB |
 | duplicate bytes (max) | 1.14 GB |
 | movement lag, straddling_file (blocks: max / end) | 1,941 / 342 |
 | movement lag, copy_pending (blocks: max / end) | 1,952 / 0 |
