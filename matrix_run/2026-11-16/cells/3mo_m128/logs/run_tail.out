@@ -1,0 +1,300 @@
+[INFO] [11-16|22:35:33.581] [4/6 Execution] domain=accounts          db=335 dbdur=5µs files=728 fdur=2µs
+[INFO] [11-16|22:35:33.581] [4/6 Execution] domain=storage           db=1.15k dbdur=4µs files=2.16k fdur=2µs
+[INFO] [11-16|22:35:33.581] [4/6 Execution] parallel committed       blk=25409984 blks=0 blk/s=0 txs=365 tx/s=775 gas/s=97.92M bdur=0s progress=0/0 buf=384.5KB chit=0 cmiss=0 stepsInDB=0.50 step=9248.5 alloc=8.4GB sys=15.3GB isForkValidation=false isApplyingBlocks=true
+[INFO] [11-16|22:35:33.581] [4/6 Execution] domain reads             db=3.12k dbdur=4µs files=3.62k fdur=369µs
+[INFO] [11-16|22:35:33.581] [4/6 Execution] domain=storage           db=1.15k dbdur=4µs files=2.16k fdur=2µs
+[INFO] [11-16|22:35:33.581] [4/6 Execution] domain=commitment        db=1.63k dbdur=4µs files=729 fdur=9µs
+[INFO] [11-16|22:35:33.581] [4/6 Execution] domain=accounts          db=335 dbdur=5µs files=728 fdur=2µs
+[INFO] [11-16|22:35:33.582] [4/6 Execution] parallel done            in=470.968851ms buf=384.5KB/512.0MB blk=25409984 blks=1 blk/s=2 txs=365 tx/s=774 gas/s=97.88M stepsInDB=0.50 step=9248.5 alloc=8.4GB sys=15.3GB isForkValidation=false isApplyingBlocks=true
+[INFO] [11-16|22:35:33.582] [4/6 Execution] domains                  db=3.12k dbdur=4µs files=3.62k fdur=369µs
+[INFO] [11-16|22:35:33.582] [4/6 Execution] domain=accounts          db=335 dbdur=5µs files=728 fdur=2µs
+[INFO] [11-16|22:35:33.582] [4/6 Execution] domain=storage           db=1.15k dbdur=4µs files=2.16k fdur=2µs
+[INFO] [11-16|22:35:33.582] [4/6 Execution] domain=commitment        db=1.63k dbdur=4µs files=729 fdur=9µs
+[INFO] [11-16|22:35:33.829] BuildFilesInBackground                   step=9248 lastInDB=9248 targetStep=9249 reorgSafeBlock=26147573 reorgSafeStep=9812.51 reorgSafeOK=true
+[INFO] [11-16|22:35:34.030] [4/6 Execution] parallel executed        blk=25409985 blks=1 blk/s=5 txs=161 tx/s=806 gas/s=127.61M exec=162 repeat%=0.00 abort=0 invalid=0 tgas/s=127.61M tcpus=1.2 tdur=1ms exec=1ms(69.79%) read="439µs(30.21%),a=13µs,s=276µs,c=150µs" rd="4.84k,a=199,s=1.83k,c=701" wrt=1.70k rd/s=24.26k wrt/s=8.53k buf=388.7KB/512.0MB bdur=27ms ucgas=25.46M alloc=8.4GB sys=15.3GB isForkValidation=false isApplyingBlocks=true
+[INFO] [11-16|22:35:34.030] [4/6 Execution] compute-ahead            parallelCommit=0 commitComputeTotal=1h6m53.564020964s
+[INFO] [11-16|22:35:34.030] [4/6 Execution] domain reads             db=1.36k dbdur=5µs files=1.57k fdur=257µs
+[INFO] [11-16|22:35:34.030] [4/6 Execution] domain=commitment        db=566 dbdur=5µs files=238 fdur=12µs
+[INFO] [11-16|22:35:34.030] [4/6 Execution] domain=accounts          db=194 dbdur=6µs files=396 fdur=3µs
+[INFO] [11-16|22:35:34.030] [4/6 Execution] domain=storage           db=608 dbdur=5µs files=942 fdur=3µs
+[INFO] [11-16|22:35:34.031] [4/6 Execution] parallel committed       blk=25409985 blks=0 blk/s=0 txs=161 tx/s=802 gas/s=126.87M bdur=0s progress=0/0 buf=194.3KB chit=0 cmiss=0 stepsInDB=0.50 step=9248.5 alloc=8.4GB sys=15.3GB isForkValidation=false isApplyingBlocks=true
+[INFO] [11-16|22:35:34.031] [4/6 Execution] domain reads             db=1.36k dbdur=5µs files=1.57k fdur=257µs
+[INFO] [11-16|22:35:34.031] [4/6 Execution] domain=commitment        db=566 dbdur=5µs files=238 fdur=12µs
+[INFO] [11-16|22:35:34.031] [4/6 Execution] domain=accounts          db=194 dbdur=6µs files=396 fdur=3µs
+[INFO] [11-16|22:35:34.031] [4/6 Execution] domain=storage           db=608 dbdur=5µs files=942 fdur=3µs
+[INFO] [11-16|22:35:34.031] [4/6 Execution] parallel done            in=201.015403ms buf=194.3KB/512.0MB blk=25409985 blks=1 blk/s=4 txs=161 tx/s=800 gas/s=126.70M stepsInDB=0.50 step=9248.5 alloc=8.4GB sys=15.3GB isForkValidation=false isApplyingBlocks=true
+[INFO] [11-16|22:35:34.031] [4/6 Execution] domains                  db=1.36k dbdur=5µs files=1.57k fdur=257µs
+[INFO] [11-16|22:35:34.031] [4/6 Execution] domain=commitment        db=566 dbdur=5µs files=238 fdur=12µs
+[INFO] [11-16|22:35:34.031] [4/6 Execution] domain=accounts          db=194 dbdur=6µs files=396 fdur=3µs
+[INFO] [11-16|22:35:34.031] [4/6 Execution] domain=storage           db=608 dbdur=5µs files=942 fdur=3µs
+[INFO] [11-16|22:35:34.180] BuildFilesInBackground                   step=9248 lastInDB=9248 targetStep=9249 reorgSafeBlock=26147573 reorgSafeStep=9812.51 reorgSafeOK=true
+[INFO] [11-16|22:35:34.496] [4/6 Execution] parallel executed        blk=25409986 blks=1 blk/s=3 txs=223 tx/s=709 gas/s=99.33M exec=224 repeat%=0.00 abort=0 invalid=0 tgas/s=99.33M tcpus=0.7 tdur=1ms exec=674µs(67.22%) read="329µs(32.78%),a=19µs,s=181µs,c=129µs" rd="7.52k,a=264,s=2.90k,c=1.07k" wrt=2.58k rd/s=23.94k wrt/s=8.22k buf=600.5KB/512.0MB bdur=22ms ucgas=31.20M alloc=8.5GB sys=15.3GB isForkValidation=false isApplyingBlocks=true
+[INFO] [11-16|22:35:34.496] [4/6 Execution] compute-ahead            parallelCommit=0 commitComputeTotal=1h6m53.710427767s
+[INFO] [11-16|22:35:34.496] [4/6 Execution] domain reads             db=2.64k dbdur=4µs files=2.33k fdur=308µs
+[INFO] [11-16|22:35:34.496] [4/6 Execution] domain=commitment        db=1.30k dbdur=5µs files=339 fdur=20µs
+[INFO] [11-16|22:35:34.496] [4/6 Execution] domain=accounts          db=223 dbdur=5µs files=664 fdur=2µs
+[INFO] [11-16|22:35:34.496] [4/6 Execution] domain=storage           db=1.11k dbdur=3µs files=1.33k fdur=3µs
+[INFO] [11-16|22:35:34.496] [4/6 Execution] parallel committed       blk=25409986 blks=0 blk/s=0 txs=223 tx/s=707 gas/s=99.02M bdur=0s progress=0/0 buf=300.3KB chit=0 cmiss=0 stepsInDB=0.50 step=9248.5 alloc=8.5GB sys=15.3GB isForkValidation=false isApplyingBlocks=true
+[INFO] [11-16|22:35:34.496] [4/6 Execution] domain reads             db=2.64k dbdur=4µs files=2.33k fdur=308µs
+[INFO] [11-16|22:35:34.496] [4/6 Execution] domain=storage           db=1.11k dbdur=3µs files=1.33k fdur=3µs
+[INFO] [11-16|22:35:34.496] [4/6 Execution] domain=commitment        db=1.30k dbdur=5µs files=339 fdur=20µs
+[INFO] [11-16|22:35:34.496] [4/6 Execution] domain=accounts          db=223 dbdur=5µs files=664 fdur=2µs
+[INFO] [11-16|22:35:34.496] [4/6 Execution] parallel done            in=315.349264ms buf=300.3KB/512.0MB blk=25409986 blks=1 blk/s=3 txs=223 tx/s=707 gas/s=98.95M stepsInDB=0.50 step=9248.5 alloc=8.5GB sys=15.3GB isForkValidation=false isApplyingBlocks=true
+[INFO] [11-16|22:35:34.496] [4/6 Execution] domains                  db=2.64k dbdur=4µs files=2.33k fdur=308µs
+[INFO] [11-16|22:35:34.496] [4/6 Execution] domain=commitment        db=1.30k dbdur=5µs files=339 fdur=20µs
+[INFO] [11-16|22:35:34.496] [4/6 Execution] domain=accounts          db=223 dbdur=5µs files=664 fdur=2µs
+[INFO] [11-16|22:35:34.496] [4/6 Execution] domain=storage           db=1.11k dbdur=3µs files=1.33k fdur=3µs
+[INFO] [11-16|22:35:34.701] BuildFilesInBackground                   step=9248 lastInDB=9248 targetStep=9249 reorgSafeBlock=26147573 reorgSafeStep=9812.51 reorgSafeOK=true
+[INFO] [11-16|22:35:34.927] [4/6 Execution] parallel executed        blk=25409987 blks=1 blk/s=4 txs=201 tx/s=892 gas/s=110.32M exec=202 repeat%=0.00 abort=0 invalid=0 tgas/s=110.32M tcpus=0.9 tdur=979µs exec=591µs(60.42%) read="387µs(39.58%),a=11µs,s=262µs,c=115µs" rd="5.34k,a=249,s=2.06k,c=751" wrt=1.98k rd/s=23.70k wrt/s=8.80k buf=396.0KB/512.0MB bdur=19ms ucgas=24.85M alloc=8.5GB sys=15.3GB isForkValidation=false isApplyingBlocks=true
+[INFO] [11-16|22:35:34.927] [4/6 Execution] compute-ahead            parallelCommit=0 commitComputeTotal=1h6m53.806310114s
+[INFO] [11-16|22:35:34.927] [4/6 Execution] domain reads             db=1.50k dbdur=5µs files=1.86k fdur=182µs
+[INFO] [11-16|22:35:34.927] [4/6 Execution] domain=commitment        db=655 dbdur=5µs files=391 fdur=9µs
+[INFO] [11-16|22:35:34.927] [4/6 Execution] domain=accounts          db=223 dbdur=5µs files=425 fdur=3µs
+[INFO] [11-16|22:35:34.927] [4/6 Execution] domain=storage           db=625 dbdur=4µs files=1.05k fdur=2µs
+[INFO] [11-16|22:35:34.927] [4/6 Execution] parallel committed       blk=25409987 blks=0 blk/s=0 txs=201 tx/s=888 gas/s=109.84M bdur=0s progress=0/0 buf=198.0KB chit=0 cmiss=0 stepsInDB=0.50 step=9248.5 alloc=8.5GB sys=15.3GB isForkValidation=false isApplyingBlocks=true
+[INFO] [11-16|22:35:34.927] [4/6 Execution] domain reads             db=1.50k dbdur=5µs files=1.86k fdur=182µs
+[INFO] [11-16|22:35:34.927] [4/6 Execution] domain=storage           db=625 dbdur=4µs files=1.05k fdur=2µs
+[INFO] [11-16|22:35:34.927] [4/6 Execution] domain=commitment        db=655 dbdur=5µs files=391 fdur=9µs
+[INFO] [11-16|22:35:34.927] [4/6 Execution] domain=accounts          db=223 dbdur=5µs files=425 fdur=3µs
+[INFO] [11-16|22:35:34.928] [4/6 Execution] parallel done            in=226.476753ms buf=198.0KB/512.0MB blk=25409987 blks=1 blk/s=4 txs=201 tx/s=887 gas/s=109.75M stepsInDB=0.50 step=9248.5 alloc=8.5GB sys=15.3GB isForkValidation=false isApplyingBlocks=true
+[INFO] [11-16|22:35:34.928] [4/6 Execution] domains                  db=1.50k dbdur=5µs files=1.86k fdur=182µs
+[INFO] [11-16|22:35:34.928] [4/6 Execution] domain=accounts          db=223 dbdur=5µs files=425 fdur=3µs
+[INFO] [11-16|22:35:34.928] [4/6 Execution] domain=storage           db=625 dbdur=4µs files=1.05k fdur=2µs
+[INFO] [11-16|22:35:34.928] [4/6 Execution] domain=commitment        db=655 dbdur=5µs files=391 fdur=9µs
+[INFO] [11-16|22:35:35.084] BuildFilesInBackground                   step=9248 lastInDB=9248 targetStep=9249 reorgSafeBlock=26147573 reorgSafeStep=9812.51 reorgSafeOK=true
+[INFO] [11-16|22:35:35.363] [4/6 Execution] parallel executed        blk=25409988 blks=1 blk/s=3 txs=262 tx/s=944 gas/s=128.21M exec=263 repeat%=0.00 abort=0 invalid=0 tgas/s=128.21M tcpus=0.9 tdur=977µs exec=663µs(67.86%) read="314µs(32.14%),a=15µs,s=195µs,c=103µs" rd="7.62k,a=318,s=2.81k,c=1.04k" wrt=2.72k rd/s=27.48k wrt/s=9.82k buf=559.7KB/512.0MB bdur=24ms ucgas=35.57M alloc=8.6GB sys=15.3GB isForkValidation=false isApplyingBlocks=true
+[INFO] [11-16|22:35:35.363] [4/6 Execution] compute-ahead            parallelCommit=0 commitComputeTotal=1h6m53.928536667s
+[INFO] [11-16|22:35:35.363] [4/6 Execution] domain reads             db=2.46k dbdur=5µs files=2.48k fdur=243µs
+[INFO] [11-16|22:35:35.363] [4/6 Execution] domain=storage           db=1.02k dbdur=4µs files=1.34k fdur=3µs
+[INFO] [11-16|22:35:35.363] [4/6 Execution] domain=commitment        db=1.18k dbdur=5µs files=441 fdur=14µs
+[INFO] [11-16|22:35:35.363] [4/6 Execution] domain=accounts          db=261 dbdur=6µs files=698 fdur=2µs
+[INFO] [11-16|22:35:35.363] [4/6 Execution] parallel committed       blk=25409988 blks=0 blk/s=0 txs=262 tx/s=940 gas/s=127.70M bdur=0s progress=0/0 buf=279.8KB chit=0 cmiss=0 stepsInDB=0.50 step=9248.5 alloc=8.6GB sys=15.3GB isForkValidation=false isApplyingBlocks=true
+[INFO] [11-16|22:35:35.363] [4/6 Execution] domain reads             db=2.46k dbdur=5µs files=2.48k fdur=243µs
+[INFO] [11-16|22:35:35.363] [4/6 Execution] domain=storage           db=1.02k dbdur=4µs files=1.34k fdur=3µs
+[INFO] [11-16|22:35:35.363] [4/6 Execution] domain=commitment        db=1.18k dbdur=5µs files=441 fdur=14µs
+[INFO] [11-16|22:35:35.363] [4/6 Execution] domain=accounts          db=261 dbdur=6µs files=698 fdur=2µs
+[INFO] [11-16|22:35:35.364] [4/6 Execution] parallel done            in=278.804ms buf=279.8KB/512.0MB blk=25409988 blks=1 blk/s=3 txs=262 tx/s=939 gas/s=127.60M stepsInDB=0.50 step=9248.5 alloc=8.6GB sys=15.3GB isForkValidation=false isApplyingBlocks=true
+[INFO] [11-16|22:35:35.364] [4/6 Execution] domains                  db=2.46k dbdur=5µs files=2.48k fdur=243µs
+[INFO] [11-16|22:35:35.364] [4/6 Execution] domain=storage           db=1.02k dbdur=4µs files=1.34k fdur=3µs
+[INFO] [11-16|22:35:35.364] [4/6 Execution] domain=commitment        db=1.18k dbdur=5µs files=441 fdur=14µs
+[INFO] [11-16|22:35:35.364] [4/6 Execution] domain=accounts          db=261 dbdur=6µs files=698 fdur=2µs
+[INFO] [11-16|22:35:35.574] BuildFilesInBackground                   step=9248 lastInDB=9248 targetStep=9249 reorgSafeBlock=26147573 reorgSafeStep=9812.51 reorgSafeOK=true
+[INFO] [11-16|22:35:35.826] [4/6 Execution] parallel executed        blk=25409989 blks=1 blk/s=3 txs=260 tx/s=1.03k gas/s=121.15M exec=261 repeat%=0.00 abort=0 invalid=0 tgas/s=121.15M tcpus=0.9 tdur=835µs exec=536µs(64.23%) read="299µs(35.77%),a=12µs,s=203µs,c=84µs" rd="6.93k,a=297,s=2.48k,c=1.01k" wrt=2.79k rd/s=27.58k wrt/s=11.13k buf=551.4KB/512.0MB bdur=22ms ucgas=30.44M alloc=8.6GB sys=15.3GB isForkValidation=false isApplyingBlocks=true
+[INFO] [11-16|22:35:35.827] [4/6 Execution] compute-ahead            parallelCommit=0 commitComputeTotal=1h6m54.030490123s
+[INFO] [11-16|22:35:35.827] [4/6 Execution] domain reads             db=1.58k dbdur=5µs files=2.19k fdur=257µs
+[INFO] [11-16|22:35:35.827] [4/6 Execution] domain=commitment        db=764 dbdur=5µs files=516 fdur=8µs
+[INFO] [11-16|22:35:35.827] [4/6 Execution] domain=accounts          db=216 dbdur=5µs files=457 fdur=3µs
+[INFO] [11-16|22:35:35.827] [4/6 Execution] domain=storage           db=603 dbdur=4µs files=1.22k fdur=2µs
+[INFO] [11-16|22:35:35.827] [4/6 Execution] parallel committed       blk=25409989 blks=0 blk/s=0 txs=260 tx/s=1.03k gas/s=120.68M bdur=0s progress=0/0 buf=275.7KB chit=0 cmiss=0 stepsInDB=0.50 step=9248.5 alloc=8.6GB sys=15.3GB isForkValidation=false isApplyingBlocks=true
+[INFO] [11-16|22:35:35.827] [4/6 Execution] domain reads             db=1.58k dbdur=5µs files=2.19k fdur=257µs
+[INFO] [11-16|22:35:35.827] [4/6 Execution] domain=accounts          db=216 dbdur=5µs files=457 fdur=3µs
+[INFO] [11-16|22:35:35.827] [4/6 Execution] domain=storage           db=603 dbdur=4µs files=1.22k fdur=2µs
+[INFO] [11-16|22:35:35.827] [4/6 Execution] domain=commitment        db=764 dbdur=5µs files=516 fdur=8µs
+[INFO] [11-16|22:35:35.827] [4/6 Execution] parallel done            in=252.420798ms buf=275.7KB/512.0MB blk=25409989 blks=1 blk/s=3 txs=260 tx/s=1.03k gas/s=120.60M stepsInDB=0.50 step=9248.5 alloc=8.6GB sys=15.3GB isForkValidation=false isApplyingBlocks=true
+[INFO] [11-16|22:35:35.827] [4/6 Execution] domains                  db=1.58k dbdur=5µs files=2.19k fdur=257µs
+[INFO] [11-16|22:35:35.827] [4/6 Execution] domain=accounts          db=216 dbdur=5µs files=457 fdur=3µs
+[INFO] [11-16|22:35:35.827] [4/6 Execution] domain=storage           db=603 dbdur=4µs files=1.22k fdur=2µs
+[INFO] [11-16|22:35:35.827] [4/6 Execution] domain=commitment        db=764 dbdur=5µs files=516 fdur=8µs
+[INFO] [11-16|22:35:35.992] BuildFilesInBackground                   step=9248 lastInDB=9248 targetStep=9249 reorgSafeBlock=26147573 reorgSafeStep=9812.51 reorgSafeOK=true
+[INFO] [11-16|22:35:36.205] [4/6 Execution] parallel executed        blk=25409990 blks=1 blk/s=4 txs=151 tx/s=710 gas/s=110.26M exec=152 repeat%=0.00 abort=0 invalid=0 tgas/s=110.26M tcpus=0.7 tdur=969µs exec=612µs(63.14%) read="357µs(36.86%),a=12µs,s=243µs,c=103µs" rd="4.87k,a=201,s=1.76k,c=716" wrt=1.69k rd/s=22.91k wrt/s=7.99k buf=384.8KB/512.0MB bdur=18ms ucgas=23.44M alloc=8.6GB sys=15.3GB isForkValidation=false isApplyingBlocks=true
+[INFO] [11-16|22:35:36.206] [4/6 Execution] compute-ahead            parallelCommit=0 commitComputeTotal=1h6m54.139479044s
+[INFO] [11-16|22:35:36.206] [4/6 Execution] domain reads             db=1.75k dbdur=5µs files=1.48k fdur=302µs
+[INFO] [11-16|22:35:36.206] [4/6 Execution] domain=accounts          db=174 dbdur=5µs files=488 fdur=2µs
+[INFO] [11-16|22:35:36.206] [4/6 Execution] domain=storage           db=758 dbdur=4µs files=764 fdur=4µs
+[INFO] [11-16|22:35:36.206] [4/6 Execution] domain=commitment        db=820 dbdur=5µs files=234 fdur=19µs
+[INFO] [11-16|22:35:36.206] [4/6 Execution] parallel committed       blk=25409990 blks=0 blk/s=0 txs=151 tx/s=707 gas/s=109.80M bdur=0s progress=0/0 buf=192.4KB chit=0 cmiss=0 stepsInDB=0.50 step=9248.5 alloc=8.6GB sys=15.3GB isForkValidation=false isApplyingBlocks=true
+[INFO] [11-16|22:35:36.206] [4/6 Execution] domain reads             db=1.75k dbdur=5µs files=1.48k fdur=302µs
+[INFO] [11-16|22:35:36.206] [4/6 Execution] domain=commitment        db=820 dbdur=5µs files=234 fdur=19µs
+[INFO] [11-16|22:35:36.206] [4/6 Execution] domain=accounts          db=174 dbdur=5µs files=488 fdur=2µs
+[INFO] [11-16|22:35:36.206] [4/6 Execution] domain=storage           db=758 dbdur=4µs files=764 fdur=4µs
+[INFO] [11-16|22:35:36.206] [4/6 Execution] parallel done            in=213.666641ms buf=192.4KB/512.0MB blk=25409990 blks=1 blk/s=4 txs=151 tx/s=706 gas/s=109.71M stepsInDB=0.50 step=9248.5 alloc=8.6GB sys=15.3GB isForkValidation=false isApplyingBlocks=true
+[INFO] [11-16|22:35:36.206] [4/6 Execution] domains                  db=1.75k dbdur=5µs files=1.48k fdur=302µs
+[INFO] [11-16|22:35:36.206] [4/6 Execution] domain=accounts          db=174 dbdur=5µs files=488 fdur=2µs
+[INFO] [11-16|22:35:36.206] [4/6 Execution] domain=storage           db=758 dbdur=4µs files=764 fdur=4µs
+[INFO] [11-16|22:35:36.206] [4/6 Execution] domain=commitment        db=820 dbdur=5µs files=234 fdur=19µs
+[INFO] [11-16|22:35:36.375] BuildFilesInBackground                   step=9248 lastInDB=9248 targetStep=9249 reorgSafeBlock=26147573 reorgSafeStep=9812.51 reorgSafeOK=true
+[INFO] [11-16|22:35:36.812] [4/6 Execution] parallel executed        blk=25409991 blks=1 blk/s=2 txs=384 tx/s=881 gas/s=47.56M exec=385 repeat%=0.00 abort=0 invalid=0 tgas/s=47.56M tcpus=0.5 tdur=543µs exec=386µs(71.14%) read="157µs(28.86%),a=9µs,s=114µs,c=34µs" rd="5.90k,a=435,s=1.49k,c=649" wrt=2.59k rd/s=13.54k wrt/s=5.94k buf=238.6KB/512.0MB bdur=17ms ucgas=20.72M alloc=8.7GB sys=15.3GB isForkValidation=false isApplyingBlocks=true
+[INFO] [11-16|22:35:36.812] [4/6 Execution] compute-ahead            parallelCommit=0 commitComputeTotal=1h6m54.288559518s
+[INFO] [11-16|22:35:36.812] [4/6 Execution] domain reads             db=1.17k dbdur=5µs files=1.35k fdur=642µs
+[INFO] [11-16|22:35:36.812] [4/6 Execution] domain=accounts          db=236 dbdur=5µs files=346 fdur=4µs
+[INFO] [11-16|22:35:36.812] [4/6 Execution] domain=storage           db=276 dbdur=5µs files=632 fdur=2µs
+[INFO] [11-16|22:35:36.812] [4/6 Execution] domain=commitment        db=666 dbdur=5µs files=375 fdur=9µs
+[INFO] [11-16|22:35:36.812] [4/6 Execution] parallel committed       blk=25409991 blks=0 blk/s=0 txs=384 tx/s=879 gas/s=47.46M bdur=0s progress=0/0 buf=119.3KB chit=0 cmiss=0 stepsInDB=0.50 step=9248.5 alloc=8.7GB sys=15.3GB isForkValidation=false isApplyingBlocks=true
+[INFO] [11-16|22:35:36.812] [4/6 Execution] domain reads             db=1.17k dbdur=5µs files=1.35k fdur=642µs
+[INFO] [11-16|22:35:36.812] [4/6 Execution] domain=storage           db=276 dbdur=5µs files=632 fdur=2µs
+[INFO] [11-16|22:35:36.812] [4/6 Execution] domain=commitment        db=666 dbdur=5µs files=375 fdur=9µs
+[INFO] [11-16|22:35:36.812] [4/6 Execution] domain=accounts          db=236 dbdur=5µs files=346 fdur=4µs
+[INFO] [11-16|22:35:36.812] [4/6 Execution] parallel done            in=436.933103ms buf=119.3KB/512.0MB blk=25409991 blks=1 blk/s=2 txs=384 tx/s=878 gas/s=47.44M stepsInDB=0.50 step=9248.5 alloc=8.7GB sys=15.3GB isForkValidation=false isApplyingBlocks=true
+[INFO] [11-16|22:35:36.812] [4/6 Execution] domains                  db=1.17k dbdur=5µs files=1.35k fdur=642µs
+[INFO] [11-16|22:35:36.812] [4/6 Execution] domain=storage           db=276 dbdur=5µs files=632 fdur=2µs
+[INFO] [11-16|22:35:36.812] [4/6 Execution] domain=commitment        db=666 dbdur=5µs files=375 fdur=9µs
+[INFO] [11-16|22:35:36.812] [4/6 Execution] domain=accounts          db=236 dbdur=5µs files=346 fdur=4µs
+[INFO] [11-16|22:35:36.941] BuildFilesInBackground                   step=9248 lastInDB=9248 targetStep=9249 reorgSafeBlock=26147573 reorgSafeStep=9812.51 reorgSafeOK=true
+[INFO] [11-16|22:35:37.394] [4/6 Execution] parallel executed        blk=25409992 blks=1 blk/s=2 txs=291 tx/s=643 gas/s=95.42M exec=292 repeat%=0.00 abort=0 invalid=0 tgas/s=95.42M tcpus=0.7 tdur=1ms exec=737µs(65.70%) read="385µs(34.30%),a=9µs,s=235µs,c=140µs" rd="10.62k,a=344,s=4.62k,c=1.43k" wrt=3.33k rd/s=23.52k wrt/s=7.37k buf=742.8KB/512.0MB bdur=35ms ucgas=43.12M alloc=8.7GB sys=15.3GB isForkValidation=false isApplyingBlocks=true
+[INFO] [11-16|22:35:37.394] [4/6 Execution] compute-ahead            parallelCommit=0 commitComputeTotal=1h6m54.557783744s
+[INFO] [11-16|22:35:37.394] [4/6 Execution] domain reads             db=3.15k dbdur=4µs files=3.96k fdur=599µs
+[INFO] [11-16|22:35:37.394] [4/6 Execution] domain=storage           db=1.43k dbdur=3µs files=2.55k fdur=2µs
+[INFO] [11-16|22:35:37.394] [4/6 Execution] domain=commitment        db=1.38k dbdur=5µs files=599 fdur=12µs
+[INFO] [11-16|22:35:37.394] [4/6 Execution] domain=accounts          db=333 dbdur=4µs files=809 fdur=2µs
+[INFO] [11-16|22:35:37.394] [4/6 Execution] parallel committed       blk=25409992 blks=0 blk/s=0 txs=291 tx/s=642 gas/s=95.15M bdur=0s progress=0/0 buf=371.4KB chit=0 cmiss=0 stepsInDB=0.51 step=9248.5 alloc=8.7GB sys=15.3GB isForkValidation=false isApplyingBlocks=true
+[INFO] [11-16|22:35:37.394] [4/6 Execution] domain reads             db=3.15k dbdur=4µs files=3.96k fdur=599µs
+[INFO] [11-16|22:35:37.394] [4/6 Execution] domain=commitment        db=1.38k dbdur=5µs files=599 fdur=12µs
+[INFO] [11-16|22:35:37.394] [4/6 Execution] domain=accounts          db=333 dbdur=4µs files=809 fdur=2µs
+[INFO] [11-16|22:35:37.394] [4/6 Execution] domain=storage           db=1.43k dbdur=3µs files=2.55k fdur=2µs
+[INFO] [11-16|22:35:37.394] [4/6 Execution] parallel done            in=453.372546ms buf=371.4KB/512.0MB blk=25409992 blks=1 blk/s=2 txs=291 tx/s=641 gas/s=95.11M stepsInDB=0.51 step=9248.5 alloc=8.7GB sys=15.3GB isForkValidation=false isApplyingBlocks=true
+[INFO] [11-16|22:35:37.395] [4/6 Execution] domains                  db=3.15k dbdur=4µs files=3.96k fdur=599µs
+[INFO] [11-16|22:35:37.395] [4/6 Execution] domain=storage           db=1.43k dbdur=3µs files=2.55k fdur=2µs
+[INFO] [11-16|22:35:37.395] [4/6 Execution] domain=commitment        db=1.38k dbdur=5µs files=599 fdur=12µs
+[INFO] [11-16|22:35:37.395] [4/6 Execution] domain=accounts          db=333 dbdur=4µs files=809 fdur=2µs
+[INFO] [11-16|22:35:37.663] BuildFilesInBackground                   step=9248 lastInDB=9248 targetStep=9249 reorgSafeBlock=26147573 reorgSafeStep=9812.51 reorgSafeOK=true
+[INFO] [11-16|22:35:37.990] [4/6 Execution] parallel executed        blk=25409993 blks=1 blk/s=3 txs=211 tx/s=648 gas/s=76.10M exec=212 repeat%=0.00 abort=0 invalid=0 tgas/s=76.10M tcpus=0.6 tdur=966µs exec=673µs(69.74%) read="292µs(30.26%),a=13µs,s=175µs,c=104µs" rd="5.70k,a=259,s=2.09k,c=784" wrt=2.04k rd/s=17.52k wrt/s=6.28k buf=404.7KB/512.0MB bdur=22ms ucgas=24.76M alloc=8.8GB sys=15.3GB isForkValidation=false isApplyingBlocks=true
+[INFO] [11-16|22:35:37.990] [4/6 Execution] compute-ahead            parallelCommit=0 commitComputeTotal=1h6m54.736547256s
+[INFO] [11-16|22:35:37.990] [4/6 Execution] domain reads             db=1.49k dbdur=5µs files=1.77k fdur=603µs
+[INFO] [11-16|22:35:37.990] [4/6 Execution] domain=storage           db=577 dbdur=5µs files=1.02k fdur=3µs
+[INFO] [11-16|22:35:37.990] [4/6 Execution] domain=commitment        db=671 dbdur=6µs files=326 fdur=12µs
+[INFO] [11-16|22:35:37.990] [4/6 Execution] domain=accounts          db=244 dbdur=6µs files=426 fdur=3µs
+[INFO] [11-16|22:35:37.990] [4/6 Execution] parallel committed       blk=25409993 blks=0 blk/s=0 txs=211 tx/s=645 gas/s=75.80M bdur=0s progress=0/0 buf=202.4KB chit=0 cmiss=0 stepsInDB=0.51 step=9248.5 alloc=8.8GB sys=15.3GB isForkValidation=false isApplyingBlocks=true
+[INFO] [11-16|22:35:37.990] [4/6 Execution] domain reads             db=1.49k dbdur=5µs files=1.77k fdur=603µs
+[INFO] [11-16|22:35:37.990] [4/6 Execution] domain=storage           db=577 dbdur=5µs files=1.02k fdur=3µs
+[INFO] [11-16|22:35:37.990] [4/6 Execution] domain=commitment        db=671 dbdur=6µs files=326 fdur=12µs
+[INFO] [11-16|22:35:37.990] [4/6 Execution] domain=accounts          db=244 dbdur=6µs files=426 fdur=3µs
+[INFO] [11-16|22:35:37.990] [4/6 Execution] parallel done            in=327.028357ms buf=202.4KB/512.0MB blk=25409993 blks=1 blk/s=3 txs=211 tx/s=645 gas/s=75.73M stepsInDB=0.51 step=9248.5 alloc=8.8GB sys=15.3GB isForkValidation=false isApplyingBlocks=true
+[INFO] [11-16|22:35:37.990] [4/6 Execution] domains                  db=1.49k dbdur=5µs files=1.77k fdur=603µs
+[INFO] [11-16|22:35:37.990] [4/6 Execution] domain=accounts          db=244 dbdur=6µs files=426 fdur=3µs
+[INFO] [11-16|22:35:37.990] [4/6 Execution] domain=storage           db=577 dbdur=5µs files=1.02k fdur=3µs
+[INFO] [11-16|22:35:37.990] [4/6 Execution] domain=commitment        db=671 dbdur=6µs files=326 fdur=12µs
+[INFO] [11-16|22:35:38.150] BuildFilesInBackground                   step=9248 lastInDB=9248 targetStep=9249 reorgSafeBlock=26147573 reorgSafeStep=9812.51 reorgSafeOK=true
+[INFO] [11-16|22:35:38.523] [4/6 Execution] parallel executed        blk=25409994 blks=1 blk/s=2 txs=257 tx/s=690 gas/s=80.05M exec=258 repeat%=0.00 abort=0 invalid=0 tgas/s=80.05M tcpus=0.9 tdur=1ms exec=545µs(42.63%) read="733µs(57.37%),a=10µs,s=641µs,c=82µs" rd="6.87k,a=304,s=2.41k,c=902" wrt=2.62k rd/s=18.46k wrt/s=7.05k buf=520.8KB/512.0MB bdur=38ms ucgas=29.79M alloc=8.8GB sys=15.3GB isForkValidation=false isApplyingBlocks=true
+[INFO] [11-16|22:35:38.523] [4/6 Execution] compute-ahead            parallelCommit=0 commitComputeTotal=1h6m54.967065173s
+[INFO] [11-16|22:35:38.523] [4/6 Execution] domain reads             db=2.16k dbdur=4µs files=2.05k fdur=799µs
+[INFO] [11-16|22:35:38.523] [4/6 Execution] domain=accounts          db=258 dbdur=5µs files=635 fdur=2µs
+[INFO] [11-16|22:35:38.523] [4/6 Execution] domain=storage           db=941 dbdur=4µs files=1.12k fdur=3µs
+[INFO] [11-16|22:35:38.523] [4/6 Execution] domain=commitment        db=962 dbdur=5µs files=293 fdur=16µs
+[INFO] [11-16|22:35:38.524] [4/6 Execution] parallel committed       blk=25409994 blks=0 blk/s=0 txs=257 tx/s=688 gas/s=79.83M bdur=0s progress=0/0 buf=260.4KB chit=0 cmiss=0 stepsInDB=0.51 step=9248.5 alloc=8.8GB sys=15.3GB isForkValidation=false isApplyingBlocks=true
+[INFO] [11-16|22:35:38.524] [4/6 Execution] domain reads             db=2.16k dbdur=4µs files=2.05k fdur=799µs
+[INFO] [11-16|22:35:38.524] [4/6 Execution] domain=storage           db=941 dbdur=4µs files=1.12k fdur=3µs
+[INFO] [11-16|22:35:38.524] [4/6 Execution] domain=commitment        db=962 dbdur=5µs files=293 fdur=16µs
+[INFO] [11-16|22:35:38.524] [4/6 Execution] domain=accounts          db=258 dbdur=5µs files=635 fdur=2µs
+[INFO] [11-16|22:35:38.524] [4/6 Execution] parallel done            in=373.413507ms buf=260.4KB/512.0MB blk=25409994 blks=1 blk/s=2 txs=257 tx/s=688 gas/s=79.78M stepsInDB=0.51 step=9248.5 alloc=8.8GB sys=15.3GB isForkValidation=false isApplyingBlocks=true
+[INFO] [11-16|22:35:38.524] [4/6 Execution] domains                  db=2.16k dbdur=4µs files=2.05k fdur=799µs
+[INFO] [11-16|22:35:38.524] [4/6 Execution] domain=commitment        db=962 dbdur=5µs files=293 fdur=16µs
+[INFO] [11-16|22:35:38.524] [4/6 Execution] domain=accounts          db=258 dbdur=5µs files=635 fdur=2µs
+[INFO] [11-16|22:35:38.524] [4/6 Execution] domain=storage           db=941 dbdur=4µs files=1.12k fdur=3µs
+[INFO] [11-16|22:35:38.724] BuildFilesInBackground                   step=9248 lastInDB=9248 targetStep=9249 reorgSafeBlock=26147573 reorgSafeStep=9812.51 reorgSafeOK=true
+[INFO] [11-16|22:35:38.984] [4/6 Execution] parallel executed        blk=25409995 blks=1 blk/s=3 txs=195 tx/s=753 gas/s=85.20M exec=196 repeat%=0.00 abort=0 invalid=0 tgas/s=85.20M tcpus=0.8 tdur=1ms exec=593µs(58.65%) read="418µs(41.35%),a=12µs,s=277µs,c=129µs" rd="5.48k,a=235,s=2.06k,c=773" wrt=1.89k rd/s=21.18k wrt/s=7.32k buf=396.1KB/512.0MB bdur=20ms ucgas=22.05M alloc=8.9GB sys=15.3GB isForkValidation=false isApplyingBlocks=true
+[INFO] [11-16|22:35:38.984] [4/6 Execution] compute-ahead            parallelCommit=0 commitComputeTotal=1h6m55.08883221s
+[INFO] [11-16|22:35:38.984] [4/6 Execution] domain reads             db=1.51k dbdur=5µs files=1.86k fdur=206µs
+[INFO] [11-16|22:35:38.984] [4/6 Execution] domain=commitment        db=657 dbdur=6µs files=293 fdur=13µs
+[INFO] [11-16|22:35:38.984] [4/6 Execution] domain=accounts          db=213 dbdur=6µs files=455 fdur=3µs
+[INFO] [11-16|22:35:38.984] [4/6 Execution] domain=storage           db=644 dbdur=4µs files=1.11k fdur=2µs
+[INFO] [11-16|22:35:38.984] [4/6 Execution] parallel committed       blk=25409995 blks=0 blk/s=0 txs=195 tx/s=750 gas/s=84.82M bdur=0s progress=0/0 buf=198.1KB chit=0 cmiss=0 stepsInDB=0.51 step=9248.5 alloc=8.9GB sys=15.3GB isForkValidation=false isApplyingBlocks=true
+[INFO] [11-16|22:35:38.984] [4/6 Execution] domain reads             db=1.51k dbdur=5µs files=1.86k fdur=206µs
+[INFO] [11-16|22:35:38.984] [4/6 Execution] domain=commitment        db=657 dbdur=6µs files=293 fdur=13µs
+[INFO] [11-16|22:35:38.984] [4/6 Execution] domain=accounts          db=213 dbdur=6µs files=455 fdur=3µs
+[INFO] [11-16|22:35:38.984] [4/6 Execution] domain=storage           db=644 dbdur=4µs files=1.11k fdur=2µs
+[INFO] [11-16|22:35:38.984] [4/6 Execution] parallel done            in=260.149823ms buf=198.1KB/512.0MB blk=25409995 blks=1 blk/s=3 txs=195 tx/s=749 gas/s=84.76M stepsInDB=0.51 step=9248.5 alloc=8.9GB sys=15.3GB isForkValidation=false isApplyingBlocks=true
+[INFO] [11-16|22:35:38.984] [4/6 Execution] domains                  db=1.51k dbdur=5µs files=1.86k fdur=206µs
+[INFO] [11-16|22:35:38.984] [4/6 Execution] domain=accounts          db=213 dbdur=6µs files=455 fdur=3µs
+[INFO] [11-16|22:35:38.984] [4/6 Execution] domain=storage           db=644 dbdur=4µs files=1.11k fdur=2µs
+[INFO] [11-16|22:35:38.984] [4/6 Execution] domain=commitment        db=657 dbdur=6µs files=293 fdur=13µs
+[INFO] [11-16|22:35:39.150] BuildFilesInBackground                   step=9248 lastInDB=9248 targetStep=9249 reorgSafeBlock=26147573 reorgSafeStep=9812.51 reorgSafeOK=true
+[INFO] [11-16|22:35:40.051] [4/6 Execution] parallel executed        blk=25409996 blks=1 blk/s=1 txs=261 tx/s=290 gas/s=38.20M exec=262 repeat%=0.00 abort=0 invalid=0 tgas/s=38.20M tcpus=0.3 tdur=1ms exec=609µs(59.06%) read="423µs(40.94%),a=12µs,s=270µs,c=140µs" rd="8.82k,a=320,s=3.80k,c=1.12k" wrt=2.93k rd/s=9.80k wrt/s=3.26k buf=629.5KB/512.0MB bdur=46ms ucgas=34.36M alloc=8.9GB sys=15.3GB isForkValidation=false isApplyingBlocks=true
+[INFO] [11-16|22:35:40.051] [4/6 Execution] compute-ahead            parallelCommit=0 commitComputeTotal=1h6m55.845293725s
+[INFO] [11-16|22:35:40.051] [4/6 Execution] domain reads             db=3.01k dbdur=4µs files=3.84k fdur=1ms
+[INFO] [11-16|22:35:40.051] [4/6 Execution] domain=commitment        db=1.65k dbdur=5µs files=868 fdur=10µs
+[INFO] [11-16|22:35:40.051] [4/6 Execution] domain=accounts          db=272 dbdur=5µs files=701 fdur=2µs
+[INFO] [11-16|22:35:40.051] [4/6 Execution] domain=storage           db=1.09k dbdur=3µs files=2.27k fdur=1µs
+[INFO] [11-16|22:35:40.051] [4/6 Execution] parallel committed       blk=25409996 blks=0 blk/s=0 txs=261 tx/s=289 gas/s=38.14M bdur=0s progress=0/0 buf=314.8KB chit=0 cmiss=0 stepsInDB=0.51 step=9248.5 alloc=8.9GB sys=15.3GB isForkValidation=false isApplyingBlocks=true
+[INFO] [11-16|22:35:40.051] [4/6 Execution] domain reads             db=3.01k dbdur=4µs files=3.84k fdur=1ms
+[INFO] [11-16|22:35:40.051] [4/6 Execution] domain=commitment        db=1.65k dbdur=5µs files=868 fdur=10µs
+[INFO] [11-16|22:35:40.051] [4/6 Execution] domain=accounts          db=272 dbdur=5µs files=701 fdur=2µs
+[INFO] [11-16|22:35:40.051] [4/6 Execution] domain=storage           db=1.09k dbdur=3µs files=2.27k fdur=1µs
+[INFO] [11-16|22:35:40.052] [4/6 Execution] parallel done            in=901.050024ms buf=314.8KB/512.0MB blk=25409996 blks=1 blk/s=1 txs=261 tx/s=289 gas/s=38.13M stepsInDB=0.51 step=9248.5 alloc=8.9GB sys=15.3GB isForkValidation=false isApplyingBlocks=true
+[INFO] [11-16|22:35:40.052] [4/6 Execution] domains                  db=3.01k dbdur=4µs files=3.84k fdur=1ms
+[INFO] [11-16|22:35:40.052] [4/6 Execution] domain=accounts          db=272 dbdur=5µs files=701 fdur=2µs
+[INFO] [11-16|22:35:40.052] [4/6 Execution] domain=storage           db=1.09k dbdur=3µs files=2.27k fdur=1µs
+[INFO] [11-16|22:35:40.052] [4/6 Execution] domain=commitment        db=1.65k dbdur=5µs files=868 fdur=10µs
+[INFO] [11-16|22:35:40.301] BuildFilesInBackground                   step=9248 lastInDB=9248 targetStep=9249 reorgSafeBlock=26147573 reorgSafeStep=9812.51 reorgSafeOK=true
+[INFO] [11-16|22:35:40.512] [4/6 Execution] parallel executed        blk=25409997 blks=1 blk/s=4 txs=149 tx/s=709 gas/s=82.77M exec=150 repeat%=0.00 abort=0 invalid=0 tgas/s=82.77M tcpus=0.7 tdur=920µs exec=477µs(51.82%) read="444µs(48.18%),a=22µs,s=278µs,c=144µs" rd="3.43k,a=165,s=1.26k,c=432" wrt=1.33k rd/s=16.32k wrt/s=6.35k buf=249.9KB/512.0MB bdur=20ms ucgas=17.38M alloc=9.0GB sys=15.3GB isForkValidation=false isApplyingBlocks=true
+[INFO] [11-16|22:35:40.512] [4/6 Execution] compute-ahead            parallelCommit=0 commitComputeTotal=1h6m55.96067905s
+[INFO] [11-16|22:35:40.512] [4/6 Execution] domain reads             db=988 dbdur=5µs files=1.09k fdur=668µs
+[INFO] [11-16|22:35:40.512] [4/6 Execution] domain=commitment        db=457 dbdur=6µs files=225 fdur=12µs
+[INFO] [11-16|22:35:40.512] [4/6 Execution] domain=accounts          db=148 dbdur=6µs files=231 fdur=4µs
+[INFO] [11-16|22:35:40.512] [4/6 Execution] domain=storage           db=383 dbdur=5µs files=642 fdur=3µs
+[INFO] [11-16|22:35:40.512] [4/6 Execution] parallel committed       blk=25409997 blks=0 blk/s=0 txs=149 tx/s=705 gas/s=82.35M bdur=0s progress=0/0 buf=125.0KB chit=0 cmiss=0 stepsInDB=0.51 step=9248.5 alloc=9.0GB sys=15.3GB isForkValidation=false isApplyingBlocks=true
+[INFO] [11-16|22:35:40.512] [4/6 Execution] domain reads             db=988 dbdur=5µs files=1.09k fdur=668µs
+[INFO] [11-16|22:35:40.512] [4/6 Execution] domain=commitment        db=457 dbdur=6µs files=225 fdur=12µs
+[INFO] [11-16|22:35:40.512] [4/6 Execution] domain=accounts          db=148 dbdur=6µs files=231 fdur=4µs
+[INFO] [11-16|22:35:40.512] [4/6 Execution] domain=storage           db=383 dbdur=5µs files=642 fdur=3µs
+[INFO] [11-16|22:35:40.512] [4/6 Execution] parallel done            in=211.339327ms buf=125.0KB/512.0MB blk=25409997 blks=1 blk/s=4 txs=149 tx/s=705 gas/s=82.28M stepsInDB=0.51 step=9248.5 alloc=9.0GB sys=15.3GB isForkValidation=false isApplyingBlocks=true
+[INFO] [11-16|22:35:40.512] [4/6 Execution] domains                  db=988 dbdur=5µs files=1.09k fdur=668µs
+[INFO] [11-16|22:35:40.512] [4/6 Execution] domain=storage           db=383 dbdur=5µs files=642 fdur=3µs
+[INFO] [11-16|22:35:40.512] [4/6 Execution] domain=commitment        db=457 dbdur=6µs files=225 fdur=12µs
+[INFO] [11-16|22:35:40.512] [4/6 Execution] domain=accounts          db=148 dbdur=6µs files=231 fdur=4µs
+[INFO] [11-16|22:35:40.627] BuildFilesInBackground                   step=9248 lastInDB=9248 targetStep=9249 reorgSafeBlock=26147573 reorgSafeStep=9812.51 reorgSafeOK=true
+[INFO] [11-16|22:35:41.041] [4/6 Execution] parallel executed        blk=25409998 blks=1 blk/s=2 txs=353 tx/s=855 gas/s=110.77M exec=354 repeat%=0.00 abort=0 invalid=0 tgas/s=110.77M tcpus=0.7 tdur=792µs exec=510µs(64.33%) read="283µs(35.67%),a=12µs,s=160µs,c=111µs" rd="10.70k,a=446,s=3.84k,c=1.62k" wrt=3.90k rd/s=25.93k wrt/s=9.45k buf=852.9KB/512.0MB bdur=31ms ucgas=45.72M alloc=9.0GB sys=15.3GB isForkValidation=false isApplyingBlocks=true
+[INFO] [11-16|22:35:41.041] [4/6 Execution] compute-ahead            parallelCommit=0 commitComputeTotal=1h6m56.178481485s
+[INFO] [11-16|22:35:41.041] [4/6 Execution] domain reads             db=3.48k dbdur=4µs files=3.10k fdur=449µs
+[INFO] [11-16|22:35:41.041] [4/6 Execution] domain=storage           db=1.34k dbdur=3µs files=1.68k fdur=3µs
+[INFO] [11-16|22:35:41.041] [4/6 Execution] domain=commitment        db=1.80k dbdur=5µs files=518 fdur=16µs
+[INFO] [11-16|22:35:41.041] [4/6 Execution] domain=accounts          db=332 dbdur=4µs files=898 fdur=1µs
+[INFO] [11-16|22:35:41.041] [4/6 Execution] parallel committed       blk=25409998 blks=0 blk/s=0 txs=353 tx/s=852 gas/s=110.43M bdur=0s progress=0/0 buf=426.5KB chit=0 cmiss=0 stepsInDB=0.51 step=9248.5 alloc=9.0GB sys=15.3GB isForkValidation=false isApplyingBlocks=true
+[INFO] [11-16|22:35:41.041] [4/6 Execution] domain reads             db=3.48k dbdur=4µs files=3.10k fdur=449µs
+[INFO] [11-16|22:35:41.042] [4/6 Execution] domain=commitment        db=1.80k dbdur=5µs files=518 fdur=16µs
+[INFO] [11-16|22:35:41.042] [4/6 Execution] domain=accounts          db=332 dbdur=4µs files=898 fdur=1µs
+[INFO] [11-16|22:35:41.042] [4/6 Execution] domain=storage           db=1.34k dbdur=3µs files=1.68k fdur=3µs
+[INFO] [11-16|22:35:41.042] [4/6 Execution] parallel done            in=414.265517ms buf=426.5KB/512.0MB blk=25409998 blks=1 blk/s=2 txs=353 tx/s=852 gas/s=110.37M stepsInDB=0.51 step=9248.5 alloc=9.0GB sys=15.3GB isForkValidation=false isApplyingBlocks=true
+[INFO] [11-16|22:35:41.042] [4/6 Execution] domains                  db=3.48k dbdur=4µs files=3.10k fdur=449µs
+[INFO] [11-16|22:35:41.042] [4/6 Execution] domain=commitment        db=1.80k dbdur=5µs files=518 fdur=16µs
+[INFO] [11-16|22:35:41.042] [4/6 Execution] domain=accounts          db=332 dbdur=4µs files=898 fdur=1µs
+[INFO] [11-16|22:35:41.042] [4/6 Execution] domain=storage           db=1.34k dbdur=3µs files=1.68k fdur=3µs
+[INFO] [11-16|22:35:41.329] BuildFilesInBackground                   step=9248 lastInDB=9248 targetStep=9249 reorgSafeBlock=26147573 reorgSafeStep=9812.51 reorgSafeOK=true
+[INFO] [11-16|22:35:41.480] [4/6 Execution] parallel executed        blk=25409999 blks=1 blk/s=6 txs=173 tx/s=1.15k gas/s=84.02M exec=174 repeat%=0.00 abort=0 invalid=0 tgas/s=84.02M tcpus=0.5 tdur=389µs exec=246µs(63.24%) read="143µs(36.76%),a=9µs,s=102µs,c=32µs" rd="2.92k,a=191,s=859,c=335" wrt=1.31k rd/s=19.48k wrt/s=8.74k buf=204.8KB/512.0MB bdur=14ms ucgas=12.62M alloc=9.1GB sys=15.3GB isForkValidation=false isApplyingBlocks=true
+[INFO] [11-16|22:35:41.480] [4/6 Execution] compute-ahead            parallelCommit=0 commitComputeTotal=1h6m56.25117305s
+[INFO] [11-16|22:35:41.480] [4/6 Execution] domain reads             db=688 dbdur=5µs files=737 fdur=228µs
+[INFO] [11-16|22:35:41.481] [4/6 Execution] domain=accounts          db=190 dbdur=5µs files=214 fdur=5µs
+[INFO] [11-16|22:35:41.481] [4/6 Execution] domain=storage           db=239 dbdur=3µs files=401 fdur=2µs
+[INFO] [11-16|22:35:41.481] [4/6 Execution] domain=commitment        db=259 dbdur=6µs files=122 fdur=12µs
+[INFO] [11-16|22:35:41.481] [4/6 Execution] parallel committed       blk=25409999 blks=0 blk/s=0 txs=173 tx/s=1.14k gas/s=83.54M bdur=0s progress=0/0 buf=102.4KB chit=0 cmiss=0 stepsInDB=0.51 step=9248.5 alloc=9.1GB sys=15.3GB isForkValidation=false isApplyingBlocks=true
+[INFO] [11-16|22:35:41.481] [4/6 Execution] domain reads             db=688 dbdur=5µs files=737 fdur=228µs
+[INFO] [11-16|22:35:41.481] [4/6 Execution] domain=commitment        db=259 dbdur=6µs files=122 fdur=12µs
+[INFO] [11-16|22:35:41.481] [4/6 Execution] domain=accounts          db=190 dbdur=5µs files=214 fdur=5µs
+[INFO] [11-16|22:35:41.481] [4/6 Execution] domain=storage           db=239 dbdur=3µs files=401 fdur=2µs
+[INFO] [11-16|22:35:41.481] [4/6 Execution] parallel done            in=151.257718ms buf=102.4KB/512.0MB blk=25409999 blks=1 blk/s=6 txs=173 tx/s=1.14k gas/s=83.44M stepsInDB=0.51 step=9248.5 alloc=9.1GB sys=15.3GB isForkValidation=false isApplyingBlocks=true
+[INFO] [11-16|22:35:41.481] [4/6 Execution] domains                  db=688 dbdur=5µs files=737 fdur=228µs
+[INFO] [11-16|22:35:41.481] [4/6 Execution] domain=commitment        db=259 dbdur=6µs files=122 fdur=12µs
+[INFO] [11-16|22:35:41.481] [4/6 Execution] domain=accounts          db=190 dbdur=5µs files=214 fdur=5µs
+[INFO] [11-16|22:35:41.481] [4/6 Execution] domain=storage           db=239 dbdur=3µs files=401 fdur=2µs
+[INFO] [11-16|22:35:41.586] BuildFilesInBackground                   step=9248 lastInDB=9248 targetStep=9249 reorgSafeBlock=26147573 reorgSafeStep=9812.51 reorgSafeOK=true
+[INFO] [11-16|22:35:42.136] [4/6 Execution] parallel executed        blk=25410000 blks=1 blk/s=1 txs=358 tx/s=653 gas/s=93.63M exec=359 repeat%=0.00 abort=0 invalid=0 tgas/s=93.63M tcpus=0.8 tdur=1ms exec=683µs(59.04%) read="474µs(40.96%),a=10µs,s=284µs,c=180µs" rd="10.96k,a=446,s=4.06k,c=1.60k" wrt=3.83k rd/s=20.01k wrt/s=7.00k buf=917.4KB/512.0MB bdur=56ms ucgas=51.28M alloc=9.1GB sys=15.3GB isForkValidation=false isApplyingBlocks=true
+[INFO] [11-16|22:35:42.136] [4/6 Execution] compute-ahead            parallelCommit=0 commitComputeTotal=1h6m56.572880046s
+[INFO] [11-16|22:35:42.136] [4/6 Execution] domain reads             db=3.79k dbdur=5µs files=3.71k fdur=553µs
+[INFO] [11-16|22:35:42.136] [4/6 Execution] domain=storage           db=1.22k dbdur=4µs files=2.10k fdur=2µs
+[INFO] [11-16|22:35:42.136] [4/6 Execution] domain=commitment        db=2.23k dbdur=5µs files=697 fdur=16µs
+[INFO] [11-16|22:35:42.136] [4/6 Execution] domain=accounts          db=346 dbdur=5µs files=910 fdur=2µs
+[INFO] [11-16|22:35:42.136] [4/6 Execution] parallel committed       blk=25410000 blks=0 blk/s=0 txs=358 tx/s=652 gas/s=93.41M bdur=0s progress=0/0 buf=458.7KB chit=0 cmiss=0 stepsInDB=0.51 step=9248.5 alloc=9.1GB sys=15.3GB isForkValidation=false isApplyingBlocks=true
+[INFO] [11-16|22:35:42.136] [4/6 Execution] domain reads             db=3.79k dbdur=5µs files=3.71k fdur=553µs
+[INFO] [11-16|22:35:42.136] [4/6 Execution] domain=storage           db=1.22k dbdur=4µs files=2.10k fdur=2µs
+[INFO] [11-16|22:35:42.136] [4/6 Execution] domain=commitment        db=2.23k dbdur=5µs files=697 fdur=16µs
+[INFO] [11-16|22:35:42.136] [4/6 Execution] domain=accounts          db=346 dbdur=5µs files=910 fdur=2µs
+[INFO] [11-16|22:35:42.136] [4/6 Execution] parallel done            in=549.280773ms buf=458.7KB/512.0MB blk=25410000 blks=1 blk/s=1 txs=358 tx/s=651 gas/s=93.37M stepsInDB=0.51 step=9248.5 alloc=9.1GB sys=15.3GB isForkValidation=false isApplyingBlocks=true
+[INFO] [11-16|22:35:42.136] [4/6 Execution] domains                  db=3.79k dbdur=5µs files=3.71k fdur=553µs
+[INFO] [11-16|22:35:42.136] [4/6 Execution] domain=commitment        db=2.23k dbdur=5µs files=697 fdur=16µs
+[INFO] [11-16|22:35:42.136] [4/6 Execution] domain=accounts          db=346 dbdur=5µs files=910 fdur=2µs
+[INFO] [11-16|22:35:42.136] [4/6 Execution] domain=storage           db=1.22k dbdur=4µs files=2.10k fdur=2µs
+[INFO] [11-16|22:35:42.408] BuildFilesInBackground                   step=9248 lastInDB=9248 targetStep=9249 reorgSafeBlock=26147573 reorgSafeStep=9812.51 reorgSafeOK=true
+[INFO] [11-16|22:35:42.418] [exec] reached --pfb.exec.stop-at-block, stopping node block=25410000 stopAt=25410000
+[INFO] [11-16|22:35:42.418] [p2p] publisher goroutine terminated 
+[INFO] [11-16|22:35:42.418] Exiting Engine... 
+[INFO] [11-16|22:35:42.418] RPC server shutting down 
+[INFO] [11-16|22:35:42.418] RPC server shutting down 
+[INFO] [11-16|22:35:42.419] [p2p] MessageListener goroutine terminated 
+[INFO] [11-16|22:35:42.419] [rpc] Exiting... 
+[INFO] [11-16|22:35:42.419] Engine HTTP endpoint close               url=127.0.0.1:8551 shutdownErr=nil
+[INFO] [11-16|22:35:42.419] [p2p] PeerTracker goroutine terminated 
+[INFO] [11-16|22:35:42.419] HTTP endpoint closed                     url=127.0.0.1:8545
+[INFO] [11-16|22:35:42.419] RPC server shutting down 
+[INFO] [11-16|22:35:42.419] RPC server shutting down 
+[INFO] [11-16|22:35:43.092] [txpool] stopped 
+[INFO] [11-16|22:35:43.092] [devp2p] txn pool goroutine terminated 
+exit rc=0 2026-11-16T21:35:45Z

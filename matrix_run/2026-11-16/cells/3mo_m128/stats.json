@@ -1,0 +1,39 @@
+{
+ "run": "mx_3mo_m128_w25400000_2026-11-16",
+ "L": "3mo",
+ "lookback_blocks": 648000,
+ "M": 128,
+ "rc": 0,
+ "datadir": "/erigon-data/tv2_mx_3mo_m128",
+ "root_errors": 0,
+ "last_block": 25410000,
+ "memory_max": 68719476736,
+ "memory_peak_gb": 64.0,
+ "oom_kill": 0,
+ "hot_files": 5,
+ "layout_after": {
+  "SSD": [
+   5,
+   79619413756
+  ],
+  "HDD": [
+   5,
+   247594622830
+  ]
+ },
+ "mgas_s_per_block": 79.24677319500437,
+ "mgas_s_p50": 76.0211985324093,
+ "wall_mgas_s": 38.95441183845232,
+ "commit_p50_ms": 177.6,
+ "commit_p95_ms": 1933.1,
+ "ssd_commit_gb": 79.62,
+ "hdd_commit_gb": 247.59,
+ "ssd_probes_per_block": 3866.4997000000003,
+ "hdd_probes_per_block": 542.3728,
+ "hdd_probe_share": 0.12296341617120321,
+ "cold_merges": 0,
+ "blocks": 10000.0,
+ "duration_s": 7787,
+ "demotions": 0,
+ "demoted_gb": 0
+}
