@@ -26,6 +26,9 @@ echo "start $(date -u +%FT%TZ) commit $C mode $MODE" > $OUT
 KV_READ_METRICS=true systemd-run --user --scope -q -p MemoryMax=64G -p MemorySwapMax=0 $BIN/erigon --datadir=$DD --chain=mainnet $FLAGS --log.dir.path=$DD/logs >> $OUT 2>&1 &
 PID=$!
 ( while kill -0 $PID 2>/dev/null; do echo "$(date +%s) $(awk '{print $12, $10}' /proc/$PID/stat 2>/dev/null)"; sleep 1; done ) > $DD/logs/faults.txt &
+( for i in $(seq 60); do CG=$(sed -n 's/^0:://p' /proc/$PID/cgroup 2>/dev/null); case $CG in */run-*.scope) break ;; esac; sleep 0.5; done
+  echo "cgroup $CG memory.max $(cat /sys/fs/cgroup$CG/memory.max)"
+  while kill -0 $PID 2>/dev/null; do echo "$(date +%s) peak $(cat /sys/fs/cgroup$CG/memory.peak) $(tr '\n' ' ' < /sys/fs/cgroup$CG/memory.events)"; sleep 10; done ) > $DD/logs/memcg.txt 2>&1 &
 python3 /erigon-data/tv2_scripts/demote_sampler.py $DD $COLD $OUT $DD/logs/demote.csv 30 > /dev/null 2>&1 & SMP=$!
 if [ "$MINUTES" -gt 0 ]; then
   END=$(( $(date +%s) + MINUTES*60 ))

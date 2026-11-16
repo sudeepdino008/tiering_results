@@ -2,3 +2,5 @@
 2026-11-16T09:07:33Z cell 6mo/1: prepare (est new 15 GB, free 706 GB)
 2026-11-16T09:08:47Z cell 6mo/1: prepared in 74 s; run mx_6mo_m1_w25400000_2026-11-16
 2026-11-16T11:23:49Z cell 6mo/1: rc=0 in 136 min; "mgas_s_per_block": 69.20598565559037
+2026-11-16T11:24:01Z driver end
+2026-11-16T11:24:39Z driver start: 6mo:32 3mo:64 6mo:1 6mo:128 3mo:128 3mo:32 6mo:64 6mo:4 4mo:64 4mo:4 4mo:32 3mo:1 4mo:1 3mo:4 4mo:128 1mo:4 1mo:1 1mo:64 1mo:32 1mo:128

@@ -1,6 +1,6 @@
 #!/bin/bash
 # Prepares a run datadir at W for one lookback: commitment files fully older than W - L are cold (HDD, pre-merged).
-# usage: tv2_prepare.sh --lookback-blocks <1mo|3mo|6mo|N> [--name <datadir name>] [--hot-merge-steps N (default 1)]
+# usage: tv2_prepare.sh --lookback-blocks <1mo|3mo|4mo|6mo|N> [--name <datadir name>] [--hot-merge-steps N (default 1)]
 # Per L a template (tv2_tpl_<L> + /backup/erigon-hdd/tv2_tpl_<L>/domain) is built once; a run is a hardlink copy of it.
 # 1-step cold copies are shared through the pool /backup/erigon-hdd/pool_1s_W (one HDD copy per file name).
 set -euo pipefail
@@ -26,8 +26,8 @@ while [ $# -gt 0 ]; do
   esac
 done
 case $L in
-  1mo) LB=216000 ;; 3mo) LB=648000 ;; 6mo) LB=1296000 ;;
-  ''|*[!0-9]*) echo "--lookback-blocks: 1mo|3mo|6mo|<blocks>"; exit 2 ;;
+  1mo) LB=216000 ;; 3mo) LB=648000 ;; 4mo) LB=864000 ;; 6mo) LB=1296000 ;;
+  ''|*[!0-9]*) echo "--lookback-blocks: 1mo|3mo|4mo|6mo|<blocks>"; exit 2 ;;
   *) LB=$L; L=${L}b ;;
 esac
 NAME=${NAME:-tv2_run_$L}
