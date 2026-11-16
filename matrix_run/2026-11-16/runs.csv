@@ -1,2 +1,3 @@
 order,L,lookback_blocks,M,mgas_s_per_block,wall_mgas_s,commit_p50_ms,commit_p95_ms,ssd_commit_gb,hdd_commit_gb,hot_files,ssd_probes_per_block,hdd_probes_per_block,hdd_probe_share,demotions,demoted_gb,cold_merges,duration_s,oom_kill,memory_peak_gb,rc,root_errors
+1,6mo,1296000,32,138.0943786651675,62.5143104748852,85.6,693.7,264.99,185.62,33,7751.705,286.0587,0.03557060216257914,0,0,0,4853,0,64.0,0,0
 3,6mo,1296000,1,69.20598565559037,37.77686526928532,155.6,1731.0,729.37,189.28,1043,162432.52301841474,278.28112489992,0.0017100922099234285,5,5.96,3.003035534267123,8030,0,64.0,0,0
