@@ -1,0 +1,19 @@
+precheck /erigon-data/tv2_mx_6mo_m1 layout=tiered at 2026-11-16T11:22:45Z
+OK   datadir under /erigon-data: /erigon-data/tv2_mx_6mo_m1
+OK   chaindata exists and is not in use: 
+OK   tiered: 0-8192 commitment is a symlink: /backup/erigon-hdd/tv2_mx_6mo_m1/domain/v2.2-commitment.0-8192.kv
+OK   tiered: symlink snapshots/domain/v2.2-commitment.0-8192.kv: -> /backup/erigon-hdd/tv2_mx_6mo_m1/domain/v2.2-commitment.0-8192.kv, size=180470634040, kvi on SSD=True, newer than boundary=False
+OK   tiered: symlink snapshots/domain/v2.2-commitment.8192-8200.kv: -> /backup/erigon-hdd/tv2_mx_6mo_m1/domain/v2.2-commitment.8192-8200.kv, size=4333639242, kvi on SSD=True, newer than boundary=False
+OK   tiered: symlink snapshots/domain/v2.2-commitment.8200-8204.kv: -> /backup/erigon-hdd/tv2_mx_6mo_m1/domain/v2.2-commitment.8200-8204.kv, size=3596582339, kvi on SSD=True, newer than boundary=False
+OK   tiered: symlink snapshots/domain/v2.2-commitment.8204-8205.kv: -> /backup/erigon-hdd/tv2_mx_6mo_m1/domain/v2.2-commitment.8204-8205.kv, size=876485334, kvi on SSD=True, newer than boundary=False
+OK   tiered: at most one symlinked file straddles the boundary: 0
+OK   tiered: no demotion leftovers (*.demote.tmp, own .tmp in cold dir): []
+OK   all other snapshot files are regular files on SSD: 0 not on SSD []
+OK   domain accounts: steps 0-9248, files 6, gaps [], no accessor []
+OK   domain code: steps 0-9248, files 6, gaps [], no accessor []
+OK   domain commitment: steps 0-9248, files 1047, gaps [], no accessor []
+OK   domain rcache: steps 0-9248, files 6, gaps [], no accessor []
+OK   domain receipt: steps 0-9248, files 6, gaps [], no accessor []
+OK   domain storage: steps 0-9248, files 6, gaps [], no accessor []
+OK   free NVMe space: 707 GB, need 100 GB
+RESULT OK (0 failed)
