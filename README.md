@@ -18,8 +18,8 @@ commitment files `1step`|`merged`). The run name is also the `run` label in the 
 |---|---|
 | CPU | Intel Xeon W-2145 @ 3.70 GHz (max 4.5 GHz), 1 socket, 8 cores, 16 threads |
 | RAM | 125 GiB; swap 4 GiB (partition on the NVMe) |
-| SSD (hot tier) | Toshiba KXD51RUE3T84, 3.84 TB NVMe, ext4 `rw,relatime`, scheduler `none`, read-ahead 128 KB, mounted at `/` (datadirs in `/erigon-data`) |
-| HDD (cold tier) | HGST HUS726060AL, 6 TB SATA 7200 rpm, ext4 `rw,relatime`, scheduler `mq-deadline`, read-ahead 128 KB, mounted at `/backup` |
+| SSD (hot tier) | Toshiba KXD51RUE3T84, 3.84 TB NVMe, ext4 `rw,relatime`, read-ahead 128 KB, mounted at `/` (datadirs in `/erigon-data`) |
+| HDD (cold tier) | HGST HUS726060AL, 6 TB SATA 7200 rpm, ext4 `rw,relatime`, read-ahead 128 KB, mounted at `/backup` |
 | OS | Ubuntu 24.04.3 LTS, kernel 6.8.0-90-generic |
 
 ### RAM limit
@@ -32,12 +32,6 @@ systemd-run --user --scope -p MemoryMax=64G -p MemorySwapMax=0 erigon ...
 
 The limit includes the page cache that erigon's file reads fill, so at most 64 GiB of snapshot data stays cached.
 Runs before this change had no limit (all of RAM was free for the page cache).
-
-To check the limit of a running erigon:
-
-```
-cat /sys/fs/cgroup$(cut -d: -f3 /proc/$(pgrep -x erigon)/cgroup)/memory.max
-```
 
 ### Kernel settings (sysctl) for the runs
 
@@ -58,12 +52,4 @@ Before each run, the run script drops the page cache:
 
 ```
 sync; sudo sh -c 'echo 3 > /proc/sys/vm/drop_caches'
-```
-
-To check the values on the machine:
-
-```
-sysctl vm.dirty_ratio vm.dirty_background_ratio vm.dirty_expire_centisecs vm.dirty_writeback_centisecs \
-  vm.swappiness vm.vfs_cache_pressure vm.overcommit_memory vm.max_map_count vm.min_free_kbytes kernel.numa_balancing
-cat /sys/block/{nvme0n1,sda}/queue/{scheduler,read_ahead_kb}
 ```
