@@ -302,10 +302,15 @@ Each cell: 10,000 chaintip blocks 25,400,001..25,410,000 from W = 25,400,000, de
 L = lookback (cold boundary = W − L), M = SSD merge limit for commitment files (`--tiering.commitment-hot-merge-steps`).
 Cold files are pre-merged and on HDD; hot files on SSD are merged up to M steps. All-SSD baseline (256-step merges):
 {BASELINE['mgas_s_per_block']} Mgas/s per block, SSD commitment ≈ {BASELINE['ssd_commit_gb']} GB (`{BASELINE['name']}`).
-Cells marked `@W2` (diamonds in the frontier) run at W2 = 26,130,000 (blocks 26,130,001..26,140,000, base `tv2_1s_base_w2`):
-9mo needs a cold boundary above the end of the 0-8192 file (block 24,091,854), which W cannot give; `6mo@W2/32` is the
-same-range anchor against `6mo/32` at W. 12mo would need W2 ≥ ~26.69M, beyond the data on this box.
 Mgas/s per block = mean of the per-block value; SSD/HDD GB = commitment `.kv` bytes per tier at the run end.
+
+### W2 (second start block, for 9mo)
+
+W2 = 26,130,000. Cells marked `@W2` (diamonds in the frontier) run blocks 26,130,001..26,140,000 from base `tv2_1s_base_w2`.
+Commitment data below block 24,091,854 is one 180 GB file (0-8192), and tiering moves only whole files. At W the 9mo boundary
+is 25,400,000 − 1,944,000 = 23,456,000, inside that file, so nothing could go to HDD. At W2 it is 24,186,000, above it.
+`6mo@W2/32` is the anchor: compared with `6mo/32` at W, it shows how much the block range alone changes the numbers.
+12mo would need W2 ≥ ~26.69M, beyond the data on this box (ends at 26,147,580).
 
 {concl}
 ## Charts
