@@ -19,3 +19,10 @@
 18 C 1mo 64 4.4
 19 C 1mo 32 4.4
 20 C 1mo 128 4.4
+# 2026-11-17 (user): appended W2 = 26,130,000 cells (6th column w2): 6mo/32 anchor + 9mo x 5; 9mo/4 last (needs ~820 GB free)
+21 D 6mo 32 2.5 w2
+22 D 9mo 32 3.0 w2
+23 D 9mo 64 3.0 w2
+24 D 9mo 128 3.0 w2
+25 D 9mo 1 3.2 w2
+26 D 9mo 4 3.5 w2
