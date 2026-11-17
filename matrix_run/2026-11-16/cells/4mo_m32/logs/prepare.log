@@ -1,0 +1,8 @@
+2026-11-17T10:39:16Z template tv2_tpl_4mo_h32: mirror /erigon-data/tv2_1s_base
+2026-11-17T10:40:59Z boundary block 24536000 min_txnum 3337913315 step 8545
+2026-11-17T10:41:11Z cold files staged on SSD: 354 (below step 8545) in 115 s
+2026-11-17T10:41:11Z tiered seg retire (cold merges on SSD in /erigon-data/tv2_tpl_4mo_h32_coldstage)
+2026-11-17T11:28:10Z cold files moved to HDD: 5 files, 236841258171 bytes, in 2934 s
+2026-11-17T11:29:01Z template done in 2985 s
+2026-11-17T11:29:01Z run tv2_mx_4mo_m32: mirror tv2_tpl_4mo_h32
+2026-11-17T11:29:33Z run tv2_mx_4mo_m32 ready in 32 s: 5 cold files, 236841258171 bytes; precheck /erigon-data/tv2_mx_4mo_m32/logs/precheck_prep_20261117T112929Z.txt

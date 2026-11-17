@@ -8,14 +8,18 @@ import argparse, csv, glob, json, os, re, sys, time
 MX = '/home/moskud/tiering_results/matrix_run/2026-11-16'
 STEP = 390625
 LS = ['1mo', '3mo', '4mo', '6mo']
+W1 = 25400000
+TREND_LS = LS + ['9mo@W2']
+GRID_LS = LS + ['6mo@W2', '9mo@W2']
 MS = [1, 4, 32, 64, 128]
-LB = {'1mo': 216000, '3mo': 648000, '4mo': 864000, '6mo': 1296000}
+LB = {'1mo': 216000, '3mo': 648000, '4mo': 864000, '6mo': 1296000, '9mo': 1944000}
 L_COLOR = {'1mo': '#2a78d6', '3mo': '#eb6834', '4mo': '#1baf7a', '6mo': '#eda100'}
+L_COLOR.update({'6mo@W2': L_COLOR['6mo'], '9mo@W2': '#d55181'})
 M_COLOR = dict(zip(MS, ['#2a78d6', '#eb6834', '#1baf7a', '#eda100', '#d55181']))
 M_RADIUS = {1: 5, 4: 6.5, 32: 8, 64: 9.5, 128: 11}
 INK, INK2, MUTED, GRID, SURFACE, CRIT = '#141412', '#52514e', '#898781', '#e1e0d9', '#fcfcfb', '#d03b3b'
 BASELINE = {'mgas_s_per_block': 277, 'ssd_commit_gb': 300, 'name': 'baseline_allssd_merged_6mo_w25400000_2026-10-23-3'}
-COLS = ['order', 'L', 'lookback_blocks', 'M', 'mgas_s_per_block', 'wall_mgas_s', 'commit_p50_ms', 'commit_p95_ms',
+COLS = ['order', 'L', 'W', 'lookback_blocks', 'M', 'mgas_s_per_block', 'wall_mgas_s', 'commit_p50_ms', 'commit_p95_ms', 'commit_p99_ms',
         'ssd_commit_gb', 'hdd_commit_gb', 'hot_files', 'ssd_probes_per_block', 'hdd_probes_per_block', 'hdd_probe_share',
         'demotions', 'demoted_gb', 'cold_merges', 'duration_s', 'oom_kill', 'memory_peak_gb']
 GEOMETRY = """| L | boundary block / step | cold set on HDD (besides 0-8192) | HDD GB | hot steps on SSD | 1-step hot GB |
@@ -50,10 +54,10 @@ def layout(dd):
     return '\n'.join(lines) + '\n'
 
 
-def stats(cell, run, dd, L, M, rc):
+def stats(cell, run, dd, L, M, rc, W=W1):
     sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
     import tv2_report as R
-    st = {'run': run, 'L': L, 'lookback_blocks': LB[L], 'M': int(M), 'rc': int(rc), 'datadir': dd}
+    st = {'run': run, 'L': L, 'lookback_blocks': LB[L], 'M': int(M), 'rc': int(rc), 'datadir': dd, 'W': int(W)}
     out = f'{dd}/logs/run.out'
     log = open(out, errors='replace').read() if os.path.exists(out) else ''
     st['root_errors'] = len(re.findall(r'Wrong trie root', log))
@@ -89,6 +93,7 @@ def stats(cell, run, dd, L, M, rc):
                   wall_mgas_s=g('Mgas/s wall clock (all-in)'),
                   commit_p50_ms=ms(g('commitment time per block p50 / p90 / p95 / p99')),
                   commit_p95_ms=ms(g('commitment time per block p50 / p90 / p95 / p99', 2)),
+                  commit_p99_ms=ms(g('commitment time per block p50 / p90 / p95 / p99', 3)),
                   ssd_commit_gb=gb(g('commitment data size on SSD (end)')), hdd_commit_gb=gb(g('commitment data size on HDD (end)')),
                   ssd_probes_per_block=g('ssd probes per block mean / p50 / p90 / p95 / p99'),
                   hdd_probes_per_block=g('hdd probes per block mean / p50 / p90 / p95 / p99'),
@@ -109,9 +114,9 @@ def load(mx):
     rows = {}
     for p in glob.glob(f'{mx}/cells/*/stats.json'):
         s = json.load(open(p))
-        rows[(s['L'], s['M'])] = s
+        rows[(s['L'] + ('@W2' if s.get('W', W1) != W1 else ''), s['M'])] = s
     running = open(f'{mx}/running.txt').read().split() if os.path.exists(f'{mx}/running.txt') else []
-    return order, rows, (running[0], int(running[1])) if len(running) == 2 else None
+    return order, rows, (running[0] + ('@W2' if running[2:] == ['w2'] else ''), int(running[1])) if len(running) >= 2 else None
 
 
 def ok(s):
@@ -164,21 +169,22 @@ def save(fig, mx, name):
         fig.savefig(f'{mx}/{name}.{ext}', dpi=200 if ext == 'png' else None, facecolor=SURFACE, bbox_inches='tight')
 
 
-def charts(mx, rows, running):
+def charts(mx, rows, running, n):
     import matplotlib
     matplotlib.use('Agg')
     import matplotlib.pyplot as plt
     from matplotlib.lines import Line2D
     done = {k: s for k, s in rows.items() if ok(s)}
 
-    fig, axes = plt.subplots(1, 2, figsize=(13, 5.2), facecolor=SURFACE)
+    fig, axes = plt.subplots(1, 3, figsize=(19, 5.2), facecolor=SURFACE)
     for ax, (key, label, high) in zip(axes, [('mgas_s_per_block', 'Mgas/s per block (higher is better)', True),
-                                              ('commit_p50_ms', 'commitment p50 ms per block (lower is better)', False)]):
+                                              ('commit_p50_ms', 'commitment p50 ms per block (lower is better)', False),
+                                              ('commit_p99_ms', 'commitment p99 ms per block (lower is better)', False)]):
         ax.set_facecolor(SURFACE)
         pts = [(s['ssd_commit_gb'], s[key], L, M) for (L, M), s in done.items() if s.get(key) is not None and s.get('ssd_commit_gb')]
         front = pareto(pts, high)
         for x, y, L, M in pts:
-            ax.scatter(x, y, s=(2 * M_RADIUS[M]) ** 2 * 0.55, color=L_COLOR[L], edgecolor=SURFACE, linewidth=2,
+            ax.scatter(x, y, s=(2 * M_RADIUS[M]) ** 2 * 0.55, color=L_COLOR[L], marker='D' if '@W2' in L else 'o', edgecolor=SURFACE, linewidth=2,
                        alpha=1 if (x, y, L, M) in front else 0.75, zorder=3)
         if len(front) > 1:
             ax.plot([p[0] for p in front], [p[1] for p in front], ls='--', color=INK2, lw=1, zorder=2)
@@ -188,10 +194,10 @@ def charts(mx, rows, running):
             ax.annotate('all-SSD baseline', (BASELINE['ssd_commit_gb'], BASELINE[key]), xytext=(6, -12), textcoords='offset points', fontsize=8, color=INK2)
         ax.axvline(BASELINE['ssd_commit_gb'], color=MUTED, lw=0.8, ls=':')
         style(ax, 'SSD commitment GB at run end (lower is better)', label)
-    handles = [Line2D([], [], marker='o', ls='', color=L_COLOR[L], label=L) for L in LS] + \
+    handles = [Line2D([], [], marker='D' if '@W2' in L else 'o', ls='', color=L_COLOR[L], label=L) for L in GRID_LS if any(k[0] == L for k in rows) or L in LS] + \
               [Line2D([], [], marker='o', ls='', color=MUTED, markersize=M_RADIUS[M] * 0.9, label=f'M={M}') for M in MS] + \
               [Line2D([], [], marker='s', ls='', markerfacecolor='none', color=INK2, label='baseline')]
-    fig.legend(handles=handles, loc='lower center', bbox_to_anchor=(0.5, 0.97), ncol=10, frameon=False, fontsize=9)
+    fig.legend(handles=handles, loc='lower center', bbox_to_anchor=(0.5, 0.97), ncol=len(handles), frameon=False, fontsize=8, columnspacing=1.2, handletextpad=0.3)
     fig.suptitle('Lookback × SSD merge limit: SSD cost vs speed (colour = lookback, label = M steps, dashed = Pareto frontier)', y=1.08, color=INK, fontsize=12)
     save(fig, mx, 'frontier')
     plt.close(fig)
@@ -199,7 +205,7 @@ def charts(mx, rows, running):
     fig, axes = plt.subplots(2, 2, figsize=(13, 8.2), facecolor=SURFACE)
     for r, (key, label) in enumerate([('ssd_commit_gb', 'SSD commitment GB'), ('mgas_s_per_block', 'Mgas/s per block')]):
         for c, (xs, lines, xname, colors, getk) in enumerate([
-                (LS, MS, 'lookback', M_COLOR, lambda x, ln: (x, ln)), (MS, LS, 'SSD merge limit M (steps)', L_COLOR, lambda x, ln: (ln, x))]):
+                (TREND_LS, MS, 'lookback (9mo only at W2)', M_COLOR, lambda x, ln: (x, ln)), (MS, TREND_LS, 'SSD merge limit M (steps)', L_COLOR, lambda x, ln: (ln, x))]):
             ax = axes[r][c]
             ax.set_facecolor(SURFACE)
             for ln in lines:
@@ -212,7 +218,7 @@ def charts(mx, rows, running):
                         ax.scatter(i, ax.get_ylim()[0], marker='o', facecolor='none', edgecolor=colors[ln], zorder=3)
             ax.set_xticks(range(len(xs)), [str(x) for x in xs])
             style(ax, xname, label)
-    h = [Line2D([], [], color=M_COLOR[M], lw=2, label=f'M={M}') for M in MS] + [Line2D([], [], color=L_COLOR[L], lw=2, label=L) for L in LS]
+    h = [Line2D([], [], color=M_COLOR[M], lw=2, label=f'M={M}') for M in MS] + [Line2D([], [], color=L_COLOR[L], lw=2, label=L) for L in TREND_LS]
     fig.tight_layout()
     fig.legend(handles=h, loc='lower center', bbox_to_anchor=(0.5, 1.0), ncol=9, frameon=False, fontsize=9)
     fig.suptitle('Trends: left by lookback (lines = M), right by merge limit (lines = lookback)', y=1.06, color=INK, fontsize=12)
@@ -223,10 +229,10 @@ def charts(mx, rows, running):
     seq = plt.get_cmap('Blues')
     vals = [s['mgas_s_per_block'] for s in done.values()]
     lo, hi = (min(vals), max(vals)) if vals else (0, 1)
-    for i, L in enumerate(LS):
+    for i, L in enumerate(GRID_LS):
         for j, M in enumerate(MS):
             s = rows.get((L, M))
-            y = len(LS) - 1 - i
+            y = len(GRID_LS) - 1 - i
             if ok(s):
                 v = s['mgas_s_per_block']
                 f = 0.35 + 0.55 * ((v - lo) / (hi - lo) if hi > lo else 0.5)
@@ -240,13 +246,13 @@ def charts(mx, rows, running):
                 ax.add_patch(plt.Rectangle((j, y), 0.95, 0.9, facecolor=SURFACE, edgecolor='#1c5cab' if run else GRID, lw=2.5 if run else 1))
                 ax.text(j + 0.475, y + 0.45, 'running' if run else '', ha='center', va='center', color='#1c5cab', fontsize=9)
     ax.set_xlim(0, len(MS))
-    ax.set_ylim(0, len(LS))
+    ax.set_ylim(0, len(GRID_LS))
     ax.set_xticks([j + 0.475 for j in range(len(MS))], [f'M={M}' for M in MS])
-    ax.set_yticks([len(LS) - 1 - i + 0.45 for i in range(len(LS))], LS)
+    ax.set_yticks([len(GRID_LS) - 1 - i + 0.45 for i in range(len(GRID_LS))], GRID_LS)
     ax.tick_params(length=0, colors=INK2)
     for sp in ax.spines.values():
         sp.set_visible(False)
-    ax.set_title(f'Matrix progress: {len(done)}/20 done (number = Mgas/s per block)', color=INK, fontsize=11)
+    ax.set_title(f'Matrix progress: {len(done)}/{n} done (number = Mgas/s per block)', color=INK, fontsize=11)
     save(fig, mx, 'progress')
     plt.close(fig)
 
@@ -261,26 +267,27 @@ def fmtv(v, nd=1):
 
 def report(mx):
     order, rows, running = load(mx)
-    idx = {(o[2], int(o[3])): int(o[0]) for o in order}
+    sk = lambda o: o[2] + ('@W2' if o[5:] == ['w2'] else '')
+    idx = {(sk(o), int(o[3])): int(o[0]) for o in order}
     with open(f'{mx}/runs.csv', 'w', newline='') as f:
         w = csv.writer(f)
         w.writerow(COLS + ['rc', 'root_errors'])
         for k in sorted(rows, key=lambda k: idx.get(k, 99)):
             s = dict(rows[k], order=idx.get(k))
             w.writerow([s.get(c) for c in COLS + ['rc', 'root_errors']])
-    charts(mx, rows, running)
-    table = ['| # | L | M | Mgas/s per block | wall Mgas/s | commit p50 / p95 ms | SSD GB | HDD GB | hot files | SSD / HDD probes per block | '
+    charts(mx, rows, running, len(order))
+    table = ['| # | L | M | Mgas/s per block | wall Mgas/s | commit p50 / p95 / p99 ms | SSD GB | HDD GB | hot files | SSD / HDD probes per block | '
              'demotions (GB) | cold merges | duration h | rc / root err / OOM / peak GiB |', '|' + '---|' * 14]
     for o in order:
-        k = (o[2], int(o[3]))
+        k = (sk(o), int(o[3]))
         s = rows.get(k)
-        cell = f'[{o[2]}/{o[3]}](cells/{o[2]}_m{o[3]}/)'
+        cell = f'[{k[0]}/{o[3]}](cells/{o[2]}_m{o[3]}{"_w2" if "@W2" in k[0] else ""}/)'
         if not s:
-            table.append(f'| {o[0]} | {o[2]} | {o[3]} | {"running" if running == k else "pending"} |' + ' |' * 10)
+            table.append(f'| {o[0]} | {k[0]} | {o[3]} | {"running" if running == k else "pending"} |' + ' |' * 10)
             continue
         dur = s.get('duration_s')
         table.append(f'| {o[0]} | {cell} | {o[3]} | {fmtv(s.get("mgas_s_per_block"))} | {fmtv(s.get("wall_mgas_s"))} | '
-                     f'{fmtv(s.get("commit_p50_ms"))} / {fmtv(s.get("commit_p95_ms"))} | {fmtv(s.get("ssd_commit_gb"))} | '
+                     f'{fmtv(s.get("commit_p50_ms"))} / {fmtv(s.get("commit_p95_ms"))} / {fmtv(s.get("commit_p99_ms"))} | {fmtv(s.get("ssd_commit_gb"))} | '
                      f'{fmtv(s.get("hdd_commit_gb"))} | {fmtv(s.get("hot_files"))} | {fmtv(s.get("ssd_probes_per_block"), 0)} / '
                      f'{fmtv(s.get("hdd_probes_per_block"), 0)} | {fmtv(s.get("demotions"))} ({fmtv(s.get("demoted_gb"))}) | '
                      f'{fmtv(s.get("cold_merges"), 0)} | {fmtv(dur / 3600 if dur else None, 2)} | '
@@ -288,13 +295,16 @@ def report(mx):
     concl = open(f'{mx}/conclusions.md').read() if os.path.exists(f'{mx}/conclusions.md') else ''
     readme = f"""# Matrix run: lookback × SSD merge limit (stage 17)
 
-Updated {time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime())}. {len([r for r in rows.values() if ok(r)])}/20 cells done{f', running {running[0]}/{running[1]}' if running else ''}.
+Updated {time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime())}. {len([r for r in rows.values() if ok(r)])}/{len(order)} cells done{f', running {running[0]}/{running[1]}' if running else ''}.
 
 Each cell: 10,000 chaintip blocks 25,400,001..25,410,000 from W = 25,400,000, demotion on, offline BALs, state cache on,
 `--tiering.cold-io-max-mbps=50`, erigon c604cf14, 64 GiB memory scope (page cache included), page caches dropped before the start.
 L = lookback (cold boundary = W − L), M = SSD merge limit for commitment files (`--tiering.commitment-hot-merge-steps`).
 Cold files are pre-merged and on HDD; hot files on SSD are merged up to M steps. All-SSD baseline (256-step merges):
 {BASELINE['mgas_s_per_block']} Mgas/s per block, SSD commitment ≈ {BASELINE['ssd_commit_gb']} GB (`{BASELINE['name']}`).
+Cells marked `@W2` (diamonds in the frontier) run at W2 = 26,130,000 (blocks 26,130,001..26,140,000, base `tv2_1s_base_w2`):
+9mo needs a cold boundary above the end of the 0-8192 file (block 24,091,854), which W cannot give; `6mo@W2/32` is the
+same-range anchor against `6mo/32` at W. 12mo would need W2 ≥ ~26.69M, beyond the data on this box.
 Mgas/s per block = mean of the per-block value; SSD/HDD GB = commitment `.kv` bytes per tier at the run end.
 
 {concl}

@@ -35,5 +35,6 @@
  "blocks": 9999.0,
  "duration_s": 4850,
  "demotions": 0,
- "demoted_gb": 0
+ "demoted_gb": 0,
+ "commit_p99_ms": 1445.0
 }
