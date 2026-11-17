@@ -1,0 +1,41 @@
+{
+ "run": "mx_4mo_m32_w25400000_2026-11-16",
+ "L": "4mo",
+ "lookback_blocks": 864000,
+ "M": 32,
+ "rc": 0,
+ "datadir": "/erigon-data/tv2_mx_4mo_m32",
+ "W": 25400000,
+ "root_errors": 0,
+ "last_block": 25410000,
+ "memory_max": 68719476736,
+ "memory_peak_gb": 64.0,
+ "oom_kill": 0,
+ "hot_files": 22,
+ "layout_after": {
+  "SSD": [
+   22,
+   169578833547
+  ],
+  "HDD": [
+   5,
+   236841258171
+  ]
+ },
+ "mgas_s_per_block": 91.03971154210235,
+ "mgas_s_p50": 87.40757439134356,
+ "wall_mgas_s": 44.853655472862826,
+ "commit_p50_ms": 149.4,
+ "commit_p95_ms": 1380.0,
+ "commit_p99_ms": 2862.5,
+ "ssd_commit_gb": 169.58,
+ "hdd_commit_gb": 236.84,
+ "ssd_probes_per_block": 6753.353235323532,
+ "hdd_probes_per_block": 468.96529652965296,
+ "hdd_probe_share": 0.06492773614205077,
+ "cold_merges": 0,
+ "blocks": 9999.0,
+ "duration_s": 6764,
+ "demotions": 0,
+ "demoted_gb": 0
+}

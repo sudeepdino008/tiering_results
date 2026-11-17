@@ -1,2 +1,5 @@
 registered 127.0.0.1:6080 as run=mx_4mo_m32_w25400000_2026-11-16
 mark 1794915082 start mx_4mo_m32_w25400000_2026-11-16 {'run': 'mx_4mo_m32_w25400000_2026-11-16', 'stage': '17', 'event': 'start', 'datadir': '/erigon-data/tv2_mx_4mo_m32', 'flags': 'KV_READ_METRICS=true --prune.mode=full --prune.distance.blocks=10000000 --externalcl --no-downloader --maxpeers=0 --exec.state-cache=true --use-offline-bals --offline-bal.dir=/erigon-data/offline-bal-8192-tip --pfb.exec.stop-at-block=25410000 --tiering.commitment-hot-merge-steps=32 --tiering.lookback-blocks=864000 --tiering.cold-dir=/backup/erigon-hdd/tv2_mx_4mo_m32/domain --tiering.demote --metrics --metrics.addr=127.0.0.1 --metrics.port=6080 --tiering.cold-io-max-mbps=50 --pfb.sync.mode.chaintip'}
+mark 1794921846 stop mx_4mo_m32_w25400000_2026-11-16 rc=0 {'run': 'mx_4mo_m32_w25400000_2026-11-16', 'stage': '17', 'event': 'stop', 'datadir': '/erigon-data/tv2_mx_4mo_m32'}
+last block: blk=25410000
+done rc=0
