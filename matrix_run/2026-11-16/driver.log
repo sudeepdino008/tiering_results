@@ -40,3 +40,6 @@
 2026-11-17T16:25:12Z cell 4mo/1: prepare (est new 60 GB, free 715 GB)
 2026-11-17T16:47:06Z cell 4mo/1: prepared in 1314 s; run mx_4mo_m1_w25400000_2026-11-16
 2026-11-17T19:08:23Z cell 4mo/1: rc=0 in 163 min; "mgas_s_per_block": 65.1597212197303
+2026-11-17T19:08:42Z cell 3mo/4: prepare (est new 342 GB, free 715 GB)
+2026-11-17T19:59:36Z cell 3mo/4: prepared in 3054 s; run mx_3mo_m4_w25400000_2026-11-16
+2026-11-17T22:17:58Z cell 3mo/4: rc=0 in 189 min; "mgas_s_per_block": 74.82377500329568
