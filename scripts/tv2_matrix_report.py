@@ -140,6 +140,25 @@ def pareto(pts, y_better_high):
     return front
 
 
+def place_labels(ax, pts, front):
+    """Label each point with its M (colour = lookback; frontier labels bold); try right/above/below/left, else stack downwards."""
+    ax.figure.canvas.draw()
+    disp = {p: ax.transData.transform(p[:2]) for p in pts}
+    boxes = [(x - r, y - r, x + r, y + r) for p, (x, y) in disp.items() for r in [M_RADIUS[p[3]] * 1.1]]
+    clash = lambda b: any(b[0] < c[2] and c[0] < b[2] and b[1] < c[3] and c[1] < b[3] for c in boxes)
+    for p in sorted(pts, key=lambda p: (-p[1], p[0])):
+        px, py = disp[p]
+        t = str(p[3])
+        w, h, r = 6 * len(t) + 2, 10, M_RADIUS[p[3]] * 1.1 + 2
+        cands = [(r, -h / 2), (-w / 2, r), (-w / 2, -r - h), (-r - w, -h / 2)] + [(r, -h / 2 - k * (h + 2)) for k in range(1, 8)]
+        dx, dy = next(((dx, dy) for dx, dy in cands if not clash((px + dx, py + dy, px + dx + w, py + dy + h))), cands[0])
+        boxes.append((px + dx, py + dy, px + dx + w, py + dy + h))
+        on = p in front
+        ax.annotate(t, p[:2], xytext=(dx * 0.72, (dy + h / 2) * 0.72), textcoords='offset points', fontsize=8, va='center',
+                    color=L_COLOR[p[2]] if not on else INK, fontweight='bold' if on else 'normal',
+                    arrowprops=dict(arrowstyle='-', color=MUTED, lw=0.5) if abs(dy) > r + h else None)
+
+
 def save(fig, mx, name):
     for ext in ('png', 'svg'):
         fig.savefig(f'{mx}/{name}.{ext}', dpi=200 if ext == 'png' else None, facecolor=SURFACE, bbox_inches='tight')
@@ -163,8 +182,7 @@ def charts(mx, rows, running):
                        alpha=1 if (x, y, L, M) in front else 0.75, zorder=3)
         if len(front) > 1:
             ax.plot([p[0] for p in front], [p[1] for p in front], ls='--', color=INK2, lw=1, zorder=2)
-        for x, y, L, M in front:
-            ax.annotate(f'{L}/{M}', (x, y), xytext=(6, 6), textcoords='offset points', fontsize=8, color=INK)
+        place_labels(ax, pts, front)
         if key == 'mgas_s_per_block':
             ax.scatter(BASELINE['ssd_commit_gb'], BASELINE[key], marker='s', s=70, facecolor='none', edgecolor=INK2, zorder=3)
             ax.annotate('all-SSD baseline', (BASELINE['ssd_commit_gb'], BASELINE[key]), xytext=(6, -12), textcoords='offset points', fontsize=8, color=INK2)
@@ -174,7 +192,7 @@ def charts(mx, rows, running):
               [Line2D([], [], marker='o', ls='', color=MUTED, markersize=M_RADIUS[M] * 0.9, label=f'M={M}') for M in MS] + \
               [Line2D([], [], marker='s', ls='', markerfacecolor='none', color=INK2, label='baseline')]
     fig.legend(handles=handles, loc='lower center', bbox_to_anchor=(0.5, 0.97), ncol=10, frameon=False, fontsize=9)
-    fig.suptitle('Lookback × SSD merge limit: SSD cost vs speed (dashed = Pareto frontier)', y=1.08, color=INK, fontsize=12)
+    fig.suptitle('Lookback × SSD merge limit: SSD cost vs speed (colour = lookback, label = M steps, dashed = Pareto frontier)', y=1.08, color=INK, fontsize=12)
     save(fig, mx, 'frontier')
     plt.close(fig)
 

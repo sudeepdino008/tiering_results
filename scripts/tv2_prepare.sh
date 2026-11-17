@@ -120,6 +120,7 @@ python3 /erigon-data/tv2_scripts/precheck.py --layout tiered --cold-dir $COLD --
 NC=$(ls $COLD | wc -l)
 BC=$(du -bc $COLD/* | tail -1 | cut -f1)
 NH=$(ls $DD/snapshots/domain | grep -c 'commitment.*\.kv$')
+rm -f $DD/TV2_README.md  # hardlinked with the template and the base: replace, never write in place
 cat > $DD/TV2_README.md <<EOF
 # $NAME
 
