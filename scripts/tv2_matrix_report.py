@@ -209,7 +209,7 @@ def charts(mx, rows, running, n):
     handles = [Line2D([], [], marker='D' if '@W2' in L else 'o', ls='', color=L_COLOR[L], label=L) for L in GRID_LS if any(k[0] == L for k in rows) or L in LS] + \
               [Line2D([], [], marker='o', ls='', color=MUTED, markersize=M_RADIUS[M] * 0.9, label=mlab(M)) for M in MS] + \
               [Line2D([], [], marker='s', ls='', markerfacecolor='none', color=INK2, label='baseline')]
-    sub = '(colour = lookback, label = M as time span, dashed = Pareto frontier)'
+    sub = '(colour = lookback, label = merge limit (M) as time span, dashed = Pareto frontier)'
     fig, axes = plt.subplots(1, 3, figsize=(19, 5.2), facecolor=SURFACE)
     for ax, f in zip(axes, FRONTIERS):
         frontier(ax, *f[1:])
