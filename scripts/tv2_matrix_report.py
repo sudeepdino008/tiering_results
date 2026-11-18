@@ -19,6 +19,9 @@ M_COLOR = dict(zip(MS, ['#2a78d6', '#eb6834', '#1baf7a', '#eda100', '#d55181']))
 M_RADIUS = {1: 5, 4: 6.5, 32: 8, 64: 9.5, 128: 11}
 INK, INK2, MUTED, GRID, SURFACE, CRIT = '#141412', '#52514e', '#898781', '#e1e0d9', '#fcfcfb', '#d03b3b'
 BASELINE = {'mgas_s_per_block': 277, 'ssd_commit_gb': 300, 'name': 'baseline_allssd_merged_6mo_w25400000_2026-10-23-3'}
+FRONTIERS = [('mgas', 'mgas_s_per_block', 'Mgas/s per block (higher is better)', True),
+             ('p50', 'commit_p50_ms', 'commitment p50 ms per block (lower is better)', False),
+             ('p99', 'commit_p99_ms', 'commitment p99 ms per block (lower is better)', False)]
 COLS = ['order', 'L', 'W', 'lookback_blocks', 'M', 'mgas_s_per_block', 'wall_mgas_s', 'commit_p50_ms', 'commit_p95_ms', 'commit_p99_ms',
         'ssd_commit_gb', 'hdd_commit_gb', 'hot_files', 'ssd_probes_per_block', 'hdd_probes_per_block', 'hdd_probe_share',
         'demotions', 'demoted_gb', 'cold_merges', 'duration_s', 'oom_kill', 'memory_peak_gb']
@@ -176,10 +179,7 @@ def charts(mx, rows, running, n):
     from matplotlib.lines import Line2D
     done = {k: s for k, s in rows.items() if ok(s)}
 
-    fig, axes = plt.subplots(1, 3, figsize=(19, 5.2), facecolor=SURFACE)
-    for ax, (key, label, high) in zip(axes, [('mgas_s_per_block', 'Mgas/s per block (higher is better)', True),
-                                              ('commit_p50_ms', 'commitment p50 ms per block (lower is better)', False),
-                                              ('commit_p99_ms', 'commitment p99 ms per block (lower is better)', False)]):
+    def frontier(ax, key, label, high):
         ax.set_facecolor(SURFACE)
         pts = [(s['ssd_commit_gb'], s[key], L, M) for (L, M), s in done.items() if s.get(key) is not None and s.get('ssd_commit_gb')]
         front = pareto(pts, high)
@@ -194,13 +194,25 @@ def charts(mx, rows, running, n):
             ax.annotate('all-SSD baseline', (BASELINE['ssd_commit_gb'], BASELINE[key]), xytext=(6, -12), textcoords='offset points', fontsize=8, color=INK2)
         ax.axvline(BASELINE['ssd_commit_gb'], color=MUTED, lw=0.8, ls=':')
         style(ax, 'SSD commitment GB at run end (lower is better)', label)
+
     handles = [Line2D([], [], marker='D' if '@W2' in L else 'o', ls='', color=L_COLOR[L], label=L) for L in GRID_LS if any(k[0] == L for k in rows) or L in LS] + \
               [Line2D([], [], marker='o', ls='', color=MUTED, markersize=M_RADIUS[M] * 0.9, label=f'M={M}') for M in MS] + \
               [Line2D([], [], marker='s', ls='', markerfacecolor='none', color=INK2, label='baseline')]
+    sub = '(colour = lookback, label = M steps, dashed = Pareto frontier)'
+    fig, axes = plt.subplots(1, 3, figsize=(19, 5.2), facecolor=SURFACE)
+    for ax, f in zip(axes, FRONTIERS):
+        frontier(ax, *f[1:])
     fig.legend(handles=handles, loc='lower center', bbox_to_anchor=(0.5, 0.97), ncol=len(handles), frameon=False, fontsize=8, columnspacing=1.2, handletextpad=0.3)
-    fig.suptitle('Lookback × SSD merge limit: SSD cost vs speed (colour = lookback, label = M steps, dashed = Pareto frontier)', y=1.08, color=INK, fontsize=12)
+    fig.suptitle(f'Lookback × SSD merge limit: SSD cost vs speed {sub}', y=1.08, color=INK, fontsize=12)
     save(fig, mx, 'frontier')
     plt.close(fig)
+    for name, key, label, high in FRONTIERS:
+        fig, ax = plt.subplots(figsize=(11, 7), facecolor=SURFACE)
+        frontier(ax, key, label, high)
+        fig.legend(handles=handles, loc='lower center', bbox_to_anchor=(0.5, 0.89), ncol=len(handles), frameon=False, fontsize=9, columnspacing=1.2, handletextpad=0.3)
+        fig.suptitle(f'SSD cost vs {label.split(" (")[0]} {sub}', y=0.95, color=INK, fontsize=12)
+        save(fig, mx, f'frontier_{name}')
+        plt.close(fig)
 
     fig, axes = plt.subplots(2, 2, figsize=(13, 8.2), facecolor=SURFACE)
     for r, (key, label) in enumerate([('ssd_commit_gb', 'SSD commitment GB'), ('mgas_s_per_block', 'Mgas/s per block')]):
@@ -315,7 +327,11 @@ is 25,400,000 − 1,944,000 = 23,456,000, inside that file, so nothing could go 
 {concl}
 ## Charts
 
-![frontier](frontier.png?v={int(time.time())})
+![frontier: Mgas/s](frontier_mgas.png?v={int(time.time())})
+
+![frontier: commitment p50](frontier_p50.png?v={int(time.time())})
+
+![frontier: commitment p99](frontier_p99.png?v={int(time.time())})
 
 ![trends](trends.png?v={int(time.time())})
 
