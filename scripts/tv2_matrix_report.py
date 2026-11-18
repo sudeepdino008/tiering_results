@@ -187,7 +187,7 @@ def charts(mx, rows, running, n):
             ax.scatter(x, y, s=(2 * M_RADIUS[M]) ** 2 * 0.55, color=L_COLOR[L], marker='D' if '@W2' in L else 'o', edgecolor=SURFACE, linewidth=2,
                        alpha=1 if (x, y, L, M) in front else 0.75, zorder=3)
         if len(front) > 1:
-            ax.plot([p[0] for p in front], [p[1] for p in front], ls='--', color=INK2, lw=1, zorder=2)
+            ax.plot([p[0] for p in front], [p[1] for p in front], ls='--', color=INK2, lw=1, zorder=4)
         place_labels(ax, pts, front)
         if key == 'mgas_s_per_block':
             ax.scatter(BASELINE['ssd_commit_gb'], BASELINE[key], marker='s', s=70, facecolor='none', edgecolor=INK2, zorder=3)
