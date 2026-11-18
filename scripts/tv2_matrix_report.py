@@ -164,7 +164,7 @@ def place_labels(ax, pts, front):
     clash = lambda b: any(b[0] < c[2] and c[0] < b[2] and b[1] < c[3] and c[1] < b[3] for c in boxes)
     for p in sorted(pts, key=lambda p: (-p[1], p[0])):
         px, py = disp[p]
-        t, on = mlab(p[3]).split('(')[1].rstrip(')'), p in front
+        t, on = mlab(p[3]).split('(')[1].rstrip(')').lstrip('~'), p in front
         probe = ax.text(0, 0, t, fontsize=8, fontweight='bold' if on else 'normal')
         bb = probe.get_window_extent(ax.figure.canvas.get_renderer())
         probe.remove()
