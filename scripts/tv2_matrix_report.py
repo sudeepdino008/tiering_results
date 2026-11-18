@@ -226,9 +226,11 @@ def charts(mx, rows, running, n):
         plt.close(fig)
 
     fig, axes = plt.subplots(2, 2, figsize=(13, 8.2), facecolor=SURFACE)
+    tls = [L for L in TREND_LS if L in LS or any(k[0] == L for k in done)]
+    lxname = 'lookback (9mo@W2 runs at blocks from W2)' if '9mo@W2' in tls else 'lookback'
     for r, (key, label) in enumerate([('ssd_commit_gb', 'SSD commitment GB'), ('mgas_s_per_block', 'Mgas/s per block')]):
         for c, (xs, lines, xname, colors, getk) in enumerate([
-                (TREND_LS, MS, 'lookback (9mo only at W2)', M_COLOR, lambda x, ln: (x, ln)), (MS, TREND_LS, 'SSD merge limit M (steps)', L_COLOR, lambda x, ln: (ln, x))]):
+                (tls, MS, lxname, M_COLOR, lambda x, ln: (x, ln)), (MS, tls, 'SSD merge limit M (steps)', L_COLOR, lambda x, ln: (ln, x))]):
             ax = axes[r][c]
             ax.set_facecolor(SURFACE)
             for ln in lines:
@@ -241,7 +243,7 @@ def charts(mx, rows, running, n):
                         ax.scatter(i, ax.get_ylim()[0], marker='o', facecolor='none', edgecolor=colors[ln], zorder=3)
             ax.set_xticks(range(len(xs)), [mlab(x).replace(' (', '\n(') if c == 1 else str(x) for x in xs])
             style(ax, xname, label)
-    h = [Line2D([], [], color=M_COLOR[M], lw=2, label=mlab(M)) for M in MS] + [Line2D([], [], color=L_COLOR[L], lw=2, label=L) for L in TREND_LS]
+    h = [Line2D([], [], color=M_COLOR[M], lw=2, label=mlab(M)) for M in MS] + [Line2D([], [], color=L_COLOR[L], lw=2, label=L) for L in tls]
     fig.tight_layout()
     fig.legend(handles=h, loc='lower center', bbox_to_anchor=(0.5, 1.0), ncol=5, frameon=False, fontsize=9)
     fig.suptitle('Trends: left by lookback (lines = M), right by merge limit (lines = lookback)', y=1.1, color=INK, fontsize=12)
