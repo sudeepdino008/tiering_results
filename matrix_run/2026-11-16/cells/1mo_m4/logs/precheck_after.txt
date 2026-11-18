@@ -1,0 +1,23 @@
+precheck /erigon-data/tv2_mx_1mo_m4 layout=tiered at 2026-11-18T05:19:12Z
+OK   datadir under /erigon-data: /erigon-data/tv2_mx_1mo_m4
+OK   chaindata exists and is not in use: 
+OK   tiered: 0-8192 commitment is a symlink: /backup/erigon-hdd/tv2_mx_1mo_m4/domain/v2.2-commitment.0-8192.kv
+OK   tiered: symlink snapshots/domain/v2.2-commitment.0-8192.kv: -> /backup/erigon-hdd/tv2_mx_1mo_m4/domain/v2.2-commitment.0-8192.kv, size=180470634040, kvi on SSD=True, newer than boundary=False
+OK   tiered: symlink snapshots/domain/v2.2-commitment.8192-8448.kv: -> /backup/erigon-hdd/tv2_mx_1mo_m4/domain/v2.2-commitment.8192-8448.kv, size=31046638240, kvi on SSD=True, newer than boundary=False
+OK   tiered: symlink snapshots/domain/v2.2-commitment.8448-8704.kv: -> /backup/erigon-hdd/tv2_mx_1mo_m4/domain/v2.2-commitment.8448-8704.kv, size=32438534759, kvi on SSD=True, newer than boundary=False
+OK   tiered: symlink snapshots/domain/v2.2-commitment.8704-8960.kv: -> /backup/erigon-hdd/tv2_mx_1mo_m4/domain/v2.2-commitment.8704-8960.kv, size=26844618343, kvi on SSD=True, newer than boundary=False
+OK   tiered: symlink snapshots/domain/v2.2-commitment.8960-9024.kv: -> /backup/erigon-hdd/tv2_mx_1mo_m4/domain/v2.2-commitment.8960-9024.kv, size=12825360177, kvi on SSD=True, newer than boundary=False
+OK   tiered: symlink snapshots/domain/v2.2-commitment.9024-9056.kv: -> /backup/erigon-hdd/tv2_mx_1mo_m4/domain/v2.2-commitment.9024-9056.kv, size=7688936385, kvi on SSD=True, newer than boundary=False
+OK   tiered: symlink snapshots/domain/v2.2-commitment.9056-9072.kv: -> /backup/erigon-hdd/tv2_mx_1mo_m4/domain/v2.2-commitment.9056-9072.kv, size=4815895535, kvi on SSD=True, newer than boundary=False
+OK   tiered: symlink snapshots/domain/v2.2-commitment.9072-9076.kv: -> /backup/erigon-hdd/tv2_mx_1mo_m4/domain/v2.2-commitment.9072-9076.kv, size=1619086990, kvi on SSD=True, newer than boundary=False
+OK   tiered: at most one symlinked file straddles the boundary: 0
+OK   tiered: no demotion leftovers (*.demote.tmp, own .tmp in cold dir): []
+OK   all other snapshot files are regular files on SSD: 0 not on SSD []
+OK   domain accounts: steps 0-9248, files 6, gaps [], no accessor []
+OK   domain code: steps 0-9248, files 6, gaps [], no accessor []
+OK   domain commitment: steps 0-9248, files 51, gaps [], no accessor []
+OK   domain rcache: steps 0-9248, files 6, gaps [], no accessor []
+OK   domain receipt: steps 0-9248, files 6, gaps [], no accessor []
+OK   domain storage: steps 0-9248, files 6, gaps [], no accessor []
+OK   free NVMe space: 627 GB, need 100 GB
+RESULT OK (0 failed)
