@@ -26,7 +26,7 @@ def mlab(m):
 
 M_RADIUS = {1: 5, 4: 6.5, 32: 8, 64: 9.5, 128: 11}
 INK, INK2, MUTED, GRID, SURFACE, CRIT = '#141412', '#52514e', '#898781', '#e1e0d9', '#fcfcfb', '#d03b3b'
-BASELINE = {'mgas_s_per_block': 277, 'ssd_commit_gb': 300, 'name': 'baseline_allssd_merged_6mo_w25400000_2026-10-23-3'}
+BASELINE = {'mgas_s_per_block': 277, 'commit_p50_ms': 22.4, 'commit_p95_ms': 73.4, 'commit_p99_ms': 135.6, 'ssd_commit_gb': 300, 'name': 'baseline_allssd_merged_6mo_w25400000_2026-10-23-3'}
 FRONTIERS = [('mgas', 'mgas_s_per_block', 'Mgas/s per block (higher is better)', True),
              ('p50', 'commit_p50_ms', 'commitment p50 ms per block (lower is better)', False),
              ('p99', 'commit_p99_ms', 'commitment p99 ms per block (lower is better)', False)]
@@ -199,9 +199,9 @@ def charts(mx, rows, running, n):
                        alpha=1 if (x, y, L, M) in front else 0.75, zorder=3)
         if len(front) > 1:
             ax.plot([p[0] for p in front], [p[1] for p in front], ls='--', color=INK2, lw=1, zorder=4)
-        if key == 'mgas_s_per_block':
+        if key in BASELINE:
             ax.scatter(BASELINE['ssd_commit_gb'], BASELINE[key], marker='s', s=70, facecolor='none', edgecolor=INK2, zorder=3)
-            ax.annotate('all-SSD baseline', (BASELINE['ssd_commit_gb'], BASELINE[key]), xytext=(6, -12), textcoords='offset points', fontsize=8, color=INK2)
+            ax.annotate(f'all-SSD baseline ({BASELINE[key]:g})', (BASELINE['ssd_commit_gb'], BASELINE[key]), xytext=(6, -12), textcoords='offset points', fontsize=8, color=INK2)
         ax.axvline(BASELINE['ssd_commit_gb'], color=MUTED, lw=0.8, ls=':')
         style(ax, 'SSD commitment GB at run end (lower is better)', label)
         place_labels(ax, pts, front)
