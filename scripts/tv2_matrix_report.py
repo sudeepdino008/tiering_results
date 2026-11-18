@@ -164,13 +164,16 @@ def place_labels(ax, pts, front):
     clash = lambda b: any(b[0] < c[2] and c[0] < b[2] and b[1] < c[3] and c[1] < b[3] for c in boxes)
     for p in sorted(pts, key=lambda p: (-p[1], p[0])):
         px, py = disp[p]
-        t = str(p[3])
-        w, h, r = 6 * len(t) + 2, 10, M_RADIUS[p[3]] * 1.1 + 2
-        cands = [(r, -h / 2), (-w / 2, r), (-w / 2, -r - h), (-r - w, -h / 2)] + [(r, -h / 2 - k * (h + 2)) for k in range(1, 8)]
+        t, on = mlab(p[3])[2:], p in front
+        probe = ax.text(0, 0, t, fontsize=8, fontweight='bold' if on else 'normal')
+        bb = probe.get_window_extent(ax.figure.canvas.get_renderer())
+        probe.remove()
+        w, h, r = bb.width + 3, bb.height + 1, M_RADIUS[p[3]] * 1.1 + 2
+        cands = [(r, -h / 2), (-w / 2, r), (-w / 2, -r - h), (-r - w, -h / 2)] + \
+                [(dx, -h / 2 + sgn * k * (h + 2)) for k in range(1, 8) for sgn in (-1, 1) for dx in (r, -r - w)]
         dx, dy = next(((dx, dy) for dx, dy in cands if not clash((px + dx, py + dy, px + dx + w, py + dy + h))), cands[0])
         boxes.append((px + dx, py + dy, px + dx + w, py + dy + h))
-        on = p in front
-        ax.annotate(t, p[:2], xytext=(dx * 0.72, (dy + h / 2) * 0.72), textcoords='offset points', fontsize=8, va='center',
+        ax.annotate(t, p[:2], xytext=(dx * 72 / ax.figure.dpi, (dy + h / 2) * 72 / ax.figure.dpi), textcoords='offset points', fontsize=8, va='center',
                     color=L_COLOR[p[2]] if not on else INK, fontweight='bold' if on else 'normal',
                     arrowprops=dict(arrowstyle='-', color=MUTED, lw=0.5) if abs(dy) > r + h else None)
 
@@ -196,12 +199,12 @@ def charts(mx, rows, running, n):
                        alpha=1 if (x, y, L, M) in front else 0.75, zorder=3)
         if len(front) > 1:
             ax.plot([p[0] for p in front], [p[1] for p in front], ls='--', color=INK2, lw=1, zorder=4)
-        place_labels(ax, pts, front)
         if key == 'mgas_s_per_block':
             ax.scatter(BASELINE['ssd_commit_gb'], BASELINE[key], marker='s', s=70, facecolor='none', edgecolor=INK2, zorder=3)
             ax.annotate('all-SSD baseline', (BASELINE['ssd_commit_gb'], BASELINE[key]), xytext=(6, -12), textcoords='offset points', fontsize=8, color=INK2)
         ax.axvline(BASELINE['ssd_commit_gb'], color=MUTED, lw=0.8, ls=':')
         style(ax, 'SSD commitment GB at run end (lower is better)', label)
+        place_labels(ax, pts, front)
 
     handles = [Line2D([], [], marker='D' if '@W2' in L else 'o', ls='', color=L_COLOR[L], label=L) for L in GRID_LS if any(k[0] == L for k in rows) or L in LS] + \
               [Line2D([], [], marker='o', ls='', color=MUTED, markersize=M_RADIUS[M] * 0.9, label=mlab(M)) for M in MS] + \
@@ -335,15 +338,15 @@ is 25,400,000 − 1,944,000 = 23,456,000, inside that file, so nothing could go 
 {concl}
 ## Charts
 
-![frontier: Mgas/s](frontier_mgas.png?v={int(time.time())})
+![frontier: Mgas/s](frontier_mgas.png)
 
-![frontier: commitment p50](frontier_p50.png?v={int(time.time())})
+![frontier: commitment p50](frontier_p50.png)
 
-![frontier: commitment p99](frontier_p99.png?v={int(time.time())})
+![frontier: commitment p99](frontier_p99.png)
 
-![trends](trends.png?v={int(time.time())})
+![trends](trends.png)
 
-![progress](progress.png?v={int(time.time())})
+![progress](progress.png)
 
 ## Cells (in run order, `order.txt`)
 
