@@ -1,6 +1,6 @@
 # Matrix run: lookback × SSD merge limit (stage 17)
 
-Updated 2026-11-18T01:01:04Z. 15/26 cells done.
+Updated 2026-11-18T01:01:10Z. 15/26 cells done, running 1mo/4.
 
 Each cell: 10,000 chaintip blocks 25,400,001..25,410,000 from W = 25,400,000, demotion on, offline BALs, state cache on,
 `--tiering.cold-io-max-mbps=50`, erigon c604cf14, 64 GiB memory scope (page cache included), page caches dropped before the start.
@@ -45,7 +45,7 @@ is 25,400,000 − 1,944,000 = 23,456,000, inside that file, so nothing could go 
 | 13 | [4mo/1](cells/4mo_m1/) | 1 | 65.2 | 36.5 | 192.7 / 1,830.2 / 3,908.7 | 468.1 | 239.3 | 696 | 132,808 / 611 | 6 (4.2) | 4 | 2.31 | 0 / 0 / 0 / 64.0 |
 | 14 | [3mo/4](cells/3mo_m4/) | 4 | 74.8 | 37.4 | 187.2 / 2,016.9 / 4,422.8 | 238.9 | 248.2 | 132 | 29,267 / 559 | 1 (1.7) | 2 | 2.25 | 0 / 0 / 0 / 64.0 |
 | 15 | [4mo/128](cells/4mo_m128/) | 128 | 90.0 | 44.5 | 153.0 / 1,406.6 / 2,957.8 | 109.9 | 236.8 | 7 | 4,122 / 469 | 0 (0) | 0 | 1.89 | 0 / 0 / 0 / 64.0 |
-| 16 | 1mo | 4 | pending | | | | | | | | | | |
+| 16 | 1mo | 4 | running | | | | | | | | | | |
 | 17 | 1mo | 1 | pending | | | | | | | | | | |
 | 18 | 1mo | 64 | pending | | | | | | | | | | |
 | 19 | 1mo | 32 | pending | | | | | | | | | | |
