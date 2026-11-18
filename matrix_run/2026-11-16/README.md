@@ -1,6 +1,6 @@
 # Matrix run: lookback × SSD merge limit (stage 17)
 
-Updated 2026-11-18T05:20:40Z. 16/26 cells done, running 1mo/1.
+Updated 2026-11-18T05:39:04Z. 16/26 cells done, running 1mo/1.
 
 Each cell: 10,000 chaintip blocks 25,400,001..25,410,000 from W = 25,400,000, demotion on, offline BALs, state cache on,
 `--tiering.cold-io-max-mbps=50`, erigon c604cf14, 64 GiB memory scope (page cache included), page caches dropped before the start.
@@ -20,11 +20,11 @@ is 25,400,000 − 1,944,000 = 23,456,000, inside that file, so nothing could go 
 
 ## Charts
 
-![frontier](frontier.png)
+![frontier](frontier.png?v=1794980344)
 
-![trends](trends.png)
+![trends](trends.png?v=1794980344)
 
-![progress](progress.png)
+![progress](progress.png?v=1794980344)
 
 ## Cells (in run order, `order.txt`)
 

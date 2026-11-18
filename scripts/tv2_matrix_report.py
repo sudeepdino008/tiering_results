@@ -315,11 +315,11 @@ is 25,400,000 − 1,944,000 = 23,456,000, inside that file, so nothing could go 
 {concl}
 ## Charts
 
-![frontier](frontier.png)
+![frontier](frontier.png?v={int(time.time())})
 
-![trends](trends.png)
+![trends](trends.png?v={int(time.time())})
 
-![progress](progress.png)
+![progress](progress.png?v={int(time.time())})
 
 ## Cells (in run order, `order.txt`)
 
