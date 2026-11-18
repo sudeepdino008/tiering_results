@@ -1,0 +1,4 @@
+2026-11-18T09:39:17Z template tv2_tpl_1mo_h64: mirror /erigon-data/tv2_1s_base
+2026-11-18T09:40:59Z boundary block 25184000 min_txnum 3543821732 step 9072
+2026-11-18T09:41:15Z cold files staged on SSD: 881 (below step 9072) in 118 s
+2026-11-18T09:41:15Z tiered seg retire (cold merges on SSD in /erigon-data/tv2_tpl_1mo_h64_coldstage)

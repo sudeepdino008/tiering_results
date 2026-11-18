@@ -16,6 +16,14 @@ LB = {'1mo': 216000, '3mo': 648000, '4mo': 864000, '6mo': 1296000, '9mo': 194400
 L_COLOR = {'1mo': '#2a78d6', '3mo': '#eb6834', '4mo': '#1baf7a', '6mo': '#eda100'}
 L_COLOR.update({'6mo@W2': L_COLOR['6mo'], '9mo@W2': '#d55181'})
 M_COLOR = dict(zip(MS, ['#2a78d6', '#eb6834', '#1baf7a', '#eda100', '#d55181']))
+STEP_H = 1520 * 12 / 3600  # one step ≈ 1,520 blocks near W at 12 s per block
+
+
+def mlab(m):
+    h = m * STEP_H
+    return f"M={m} (~{h:.0f} h)" if h < 24 else f"M={m} (~{h / 24:.0f} d)"
+
+
 M_RADIUS = {1: 5, 4: 6.5, 32: 8, 64: 9.5, 128: 11}
 INK, INK2, MUTED, GRID, SURFACE, CRIT = '#141412', '#52514e', '#898781', '#e1e0d9', '#fcfcfb', '#d03b3b'
 BASELINE = {'mgas_s_per_block': 277, 'ssd_commit_gb': 300, 'name': 'baseline_allssd_merged_6mo_w25400000_2026-10-23-3'}
@@ -196,7 +204,7 @@ def charts(mx, rows, running, n):
         style(ax, 'SSD commitment GB at run end (lower is better)', label)
 
     handles = [Line2D([], [], marker='D' if '@W2' in L else 'o', ls='', color=L_COLOR[L], label=L) for L in GRID_LS if any(k[0] == L for k in rows) or L in LS] + \
-              [Line2D([], [], marker='o', ls='', color=MUTED, markersize=M_RADIUS[M] * 0.9, label=f'M={M}') for M in MS] + \
+              [Line2D([], [], marker='o', ls='', color=MUTED, markersize=M_RADIUS[M] * 0.9, label=mlab(M)) for M in MS] + \
               [Line2D([], [], marker='s', ls='', markerfacecolor='none', color=INK2, label='baseline')]
     sub = '(colour = lookback, label = M steps, dashed = Pareto frontier)'
     fig, axes = plt.subplots(1, 3, figsize=(19, 5.2), facecolor=SURFACE)
@@ -223,17 +231,17 @@ def charts(mx, rows, running, n):
             for ln in lines:
                 ys = [done[getk(x, ln)][key] if getk(x, ln) in done else None for x in xs]
                 ax.plot(range(len(xs)), [float('nan') if y is None else y for y in ys], color=colors[ln], lw=2, marker='o',
-                        markersize=5, markeredgecolor=SURFACE, markeredgewidth=1.5, label=f'M={ln}' if c == 0 else ln)
+                        markersize=5, markeredgecolor=SURFACE, markeredgewidth=1.5, label=mlab(ln) if c == 0 else ln)
                 for i, x in enumerate(xs):
                     s = rows.get(getk(x, ln))
                     if s and not ok(s):
                         ax.scatter(i, ax.get_ylim()[0], marker='o', facecolor='none', edgecolor=colors[ln], zorder=3)
-            ax.set_xticks(range(len(xs)), [str(x) for x in xs])
+            ax.set_xticks(range(len(xs)), [mlab(x).replace(' (', '\n(') if c == 1 else str(x) for x in xs])
             style(ax, xname, label)
-    h = [Line2D([], [], color=M_COLOR[M], lw=2, label=f'M={M}') for M in MS] + [Line2D([], [], color=L_COLOR[L], lw=2, label=L) for L in TREND_LS]
+    h = [Line2D([], [], color=M_COLOR[M], lw=2, label=mlab(M)) for M in MS] + [Line2D([], [], color=L_COLOR[L], lw=2, label=L) for L in TREND_LS]
     fig.tight_layout()
-    fig.legend(handles=h, loc='lower center', bbox_to_anchor=(0.5, 1.0), ncol=9, frameon=False, fontsize=9)
-    fig.suptitle('Trends: left by lookback (lines = M), right by merge limit (lines = lookback)', y=1.06, color=INK, fontsize=12)
+    fig.legend(handles=h, loc='lower center', bbox_to_anchor=(0.5, 1.0), ncol=5, frameon=False, fontsize=9)
+    fig.suptitle('Trends: left by lookback (lines = M), right by merge limit (lines = lookback)', y=1.1, color=INK, fontsize=12)
     save(fig, mx, 'trends')
     plt.close(fig)
 
@@ -259,7 +267,7 @@ def charts(mx, rows, running, n):
                 ax.text(j + 0.475, y + 0.45, 'running' if run else '', ha='center', va='center', color='#1c5cab', fontsize=9)
     ax.set_xlim(0, len(MS))
     ax.set_ylim(0, len(GRID_LS))
-    ax.set_xticks([j + 0.475 for j in range(len(MS))], [f'M={M}' for M in MS])
+    ax.set_xticks([j + 0.475 for j in range(len(MS))], [mlab(M).replace(' (', '\n(') for M in MS])
     ax.set_yticks([len(GRID_LS) - 1 - i + 0.45 for i in range(len(GRID_LS))], GRID_LS)
     ax.tick_params(length=0, colors=INK2)
     for sp in ax.spines.values():
