@@ -53,3 +53,5 @@
 2026-11-18T06:08:35Z cell 1mo/1: prepared in 2873 s; run mx_1mo_m1_w25400000_2026-11-16
 2026-11-18T09:38:50Z cell 1mo/1: rc=0 in 258 min; "mgas_s_per_block": 46.91385559812713
 2026-11-18T09:39:17Z cell 1mo/64: prepare (est new 162 GB, free 715 GB)
+2026-11-18T10:34:08Z cell 1mo/64: prepared in 3291 s; run mx_1mo_m64_w25400000_2026-11-16
+2026-11-18T14:00:12Z cell 1mo/64: rc=0 in 260 min; "mgas_s_per_block": 48.383523792569555
