@@ -70,3 +70,6 @@
 2026-11-19T12:35:39Z cell 9mo/64_w2: rc=0 in 137 min; "mgas_s_per_block": 149.77894186822613
 2026-11-19T12:36:02Z cell 9mo/128_w2: prepare (est new 330 GB, free 704 GB)
 2026-11-19T17:12:58Z driver start: 6mo:32 3mo:64 6mo:1 6mo:128 3mo:128 3mo:32 6mo:64 6mo:4 4mo:64 4mo:4 4mo:32 3mo:1 4mo:1 3mo:4 4mo:128 1mo:4 1mo:1 1mo:64 6mo:32:w2 9mo:32:w2 9mo:64:w2 9mo:128:w2 9mo:1:w2 9mo:4:w2
+2026-11-19T17:13:06Z cell 9mo/128_w2: prepare (est new 330 GB, free 704 GB)
+2026-11-19T18:14:41Z cell 9mo/128_w2: prepared in 3695 s; run mx_9mo_m128_w26130000_2026-11-16
+2026-11-19T19:22:09Z cell 9mo/128_w2: rc=0 in 129 min; "mgas_s_per_block": 153.10782973880976
