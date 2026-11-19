@@ -1,6 +1,6 @@
 # Matrix run: lookback × SSD merge limit (stage 17)
 
-Updated 2026-11-19T12:36:00Z. 21/24 cells done, running 9mo@W2/128.
+Updated 2026-11-19T17:13:04Z. 21/24 cells done, running 9mo@W2/128.
 
 Each cell: 10,000 chaintip blocks 25,400,001..25,410,000 from W = 25,400,000, demotion on, offline BALs, state cache on,
 `--tiering.cold-io-max-mbps=50`, erigon c604cf14, 64 GiB memory scope (page cache included), page caches dropped before the start.
