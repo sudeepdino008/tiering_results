@@ -65,3 +65,6 @@
 2026-11-19T07:54:38Z cell 9mo/32_w2: prepare (est new 448 GB, free 704 GB)
 2026-11-19T09:08:26Z cell 9mo/32_w2: prepared in 4428 s; run mx_9mo_m32_w26130000_2026-11-16
 2026-11-19T10:17:45Z cell 9mo/32_w2: rc=0 in 143 min; "mgas_s_per_block": 149.12511528464273
+2026-11-19T10:18:09Z cell 9mo/64_w2: prepare (est new 384 GB, free 704 GB)
+2026-11-19T11:26:31Z cell 9mo/64_w2: prepared in 4102 s; run mx_9mo_m64_w26130000_2026-11-16
+2026-11-19T12:35:39Z cell 9mo/64_w2: rc=0 in 137 min; "mgas_s_per_block": 149.77894186822613

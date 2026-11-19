@@ -1,0 +1,41 @@
+{
+ "run": "mx_9mo_m64_w26130000_2026-11-16",
+ "L": "9mo",
+ "lookback_blocks": 1944000,
+ "M": 64,
+ "rc": 0,
+ "datadir": "/erigon-data/tv2_mx_9mo_m64_w2",
+ "W": 26130000,
+ "root_errors": 0,
+ "last_block": 26140000,
+ "memory_max": 68719476736,
+ "memory_peak_gb": 64.0,
+ "oom_kill": 0,
+ "hot_files": 28,
+ "layout_after": {
+  "SSD": [
+   28,
+   315402734903
+  ],
+  "HDD": [
+   3,
+   196311175111
+  ]
+ },
+ "mgas_s_per_block": 149.77894186822613,
+ "mgas_s_p50": 143.0737704918033,
+ "wall_mgas_s": 75.75604000516138,
+ "commit_p50_ms": 86.8,
+ "commit_p95_ms": 234.0,
+ "commit_p99_ms": 460.5,
+ "ssd_commit_gb": 315.4,
+ "hdd_commit_gb": 196.31,
+ "ssd_probes_per_block": 4065.6656988386067,
+ "hdd_probes_per_block": 146.20204245094115,
+ "hdd_probe_share": 0.03472608943200091,
+ "cold_merges": 0,
+ "blocks": 9988.0,
+ "duration_s": 4002,
+ "demotions": 0,
+ "demoted_gb": 0
+}
