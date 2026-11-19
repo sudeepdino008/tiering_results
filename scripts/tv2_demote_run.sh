@@ -13,7 +13,7 @@ BSTEP=$(sed -nE 's/.*cold boundary: block [0-9]+, min_txnum [0-9]+, step ([0-9]+
 [ -n "$LB" ] && [ -n "$COLD" ] && [ -n "$BSTEP" ] || { echo "cannot read L/cold dir/boundary from $DD/TV2_README.md"; exit 1; }
 O=$DD/logs/precheck_$(date -u +%Y%m%dT%H%M%SZ).txt
 python3 /erigon-data/tv2_scripts/precheck.py --layout tiered --cold-dir $COLD --boundary-step $BSTEP --stop-block $STOP \
-  --bal-dir /erigon-data/offline-bal-8192-tip --bal-from 25400001 --integration $BIN/integration --min-free-gb 100 $DD > $O 2>&1 \
+  --bal-dir /erigon-data/offline-bal-8192-tip --bal-from ${BALFROM:-25400001} --integration $BIN/integration --min-free-gb 100 $DD > $O 2>&1 \
   || { echo "precheck FAIL $O"; exit 1; }
 FLAGS="--prune.mode=full --prune.distance.blocks=10000000 --externalcl --no-downloader --maxpeers=0 --exec.state-cache=true --use-offline-bals --offline-bal.dir=/erigon-data/offline-bal-8192-tip --pfb.exec.stop-at-block=$STOP --tiering.commitment-hot-merge-steps=$HMS --tiering.lookback-blocks=$LB --tiering.cold-dir=$COLD --tiering.demote --metrics --metrics.addr=127.0.0.1 --metrics.port=$MPORT $EXTRA"
 [ "$MODE" = chaintip ] && FLAGS="$FLAGS --pfb.sync.mode.chaintip"
