@@ -203,7 +203,7 @@ def charts(mx, rows, running, n):
             ax.plot([p[0] for p in front], [p[1] for p in front], ls='--', color=INK2, lw=1, zorder=4)
         if key in BASELINE:
             ax.scatter(BASELINE['ssd_commit_gb'], BASELINE[key], marker='s', s=70, facecolor='none', edgecolor=INK2, zorder=3)
-            ax.annotate(f'all-SSD baseline @W: {BASELINE["ssd_commit_gb"]} GB SSD, {BASELINE[key]:g} {BASE_UNIT[key]}', (BASELINE['ssd_commit_gb'], BASELINE[key]), xytext=(6, -12), textcoords='offset points', fontsize=8, color=INK2)
+            ax.annotate(f'all-SSD baseline @W: {BASELINE["ssd_commit_gb"]} GB SSD, {BASELINE["mgas_s_per_block"]} Mgas/s' + ('' if key == 'mgas_s_per_block' else f', {BASELINE[key]:g} {BASE_UNIT[key]}'), (BASELINE['ssd_commit_gb'], BASELINE[key]), xytext=(6, -12), textcoords='offset points', fontsize=8, color=INK2)
         ax.axvline(BASELINE['ssd_commit_gb'], color=MUTED, lw=0.8, ls=':')
         if any('@W2' in L for (L, M) in done):
             ax.axvline(W2_SSD_GB, color=MUTED, lw=0.8, ls='-.')
