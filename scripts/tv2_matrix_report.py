@@ -26,7 +26,8 @@ def mlab(m):
 
 M_RADIUS = {1: 5, 4: 6.5, 32: 8, 64: 9.5, 128: 11}
 INK, INK2, MUTED, GRID, SURFACE, CRIT = '#141412', '#52514e', '#898781', '#e1e0d9', '#fcfcfb', '#d03b3b'
-BASELINE = {'mgas_s_per_block': 277, 'commit_p50_ms': 22.4, 'commit_p95_ms': 73.4, 'commit_p99_ms': 135.6, 'ssd_commit_gb': 300, 'name': 'baseline_allssd_merged_6mo_w25400000_2026-10-23-3'}
+BASELINE = {'mgas_s_per_block': 277, 'commit_p50_ms': 22.4, 'commit_p95_ms': 73.4, 'commit_p99_ms': 135.6, 'ssd_commit_gb': 307, 'name': 'baseline_allssd_merged_6mo_w25400000_2026-10-23-3'}
+W2_SSD_GB = 380  # all-SSD commitment at W2 after default seg retire; size only, no run
 FRONTIERS = [('mgas', 'mgas_s_per_block', 'Mgas/s per block (higher is better)', True),
              ('p50', 'commit_p50_ms', 'commitment p50 ms per block (lower is better)', False),
              ('p99', 'commit_p99_ms', 'commitment p99 ms per block (lower is better)', False)]
@@ -201,14 +202,18 @@ def charts(mx, rows, running, n):
             ax.plot([p[0] for p in front], [p[1] for p in front], ls='--', color=INK2, lw=1, zorder=4)
         if key in BASELINE:
             ax.scatter(BASELINE['ssd_commit_gb'], BASELINE[key], marker='s', s=70, facecolor='none', edgecolor=INK2, zorder=3)
-            ax.annotate(f'all-SSD baseline ({BASELINE[key]:g})', (BASELINE['ssd_commit_gb'], BASELINE[key]), xytext=(6, -12), textcoords='offset points', fontsize=8, color=INK2)
+            ax.annotate(f'all-SSD baseline @W ({BASELINE["ssd_commit_gb"]} GB, {BASELINE[key]:g})', (BASELINE['ssd_commit_gb'], BASELINE[key]), xytext=(6, -12), textcoords='offset points', fontsize=8, color=INK2)
         ax.axvline(BASELINE['ssd_commit_gb'], color=MUTED, lw=0.8, ls=':')
+        if any('@W2' in L for (L, M) in done):
+            ax.axvline(W2_SSD_GB, color=MUTED, lw=0.8, ls='-.')
+            ax.annotate(f'all-SSD @W2 ({W2_SSD_GB} GB, size only)', (W2_SSD_GB, 1), xycoords=('data', 'axes fraction'), xytext=(4, -12),
+                        textcoords='offset points', fontsize=8, color=INK2)
         style(ax, 'SSD commitment GB at run end (lower is better)', label)
         place_labels(ax, pts, front)
 
     handles = [Line2D([], [], marker='D' if '@W2' in L else 'o', ls='', color=L_COLOR[L], label=L) for L in GRID_LS if any(k[0] == L for k in rows) or L in LS] + \
               [Line2D([], [], marker='o', ls='', color=MUTED, markersize=M_RADIUS[M] * 0.9, label=mlab(M)) for M in MS] + \
-              [Line2D([], [], marker='s', ls='', markerfacecolor='none', color=INK2, label='baseline')]
+              [Line2D([], [], marker='s', ls='', markerfacecolor='none', color=INK2, label='all-SSD baseline @W')]
     sub = '(colour = lookback, label = merge limit (M) as time span, dashed = Pareto frontier)'
     fig, axes = plt.subplots(1, 3, figsize=(19, 5.2), facecolor=SURFACE)
     for ax, f in zip(axes, FRONTIERS):
@@ -326,7 +331,8 @@ Each cell: 10,000 chaintip blocks 25,400,001..25,410,000 from W = 25,400,000, de
 `--tiering.cold-io-max-mbps=50`, erigon c604cf14, 64 GiB memory scope (page cache included), page caches dropped before the start.
 L = lookback (cold boundary = W − L), M = SSD merge limit for commitment files (`--tiering.commitment-hot-merge-steps`).
 Cold files are pre-merged and on HDD; hot files on SSD are merged up to M steps. All-SSD baseline (256-step merges):
-{BASELINE['mgas_s_per_block']} Mgas/s per block, SSD commitment ≈ {BASELINE['ssd_commit_gb']} GB (`{BASELINE['name']}`).
+{BASELINE['mgas_s_per_block']} Mgas/s per block, SSD commitment {BASELINE['ssd_commit_gb']} GB (`{BASELINE['name']}`).
+All-SSD commitment at W2 (default `seg retire` of `tv2_1s_base_w2`, size only, no run): {W2_SSD_GB} GB.
 Mgas/s per block = mean of the per-block value; SSD/HDD GB = commitment `.kv` bytes per tier at the run end.
 
 ### W2 (second start block, for 9mo)

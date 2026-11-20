@@ -1,12 +1,13 @@
 # Matrix run: lookback × SSD merge limit (stage 17)
 
-Updated 2026-11-19T21:30:01Z. 23/24 cells done.
+Updated 2026-11-20T08:49:07Z. 23/24 cells done.
 
 Each cell: 10,000 chaintip blocks 25,400,001..25,410,000 from W = 25,400,000, demotion on, offline BALs, state cache on,
 `--tiering.cold-io-max-mbps=50`, erigon c604cf14, 64 GiB memory scope (page cache included), page caches dropped before the start.
 L = lookback (cold boundary = W − L), M = SSD merge limit for commitment files (`--tiering.commitment-hot-merge-steps`).
 Cold files are pre-merged and on HDD; hot files on SSD are merged up to M steps. All-SSD baseline (256-step merges):
-277 Mgas/s per block, SSD commitment ≈ 300 GB (`baseline_allssd_merged_6mo_w25400000_2026-10-23-3`).
+277 Mgas/s per block, SSD commitment 307 GB (`baseline_allssd_merged_6mo_w25400000_2026-10-23-3`).
+All-SSD commitment at W2 (default `seg retire` of `tv2_1s_base_w2`, size only, no run): 380 GB.
 Mgas/s per block = mean of the per-block value; SSD/HDD GB = commitment `.kv` bytes per tier at the run end.
 
 ### W2 (second start block, for 9mo)
