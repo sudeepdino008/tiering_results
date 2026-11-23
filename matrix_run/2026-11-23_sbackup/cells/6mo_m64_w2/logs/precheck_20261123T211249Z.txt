@@ -1,0 +1,32 @@
+precheck /erigon-data/tv2_mx_6mo_m64_w2 layout=tiered at 2026-11-23T21:12:49Z
+OK   datadir under /erigon-data: /erigon-data/tv2_mx_6mo_m64_w2
+OK   chaindata exists and is not in use: 
+OK   tiered: 0-8192 commitment is a symlink: /sbackup/tv2_mx_6mo_m64_w2/domain/v2.2-commitment.0-8192.kv
+OK   tiered: symlink snapshots/domain/v2.2-commitment.0-8192.kv: -> /sbackup/tv2_mx_6mo_m64_w2/domain/v2.2-commitment.0-8192.kv, size=180470634040, kvi on SSD=True, newer than boundary=False
+OK   tiered: symlink snapshots/domain/v2.2-commitment.8192-8448.kv: -> /sbackup/tv2_mx_6mo_m64_w2/domain/v2.2-commitment.8192-8448.kv, size=31046638240, kvi on SSD=True, newer than boundary=False
+OK   tiered: symlink snapshots/domain/v2.2-commitment.8448-8704.kv: -> /sbackup/tv2_mx_6mo_m64_w2/domain/v2.2-commitment.8448-8704.kv, size=32438534759, kvi on SSD=True, newer than boundary=False
+OK   tiered: symlink snapshots/domain/v2.2-commitment.8704-8768.kv: -> /sbackup/tv2_mx_6mo_m64_w2/domain/v2.2-commitment.8704-8768.kv, size=11847228077, kvi on SSD=True, newer than boundary=False
+OK   tiered: symlink snapshots/domain/v2.2-commitment.8768-8776.kv: -> /sbackup/tv2_mx_6mo_m64_w2/domain/v2.2-commitment.8768-8776.kv, size=3354123438, kvi on SSD=True, newer than boundary=False
+OK   tiered: symlink snapshots/domain/v2.2-commitment.8776-8780.kv: -> /sbackup/tv2_mx_6mo_m64_w2/domain/v2.2-commitment.8776-8780.kv, size=1470976867, kvi on SSD=True, newer than boundary=False
+OK   tiered: symlink snapshots/domain/v2.2-commitment.8780-8782.kv: -> /sbackup/tv2_mx_6mo_m64_w2/domain/v2.2-commitment.8780-8782.kv, size=917071442, kvi on SSD=True, newer than boundary=False
+OK   tiered: at most one symlinked file straddles the boundary: 0
+OK   tiered: no demotion leftovers (*.demote.tmp, own .tmp in cold dir): []
+OK   all other snapshot files are regular files on SSD: 0 not on SSD []
+OK   domain accounts: steps 0-9800, files 9, gaps [], no accessor []
+OK   domain code: steps 0-9800, files 9, gaps [], no accessor []
+OK   domain commitment: steps 0-9800, files 24, gaps [], no accessor []
+OK   domain rcache: steps 0-9800, files 9, gaps [], no accessor []
+OK   domain receipt: steps 0-9800, files 9, gaps [], no accessor []
+OK   domain storage: steps 0-9800, files 9, gaps [], no accessor []
+OK   header segments reach stop block: segments end at 26147000, stop 26140000
+OK   offline-BAL store covers range: 24091855..26147580, need 26130001..26140000
+OK   free NVMe space: 525 GB, need 100 GB
+RESULT OK (0 failed)
+== free before drop
+               total        used        free      shared  buff/cache   available
+Mem:           125Gi       8.2Gi       6.6Gi       3.7Mi       111Gi       117Gi
+Swap:          4.0Gi       4.0Gi       880Ki
+== free after global drop
+               total        used        free      shared  buff/cache   available
+Mem:           125Gi       7.8Gi       118Gi       3.7Mi       624Mi       117Gi
+Swap:          4.0Gi       4.0Gi       880Ki
