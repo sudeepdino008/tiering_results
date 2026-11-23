@@ -2,14 +2,16 @@
 # Stage 17 matrix driver: per cell (L, M) from order.txt: prepare, 10,000-block chaintip run, report, delete, push.
 # usage: tv2_matrix.sh [L:M[:w2] ...]   (default: every cell of order.txt without a stats.json with rc 0)
 # A cell with :w2 runs at W2 = 26,130,000 (base tv2_1s_base_w2, blocks 26,130,001..26,140,000).
+# env MX (results folder; its name is the run-name suffix), COLDROOT (run cold dirs, e.g. /sbackup).
 # Scripts run from frozen copies in $FROZEN; restart the driver to pick up script edits.
 {
 set -uo pipefail
-MX=/home/moskud/tiering_results/matrix_run/2026-11-16
+MX=${MX:-/home/moskud/tiering_results/matrix_run/2026-11-16}
 SRC=/erigon-data/tv2_scripts
 FROZEN=/erigon-data/tv2_logs/stage17/scripts
 BIN=/erigon-data/tv2_logs/stage16/bin
 HDD=/backup/erigon-hdd
+export COLDROOT=${COLDROOT:-$HDD} TV2_MX=$MX
 NOTES=/home/moskud/worktrees/tiering_v2/ralph_notes.md
 PY=$SRC/.venv/bin/python
 declare -A HOT1=([6mo]=730 [4mo]=490 [3mo]=370 [1mo]=125 [6mow2]=730 [9mow2]=1080)
@@ -24,7 +26,7 @@ delete() { # deletable per the stage-17 policy; every deletion is logged in ralp
   local p
   for p in "$@"; do
     [ -e "$p" ] || continue
-    case $p in /erigon-data/tv2_mx_*|/erigon-data/tv2_tpl_*|/erigon-data/*_coldstage|$HDD/tv2_mx_*|$HDD/tv2_tpl_*) ;;
+    case $p in /erigon-data/tv2_mx_*|/erigon-data/tv2_tpl_*|/erigon-data/*_coldstage|$HDD/tv2_mx_*|$HDD/tv2_tpl_*|/sbackup/tv2_mx_*) ;;
       *) log "refusing to delete $p"; return 1 ;; esac
     rm -rf "$p" && echo "- $(date -u +%FT%TZ) stage 17 driver deleted $p" >> $NOTES
   done
@@ -39,7 +41,7 @@ done_cell() { [ -f $1/stats.json ] && $PY -c "import json,sys; sys.exit(json.loa
 cell() { # returns 0 = done/ran, 2 = skipped: space
   local L=$1 M=$2 V=${3:-} W=25400000 BASE=/erigon-data/tv2_1s_base SFX=
   [ "$V" = w2 ] && { W=26130000; BASE=/erigon-data/tv2_1s_base_w2; SFX=_w2; }
-  local C=$MX/cells/${L}_m$M$SFX NAME=tv2_mx_${L}_m$M$SFX RUN=mx_${L}_m${M}_w${W}_2026-11-16
+  local C=$MX/cells/${L}_m$M$SFX NAME=tv2_mx_${L}_m$M$SFX RUN=mx_${L}_m${M}_w${W}_$(basename $MX)
   local DD=/erigon-data/$NAME TPL; TPL=$(tpl_of $L $M $SFX)
   done_cell $C && return 0
   local est=15
@@ -52,7 +54,7 @@ cell() { # returns 0 = done/ran, 2 = skipped: space
   echo "$L $M $V" > $MX/running.txt
   $PY $FROZEN/tv2_matrix_report.py report > /dev/null && push "start $L/$M"
   [ -f /erigon-data/$TPL/TPL_BOUNDARY ] || delete /erigon-data/$TPL /erigon-data/${TPL}_coldstage $HDD/$TPL
-  delete $DD $HDD/$NAME
+  delete $DD $COLDROOT/$NAME
   log "cell $L/$M$SFX: prepare (est new $est GB, free $(free_gb) GB)"
   local t0=$SECONDS rc
   W=$W BASE=$BASE TAG=$SFX ERIGON=$BIN/erigon INTEGRATION=$BIN/integration bash $FROZEN/tv2_prepare.sh --lookback-blocks $L --hot-merge-steps $M --name $NAME > $C/logs/prepare.log 2>&1
@@ -64,7 +66,7 @@ cell() { # returns 0 = done/ran, 2 = skipped: space
       bash $FROZEN/tv2_demote_run.sh $DD $RUN > $C/logs/run_driver.log 2>&1
     rc=$(sed -nE 's/^done rc=([0-9]+)$/\1/p' $C/logs/run_driver.log); rc=${rc:-1}
     grep -q '^cgroup .*memory.max 68719476736' $DD/logs/memcg.txt || { log "cell $L/$M$SFX: memory.max is not 64G"; [ "$rc" = 0 ] && rc=99; }
-    python3 $FROZEN/precheck.py --layout tiered --cold-dir $HDD/$NAME/domain $DD > $C/logs/precheck_after.txt 2>&1 \
+    python3 $FROZEN/precheck.py --layout tiered --cold-dir $COLDROOT/$NAME/domain $DD > $C/logs/precheck_after.txt 2>&1 \
       || log "cell $L/$M$SFX: post-run precheck FAIL"
     cp $DD/logs/precheck_*.txt $DD/logs/memcg.txt $DD/logs/demote.csv $C/logs/ 2>/dev/null
     tail -300 $DD/logs/run.out > $C/logs/run_tail.out
@@ -76,7 +78,7 @@ cell() { # returns 0 = done/ran, 2 = skipped: space
   fi
   log "cell $L/$M$SFX: rc=$rc in $(( (SECONDS - t0) / 60 )) min; $(grep -oE '"mgas_s_per_block": [0-9.]+' $C/stats.json)"
   rm -f $MX/running.txt
-  delete $DD $HDD/$NAME /erigon-data/$TPL $HDD/$TPL
+  delete $DD $COLDROOT/$NAME /erigon-data/$TPL $HDD/$TPL
   $PY $FROZEN/tv2_matrix_report.py report > /dev/null
   push "cell $L/$M$SFX rc=$rc"
   return 0

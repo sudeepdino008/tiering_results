@@ -1,6 +1,6 @@
 # Matrix run: lookback × SSD merge limit (stage 17)
 
-Updated 2026-11-23T02:45:43Z. 23/23 cells done.
+Updated 2026-11-23T05:21:35Z. 23/23 cells done.
 
 Each cell: 10,000 chaintip blocks 25,400,001..25,410,000 from W = 25,400,000, demotion on, offline BALs, state cache on,
 `--tiering.cold-io-max-mbps=50`, erigon c604cf14, 64 GiB memory scope (page cache included), page caches dropped before the start.
@@ -88,3 +88,7 @@ Data: [`runs.csv`](runs.csv). Each cell folder has `layout_before.md`, `stats.js
 | 4mo | 24,536,000 / ~8543 | 8192-8448, 8448-8512, 8512-8528, +8+4+2+1 | ~225 | ~700 | ~490 |
 | 3mo | 24,752,000 / 8714 | 8192-8448, 8448-8704, 8704-8712, 8712-8714 | ~248 | 528 | ~370 |
 | 1mo | 25,184,000 / ~9066 | 8192-8448, 8448-8704, 8704-8960, 8960-9024, 9024-9056, +8+2 | ~290 | ~176 | ~125 |
+
+## Setup diagram
+
+![W and W2 setup: start blocks, lookback boundaries, commitment files, cold and hot tiers](setup_diagram.svg)

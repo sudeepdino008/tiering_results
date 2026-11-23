@@ -1,6 +1,6 @@
 #!/bin/bash
 # Prepares a run datadir at W for one lookback: commitment files fully older than W - L are cold (HDD, pre-merged).
-# env W (default 25400000), BASE, TAG (template name suffix for another W)
+# env W (default 25400000), BASE, TAG (template name suffix for another W), COLDROOT (run cold dirs; default the HDD dir, other filesystems get copies)
 # usage: tv2_prepare.sh --lookback-blocks <1mo|3mo|4mo|6mo|9mo|N> [--name <datadir name>] [--hot-merge-steps N (default 1)]
 # Per L a template (tv2_tpl_<L> + /backup/erigon-hdd/tv2_tpl_<L>/domain) is built once; a run is a hardlink copy of it.
 # 1-step cold copies are shared through the pool /backup/erigon-hdd/pool_1s_W (one HDD copy per file name).
@@ -43,7 +43,7 @@ relink_cold() { # point every commitment symlink of datadir $1 at a hardlink in 
   for l in $(find $dd/snapshots/domain -maxdepth 1 -type l); do
     t=$(readlink $l)
     [ "$(dirname $t)" = "$cold" ] && continue
-    ln $t $cold/
+    ln $t $cold/ 2>/dev/null || cp $t $cold/
     ln -sfn $cold/$(basename $l) $l
   done
 }
@@ -105,12 +105,13 @@ build_template() {
 }
 
 [ -e /erigon-data/$NAME ] && { echo "/erigon-data/$NAME exists"; exit 1; }
-[ -e $HDD/$NAME ] && { echo "$HDD/$NAME exists"; exit 1; }
+COLDROOT=${COLDROOT:-$HDD}
+[ -e $COLDROOT/$NAME ] && { echo "$COLDROOT/$NAME exists"; exit 1; }
 [ -f /erigon-data/$TPL/TPL_BOUNDARY ] || build_template
 read B TX BSTEP < /erigon-data/$TPL/TPL_BOUNDARY
 
 T0=$SECONDS
-DD=/erigon-data/$NAME; COLD=$HDD/$NAME/domain
+DD=/erigon-data/$NAME; COLD=$COLDROOT/$NAME/domain
 log "run $NAME: mirror $TPL"
 $MIRROR /erigon-data/$TPL $DD > /dev/null
 rm -rf $DD/logs $DD/TPL_BOUNDARY; mkdir $DD/logs

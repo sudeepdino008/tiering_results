@@ -5,7 +5,7 @@ usage: tv2_matrix_report.py layout <datadir>                      -> markdown on
        tv2_matrix_report.py report [--mx DIR]                     -> runs.csv, frontier/trends/progress PNG+SVG, README.md"""
 import argparse, csv, glob, json, os, re, sys, time
 
-MX = '/home/moskud/tiering_results/matrix_run/2026-11-16'
+MX = os.environ.get('TV2_MX', '/home/moskud/tiering_results/matrix_run/2026-11-16')
 STEP = 390625
 LS = ['1mo', '3mo', '4mo', '6mo']
 W1 = 25400000
@@ -41,6 +41,11 @@ GEOMETRY = """| L | boundary block / step | cold set on HDD (besides 0-8192) | H
 | 4mo | 24,536,000 / ~8543 | 8192-8448, 8448-8512, 8512-8528, +8+4+2+1 | ~225 | ~700 | ~490 |
 | 3mo | 24,752,000 / 8714 | 8192-8448, 8448-8704, 8704-8712, 8712-8714 | ~248 | 528 | ~370 |
 | 1mo | 25,184,000 / ~9066 | 8192-8448, 8448-8704, 8704-8960, 8960-9024, 9024-9056, +8+2 | ~290 | ~176 | ~125 |"""
+SETUP_DIAGRAM = """
+## Setup diagram
+
+![W and W2 setup: start blocks, lookback boundaries, commitment files, cold and hot tiers](setup_diagram.svg)
+"""
 
 
 def commitment_files(dd):
@@ -367,7 +372,7 @@ Data: [`runs.csv`](runs.csv). Each cell folder has `layout_before.md`, `stats.js
 ## Geometry (plan estimates; the real boundary is in each cell's `layout_before.md`)
 
 {GEOMETRY}
-"""
+{SETUP_DIAGRAM if os.path.exists(f'{mx}/setup_diagram.svg') else ''}"""
     open(f'{mx}/README.md', 'w').write(readme)
     print(f'wrote {mx}/README.md, runs.csv and charts ({len(rows)} cells)')
 
