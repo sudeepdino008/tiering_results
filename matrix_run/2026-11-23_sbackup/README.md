@@ -1,6 +1,6 @@
 # Matrix run: lookback × SSD merge limit (stage 17)
 
-Updated 2026-11-23T22:29:55Z. 2/3 cells done.
+Updated 2026-11-23T22:30:02Z. 2/3 cells done, running 9mo@W2/128.
 
 Each cell: 10,000 chaintip blocks 25,400,001..25,410,000 from W = 25,400,000, demotion on, offline BALs, state cache on,
 `--tiering.cold-io-max-mbps=50`, erigon c604cf14, 64 GiB memory scope (page cache included), page caches dropped before the start.
@@ -38,7 +38,7 @@ is 25,400,000 − 1,944,000 = 23,456,000, inside that file, so nothing could go 
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
 | 1 | [6mo@W2/32](cells/6mo_m32_w2/) | 32 | 126.1 / 121.1 / 50.8 / 30.9 | 67.7 | 110.9 / 294.2 / 610.4 | 258.5 | 261.6 | 36 | 5,248 / 419 | 0 (0) | 0 | 1.24 | 0 / 0 / 0 / 64.0 |
 | 2 | [6mo@W2/64](cells/6mo_m64_w2/) | 64 | 126.0 / 121.0 / 51.2 / 31.0 | 67.7 | 111.0 / 294.1 / 615.4 | 206.8 | 261.6 | 20 | 3,607 / 419 | 0 (0) | 0 | 1.24 | 0 / 0 / 0 / 64.0 |
-| 3 | 9mo@W2 | 128 | pending | | | | | | | | | | |
+| 3 | 9mo@W2 | 128 | running | | | | | | | | | | |
 
 Data: [`runs.csv`](runs.csv). Each cell folder has `layout_before.md`, `stats.json`, `metrics.md` + `images/`, and logs.
 
