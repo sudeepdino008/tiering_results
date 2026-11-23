@@ -1,1 +1,5 @@
 2026-11-23T14:09:23Z driver start: 6mo:32:w2 6mo:64:w2 9mo:128:w2
+2026-11-23T14:09:30Z cell 6mo/32_w2: prepare (est new 15 GB, free 451 GB)
+2026-11-23T14:18:57Z cell 6mo/32_w2: prepare failed rc=1
+2026-11-23T14:18:57Z cell 6mo/32_w2: rc=1 in 9 min; 
+2026-11-23T16:01:47Z driver start: 6mo:32:w2 6mo:64:w2 9mo:128:w2
