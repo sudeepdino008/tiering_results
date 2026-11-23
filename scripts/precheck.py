@@ -8,6 +8,7 @@ Prints one line per check, writes the same text to <datadir>/logs/precheck_<UTC 
 import argparse, os, re, shutil, struct, subprocess, sys, time
 
 HDD_MOUNT, SSD_MOUNT = '/backup', '/'
+HDD_MOUNTS = (HDD_MOUNT, '/sbackup')  # /sbackup is a loop device on a fixed sector range of the same HDD
 HDD0 = {'snapshots/domain/v2.2-commitment.0-8192.kv':
         ('/backup/erigon-hdd/domain/v2.2-commitment.0-8192.kv', 180_470_634_040)}
 
@@ -54,7 +55,7 @@ def check_tiered(links):
             continue
         size = os.path.getsize(p) if os.path.exists(p) else -1
         want_dir = cold
-        ok = (os.path.isabs(t) and os.path.dirname(t) == want_dir and os.path.exists(p) and mount_of(t) == HDD_MOUNT
+        ok = (os.path.isabs(t) and os.path.dirname(t) == want_dir and os.path.exists(p) and mount_of(t) in HDD_MOUNTS
               and size > 0 and not os.path.exists(t + '.tmp'))
         if rel in HDD0:
             ok = ok and size == HDD0[rel][1]
@@ -96,7 +97,7 @@ for rel, (target, size) in expected.items():
     if rel not in links:
         continue
     t = links[rel]
-    ok = (t == target and os.path.isabs(t) and os.path.exists(p) and mount_of(t) == HDD_MOUNT
+    ok = (t == target and os.path.isabs(t) and os.path.exists(p) and mount_of(t) in HDD_MOUNTS
           and os.path.getsize(p) == size)
     report(ok, f'symlink {rel}', f'-> {t}, resolves={os.path.exists(p)}, mount={mount_of(t) if os.path.exists(t) else "-"}, '
                                  f'size={os.path.getsize(p) if os.path.exists(p) else "-"}')
