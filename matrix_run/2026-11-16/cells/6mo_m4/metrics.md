@@ -22,7 +22,7 @@ KV_READ_METRICS=true --prune.mode=full --prune.distance.blocks=10000000 --extern
 | blocks executed | 10,000 |
 | wall time | 1.42 h |
 | blocks per second (mean) | 1.95 |
-| Mgas/s per block mean / p50 / p5 | 123.15 / 119.19 / 35.32 |
+| Mgas/s per block mean / p50 / p5 / p1 | 123.15 / 119.19 / 35.32 / 21.47 |
 | Mgas/s wall clock (all-in) | 59.27 |
 | exec time per block (exec + commitment) p50 / p90 / p95 / p99 | 227.5 ms / 652.8 ms / 958.2 ms / 1.99 s |
 | exec time per block (exec + commitment) worst | 4.29 s |

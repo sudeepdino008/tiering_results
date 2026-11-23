@@ -32,7 +32,7 @@ W2_SSD_GB = 380  # all-SSD commitment at W2 after default seg retire; size only,
 FRONTIERS = [('mgas', 'mgas_s_per_block', 'Mgas/s per block (higher is better)', True),
              ('p50', 'commit_p50_ms', 'commitment p50 ms per block (lower is better)', False),
              ('p99', 'commit_p99_ms', 'commitment p99 ms per block (lower is better)', False)]
-COLS = ['order', 'L', 'W', 'lookback_blocks', 'M', 'mgas_s_per_block', 'wall_mgas_s', 'commit_p50_ms', 'commit_p95_ms', 'commit_p99_ms',
+COLS = ['order', 'L', 'W', 'lookback_blocks', 'M', 'mgas_s_per_block', 'mgas_s_p50', 'mgas_s_p5', 'mgas_s_p1', 'wall_mgas_s', 'commit_p50_ms', 'commit_p95_ms', 'commit_p99_ms',
         'ssd_commit_gb', 'hdd_commit_gb', 'hot_files', 'ssd_probes_per_block', 'hdd_probes_per_block', 'hdd_probe_share',
         'demotions', 'demoted_gb', 'cold_merges', 'duration_s', 'oom_kill', 'memory_peak_gb']
 GEOMETRY = """| L | boundary block / step | cold set on HDD (besides 0-8192) | HDD GB | hot steps on SSD | 1-step hot GB |
@@ -107,7 +107,7 @@ def stats(cell, run, dd, L, M, rc, W=W1):
         g = lambda k, i=0: rows[k][i][0]
         gb = lambda v: None if v is None else round(v / 1e9, 2)
         ms = lambda v: None if v is None else round(v * 1000, 1)
-        st.update(mgas_s_per_block=g('Mgas/s per block mean / p50 / p5'), mgas_s_p50=g('Mgas/s per block mean / p50 / p5', 1),
+        st.update(mgas_s_per_block=g('Mgas/s per block mean / p50 / p5 / p1'), mgas_s_p50=g('Mgas/s per block mean / p50 / p5 / p1', 1), mgas_s_p5=g('Mgas/s per block mean / p50 / p5 / p1', 2), mgas_s_p1=g('Mgas/s per block mean / p50 / p5 / p1', 3),
                   wall_mgas_s=g('Mgas/s wall clock (all-in)'),
                   commit_p50_ms=ms(g('commitment time per block p50 / p90 / p95 / p99')),
                   commit_p95_ms=ms(g('commitment time per block p50 / p90 / p95 / p99', 2)),
@@ -313,7 +313,7 @@ def report(mx):
             s = dict(rows[k], order=idx.get(k))
             w.writerow([s.get(c) for c in COLS + ['rc', 'root_errors']])
     charts(mx, rows, running, len(order))
-    table = ['| # | L | M | Mgas/s per block | wall Mgas/s | commit p50 / p95 / p99 ms | SSD GB | HDD GB | hot files | SSD / HDD probes per block | '
+    table = ['| # | L | M | Mgas/s per block mean / p50 / p5 / p1 | wall Mgas/s | commit p50 / p95 / p99 ms | SSD GB | HDD GB | hot files | SSD / HDD probes per block | '
              'demotions (GB) | cold merges | duration h | rc / root err / OOM / peak GiB |', '|' + '---|' * 14]
     for o in order:
         k = (sk(o), int(o[3]))
@@ -323,7 +323,7 @@ def report(mx):
             table.append(f'| {o[0]} | {k[0]} | {o[3]} | {"running" if running == k else "pending"} |' + ' |' * 10)
             continue
         dur = s.get('duration_s')
-        table.append(f'| {o[0]} | {cell} | {o[3]} | {fmtv(s.get("mgas_s_per_block"))} | {fmtv(s.get("wall_mgas_s"))} | '
+        table.append(f'| {o[0]} | {cell} | {o[3]} | {" / ".join(fmtv(s.get(k)) for k in ("mgas_s_per_block", "mgas_s_p50", "mgas_s_p5", "mgas_s_p1"))} | {fmtv(s.get("wall_mgas_s"))} | '
                      f'{fmtv(s.get("commit_p50_ms"))} / {fmtv(s.get("commit_p95_ms"))} / {fmtv(s.get("commit_p99_ms"))} | {fmtv(s.get("ssd_commit_gb"))} | '
                      f'{fmtv(s.get("hdd_commit_gb"))} | {fmtv(s.get("hot_files"))} | {fmtv(s.get("ssd_probes_per_block"), 0)} / '
                      f'{fmtv(s.get("hdd_probes_per_block"), 0)} | {fmtv(s.get("demotions"))} ({fmtv(s.get("demoted_gb"))}) | '
@@ -340,7 +340,8 @@ L = lookback (cold boundary = W − L), M = SSD merge limit for commitment files
 Cold files are pre-merged and on HDD; hot files on SSD are merged up to M steps. All-SSD baseline (256-step merges):
 {BASELINE['mgas_s_per_block']} Mgas/s per block, SSD commitment {BASELINE['ssd_commit_gb']} GB (`{BASELINE['name']}`).
 All-SSD commitment at W2 (default `seg retire` of `tv2_1s_base_w2`, size only, no run): {W2_SSD_GB} GB.
-Mgas/s per block = mean of the per-block value; SSD/HDD GB = commitment `.kv` bytes per tier at the run end.
+Mgas/s per block = mean of the per-block value; p50/p5/p1 come from the `exec_block_mgas_per_sec` histogram
+(bucket edges 5, 10, 20, 30, 40, 50, 60, 80, 100, 125, 150, 200, 300; linear inside a bucket). SSD/HDD GB = commitment `.kv` bytes per tier at the run end.
 
 ### W2 (second start block, for 9mo)
 

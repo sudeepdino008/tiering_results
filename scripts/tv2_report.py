@@ -116,7 +116,7 @@ def summary(run, t0, t1):
     row('blocks executed', [(blocks, '')])
     row('wall time', [(dur / 3600, 'h')])
     row('blocks per second (mean)', [(div(blocks, dur), '')])
-    row('Mgas/s per block mean / p50 / p5', [(hmean('exec_block_mgas_per_sec'), ''), (hq('exec_block_mgas_per_sec', 0.5), ''), (hq('exec_block_mgas_per_sec', 0.05), '')])
+    row('Mgas/s per block mean / p50 / p5 / p1', [(hmean('exec_block_mgas_per_sec'), '')] + [(hq('exec_block_mgas_per_sec', q), '') for q in (0.5, 0.05, 0.01)])
     row('Mgas/s wall clock (all-in)', [(div(inc('exec_gas_used_total'), dur * 1e6), '')])
     timing('exec time per block (exec + commitment)', 'exec_block_seconds', 'exec_block_seconds_max')
     timing('commitment time per block', 'commitment_round_duration_seconds', 'commitment_round_duration_seconds_max')

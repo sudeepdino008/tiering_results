@@ -37,5 +37,7 @@
  "duration_s": 5121,
  "demotions": 1,
  "demoted_gb": 3.6,
- "commit_p99_ms": 1452.2
+ "commit_p99_ms": 1452.2,
+ "mgas_s_p5": 35.32,
+ "mgas_s_p1": 21.47
 }

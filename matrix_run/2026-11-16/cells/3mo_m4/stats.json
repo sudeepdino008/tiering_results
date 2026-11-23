@@ -37,5 +37,7 @@
  "blocks": 9997.0,
  "duration_s": 8116,
  "demotions": 1,
- "demoted_gb": 1.7
+ "demoted_gb": 1.7,
+ "mgas_s_p5": 15.98,
+ "mgas_s_p1": 8.53
 }
