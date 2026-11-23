@@ -25,4 +25,4 @@
 23 D 9mo 64 3.0 w2
 24 D 9mo 128 3.0 w2
 25 D 9mo 1 3.2 w2
-26 D 9mo 4 3.5 w2
+# skipped 2026-11-19 (space: est 816 GB + 60 > free 704 GB): 26 D 9mo 4 3.5 w2

@@ -73,11 +73,12 @@ td[contenteditable]{font-family:var(--font-mono);background:var(--accent-soft);b
 
 <div class="wrap">
   <header>
-    <div class="badge">Dummy data · model-generated</div>
+    <div class="badge">Real data · stage 17 runs</div>
     <h1>Lookback × Merge Matrix</h1>
-    <p>How the two tiering knobs trade SSD space against execution speed. Every number on this page comes from a small
-      model with noise, so the shapes are plausible and the values are not. Edit any cell in the table at the bottom and
-      the charts follow; that is how the real stage-16 runs plug in.</p>
+    <p>How the two tiering knobs trade SSD space against execution speed. Each point is one run of 10,000 chaintip blocks
+      from W = 25,400,000 (9mo from W2 = 26,130,000). SSD saved = 1 − SSD commitment GB / all-SSD commitment GB at the same
+      start block (307 GB at W, 380 GB at W2); a negative value means more SSD than all-SSD. You can edit the table cells
+      to try other values.</p>
   </header>
 
   <section class="controls" aria-label="Controls">
@@ -85,10 +86,6 @@ td[contenteditable]{font-family:var(--font-mono);background:var(--accent-soft);b
       <select id="perf"><option value="mgas">Throughput, Mgas/s</option><option value="p95">Commitment p95, ms per block</option></select></div>
     <div class="ctl"><label for="norm">Scale</label>
       <select id="norm"><option value="abs">Absolute</option><option value="rel">Relative to all-SSD baseline</option></select></div>
-    <div class="ctl"><label for="noise">Noise (run-to-run), %</label>
-      <input id="noise" type="range" min="0" max="10" value="3" step="1"></div>
-    <div class="ctl"><label for="reseed">Dummy data</label>
-      <button id="reseed" type="button">Regenerate</button></div>
     <div class="ctl"><label for="reset">Edits</label>
       <button id="reset" type="button">Discard table edits</button></div>
   </section>
@@ -119,60 +116,69 @@ td[contenteditable]{font-family:var(--font-mono);background:var(--accent-soft);b
     <p class="sub">Rows are lookback, columns are merge limit. Darker is more. These are the reference tables for the
       report; the charts above are for finding the shape.</p>
     <div class="heat">
-      <div class="m"><h3 id="t-h-saved">SSD saved, % of state</h3><svg id="h-saved" class="plot" viewBox="0 0 480 330"></svg></div>
+      <div class="m"><h3 id="t-h-saved">SSD saved, % of all-SSD</h3><svg id="h-saved" class="plot" viewBox="0 0 480 330"></svg></div>
       <div class="m"><h3 id="t-h-perf">Performance</h3><svg id="h-perf" class="plot" viewBox="0 0 480 330"></svg></div>
     </div>
   </section>
 
   <section class="card">
     <h2>Runs</h2>
-    <p class="sub">One row per run, the same window for all. Shaded cells are editable. Hot files = commitment files still
+    <p class="sub">One row per run. Shaded cells are editable. Hot files = commitment files still
       on SSD at the end of the window; it is the hidden variable behind most of the knees.</p>
     <div class="tbl-wrap"><table id="tbl"></table></div>
-    <p class="note">Real data replaces the model with a CSV of <code>lookback,merge_steps,ssd_saved_pct,mgas_s,commit_p95_ms,hot_files</code>
-      exported between each run's start and stop marks. The dummy model: saved space falls with longer lookback and with
-      larger merge limits (a merged file waits until its last step is cold); throughput falls with shorter lookback (more
-      HDD reads) and with many 1-step files on SSD (more index probes per lookup); the baseline is 150 Mgas/s and 95 ms p95.</p>
+    <p class="note">Data: <code>runs.csv</code> in tiering_results <code>matrix_run/2026-11-16</code>. Not shown: the
+      6mo@W2/32 anchor (99.2 Mgas/s). Skipped: 1mo/32 and 1mo/128 (too slow), 9mo@W2/4 (not enough SSD space). The relative
+      scale uses the all-SSD baseline at W (277 Mgas/s, 73.4 ms p95); there is no speed baseline at W2.</p>
   </section>
 </div>
 <div class="tip" id="tip"></div>
+<script type="text/csv" id="runs">
+order,L,W,lookback_blocks,M,mgas_s_per_block,wall_mgas_s,commit_p50_ms,commit_p95_ms,commit_p99_ms,ssd_commit_gb,hdd_commit_gb,hot_files,ssd_probes_per_block,hdd_probes_per_block,hdd_probe_share,demotions,demoted_gb,cold_merges,duration_s,oom_kill,memory_peak_gb,rc,root_errors
+1,6mo,,1296000,32,138.0943786651675,62.5143104748852,85.6,693.7,1457.1,264.99,185.62,33,7751.705,286.0587,0.03557060216257914,0,0,0,4853,0,64.0,0,0
+2,3mo,,648000,64,79.25421225615159,38.93667812632233,177.8,1946.9,4350.6,100.1,247.59,9,4623.7240448089615,542.5080016003202,0.10498397559694514,0,0,0,7791,0,64.0,0,0
+3,6mo,,1296000,1,69.20598565559037,37.77686526928532,155.6,1731.0,3799.0,729.37,189.28,1043,162432.52301841474,278.28112489992,0.0017100922099234285,5,5.96,3.003035534267123,8030,0,64.0,0,0
+4,6mo,,1296000,128,138.83896353115162,62.611997043792286,85.2,684.9,1446.0,164.17,185.62,9,4340.242524252425,285.96539653965397,0.06176819010423709,0,0,0,4846,0,64.0,0,0
+5,3mo,,648000,128,79.24677319500437,38.95441183845232,177.6,1933.1,4344.3,79.62,247.59,5,3866.4997000000003,542.3728,0.12296341617120321,0,0,0,7787,0,64.0,0,0
+6,3mo,,648000,32,78.78221087734093,38.805555662346734,178.8,1957.2,4337.7,124.94,247.59,17,6150.618561856185,542.5770577057706,0.08104841799349946,0,0,0,7818,0,64.0,0,0
+7,6mo,,1296000,64,138.60304929830562,62.56106139350722,85.4,689.2,1445.0,209.96,185.62,17,5475.399339933993,286.0828082808281,0.04964226412305344,0,0,0,4850,0,64.0,0,0
+8,6mo,25400000,1296000,4,123.15051868999764,59.26721884106577,93.3,708.9,1452.2,510.85,188.4,261,41759.342000000004,198.6335,0.004733802727689219,1,3.6,1,5121,0,64.0,0,0
+9,4mo,25400000,864000,64,91.61188960951,45.02465690936024,149.8,1377.7,2939.7,136.98,236.84,12,5001.330263289619,469.2074281709881,0.08576295786173822,0,0,0,6738,0,64.0,0,0
+10,4mo,25400000,864000,4,87.04442935889509,43.79641062529601,157.3,1421.7,3120.2,326.64,239.3,176,34320.86130291204,492.14880416291413,0.014137712120446538,1,1.88,2,6927,0,64.0,0,0
+11,4mo,25400000,864000,32,91.03971154210235,44.853655472862826,149.4,1380.0,2862.5,169.58,236.84,22,6753.353235323532,468.96529652965296,0.06492773614205077,0,0,0,6764,0,64.0,0,0
+12,3mo,25400000,648000,1,62.88555390410628,34.07011393927813,211.7,2093.0,4524.6,343.73,249.67,526,112950.8813,766.6836,0.00674351428371723,7,4.82,4,8905,0,64.0,0,0
+13,4mo,25400000,864000,1,65.1597212197303,36.47926554781705,192.7,1830.2,3908.7,468.11,239.3,696,132808.25332666334,610.7913956978489,0.004578224124140763,6,4.24,4,8316,0,64.0,0,0
+14,3mo,25400000,648000,4,74.82377500329568,37.374543178685606,187.2,2016.9,4422.8,238.94,248.21,132,29266.655696709015,559.4524357307192,0.01876163899329131,1,1.7,2,8116,0,64.0,0,0
+15,4mo,25400000,864000,128,90.02156090661065,44.47624377177227,153.0,1406.6,2957.8,109.91,236.84,7,4122.328894673609,468.94473368041656,0.10210470428466814,0,0,0,6820,0,64.0,0,0
+16,1mo,25400000,216000,4,48.6267049666433,25.03939075963487,314.5,3811.8,8323.8,80.0,297.75,43,14872.657199999998,1200.8944999999999,0.07470838241929942,0,0.0,0,12115,0,64.0,0,0
+17,1mo,25400000,216000,1,46.91385559812713,24.41976234172894,326.6,3897.0,8489.6,114.65,299.47,169,55306.8575,1476.5184000000002,0.02599984410389927,6,3.85,3,12422,0,64.0,0,0
+18,1mo,25400000,216000,64,48.383523792569555,24.949295148536038,317.7,3817.7,8357.2,36.22,296.13,4,3794.6221110555284,1064.4580290145072,0.219055552544515,0,0,0,12157,0,64.0,0,0
+21,6mo,26130000,1296000,32,99.22396322000921,58.09105197081572,150.7,406.3,793.7,258.51,261.55,36,5251.448172258388,418.91216825237854,0.07388295509701684,0,0,0,5218,0,64.0,0,0
+22,9mo,26130000,1944000,32,149.12511528464273,75.48122017550791,87.4,235.7,469.4,396.7,196.31,52,6156.856456937082,146.2295688706612,0.023200894716042975,0,0,0,4017,0,64.0,0,0
+23,9mo,26130000,1944000,64,149.77894186822613,75.75604000516138,86.8,234.0,460.5,315.4,196.31,28,4065.6656988386067,146.20204245094115,0.03472608943200091,0,0,0,4002,0,64.0,0,0
+24,9mo,26130000,1944000,128,153.10782973880976,76.99516339015247,83.8,222.9,452.9,253.76,196.31,17,3163.2101000000002,146.1235,0.0441610964135116,0,0,0,3938,0,64.0,0,0
+25,9mo,26130000,1944000,1,64.90041300047487,42.725991258509865,179.8,499.1,1175.7,1072.75,199.55,1543,140720.6553310662,207.80846169233845,0.001474827790414507,6,5.19,4,7094,0,64.0,0,0
+</script>
 
 <script>
 (function(){
-  const LB = [
-    {k:'3d', days:3}, {k:'1w', days:7}, {k:'2w', days:14}, {k:'1mo', days:30}, {k:'3mo', days:90}
-  ];
-  const MM = [1,4,16,64,256];
-  const STEPS_PER_DAY = 4, STATE_GB = 300, GB_PER_STEP = 0.42;
-  const BASE = {mgas:150, p95:95};
+  const LB = [{k:'1mo'}, {k:'3mo'}, {k:'4mo'}, {k:'6mo'}, {k:'9mo@W2'}];
+  const MM = [1,4,32,64,128];
+  const BASE = {mgas:277, p95:73.4};
+  const ALL_SSD_GB = {W:307, W2:380};
   const SER = ['--s1','--s2','--s3','--s4','--s5'];
 
-  let seed = 7, noisePct = 3, edits = {};
-  function rnd(){ seed = (seed*1103515245 + 12345) & 0x7fffffff; return seed/0x7fffffff; }
-  function gauss(){ return (rnd()+rnd()+rnd()+rnd()-2)/1.15; }
-
-  function model(lb, m, nz){
-    const Ls = lb.days*STEPS_PER_DAY;
-    const wait = m/2;                               // avg extra steps a merged file sits on SSD
-    const dedup = 1/(1+0.30*Math.log2(m));          // merged files shed superseded keys
-    const hotGB = (Ls + wait)*GB_PER_STEP*dedup + 6; // + accounts/storage tail always hot
-    const saved = Math.max(0, 1 - hotGB/STATE_GB)*100;
-    const hotFiles = Math.round(Ls/m) + 1;
-    const coldFrac = 0.42*Math.exp(-lb.days/20);     // cold branch reads per lookup, short lookback hurts
-    const filePen = 0.0009*Math.max(0, hotFiles-8);  // many 1-step files on SSD cost index probes
-    let mgas = BASE.mgas*(1-coldFrac)*(1-filePen);
-    let p95 = BASE.p95*(1+2.6*coldFrac)*(1+1.4*filePen);
-    const n = nz/100;
-    mgas *= 1 + n*gauss(); p95 *= 1 + n*gauss();
-    return {saved:+saved.toFixed(1), mgas:+mgas.toFixed(1), p95:+p95.toFixed(1), hot:hotFiles};
-  }
-
-  let base = [];
-  function regen(){ seed = Math.floor(Math.random()*1e6)+1; build(); }
-  function build(){
-    base = [];
-    LB.forEach((lb,i)=>MM.forEach((m,j)=>base.push({i,j,lb:lb.k,m,...model(lb,m,noisePct)})));
-  }
+  let edits = {};
+  const [head, ...lines] = document.getElementById('runs').textContent.trim().split('\n');
+  const cols = head.split(',');
+  const base = [];
+  lines.forEach(l=>{
+    const o = Object.fromEntries(l.split(',').map((v,c)=>[cols[c], v]));
+    const w2 = o.W === '26130000', lb = o.L + (w2 ? '@W2' : '');
+    const i = LB.findIndex(x=>x.k===lb), j = MM.indexOf(+o.M);
+    if(i<0 || j<0) return;
+    base.push({i, j, lb, m:+o.M, saved:(1 - o.ssd_commit_gb/ALL_SSD_GB[w2?'W2':'W'])*100,
+               mgas:+o.mgas_s_per_block, p95:+o.commit_p95_ms, hot:+o.hot_files});
+  });
   function rows(){ return base.map(r=>({...r, ...(edits[r.lb+'/'+r.m]||{})})); }
 
   const perfSel = document.getElementById('perf'), normSel = document.getElementById('norm');
@@ -206,7 +212,7 @@ td[contenteditable]{font-family:var(--font-mono);background:var(--accent-soft);b
     Y.ticks(5).forEach(t=>{g+=`<line class="grid" x1="${ml}" x2="${W-mr}" y1="${Y(t)}" y2="${Y(t)}"/><text class="tick" x="${ml-8}" y="${Y(t)+4}" text-anchor="end">${fmt(t)}</text>`;});
     X.ticks(6).forEach(t=>{g+=`<line class="grid" y1="${mt}" y2="${H-mb}" x1="${X(t)}" x2="${X(t)}"/><text class="tick" x="${X(t)}" y="${H-mb+18}" text-anchor="middle">${fmt(t)}</text>`;});
     g+=`<line class="base" x1="${ml}" x2="${W-mr}" y1="${H-mb}" y2="${H-mb}"/>`;
-    g+=`<text class="axis-title" x="${(ml+W-mr)/2}" y="${H-10}" text-anchor="middle">SSD saved, % of total state</text>`;
+    g+=`<text class="axis-title" x="${(ml+W-mr)/2}" y="${H-10}" text-anchor="middle">SSD saved, % of all-SSD commitment</text>`;
     g+=`<text class="axis-title" transform="translate(16 ${(mt+H-mb)/2}) rotate(-90)" text-anchor="middle">${esc(perfLabel())}</text>`;
     // frontier
     const hib=higherIsBetter();
@@ -215,7 +221,7 @@ td[contenteditable]{font-family:var(--font-mono);background:var(--accent-soft);b
     sorted.forEach(r=>{const v=perfVal(r); if(hib? v>best : v<best){front.push(r); best=v;}});
     front.sort((a,b)=>a.saved-b.saved);
     if(front.length>1) g+=`<polyline fill="none" stroke="${css('--ink-2')}" stroke-width="1.5" stroke-dasharray="4 4" points="${front.map(r=>`${X(r.saved)},${Y(perfVal(r))}`).join(' ')}"/>`;
-    const sizes={1:5,4:6.5,16:8,64:9.5,256:11};
+    const sizes={1:5,4:6.5,32:8,64:9.5,128:11};
     vis.forEach(r=>{
       const c=css(SER[r.i]); const onF=front.includes(r);
       g+=`<circle data-k="${r.lb}/${r.m}" cx="${X(r.saved)}" cy="${Y(perfVal(r))}" r="${sizes[r.m]}" fill="${c}" fill-opacity="${onF?1:.75}" stroke="${css('--surface')}" stroke-width="2"/>`;
@@ -225,7 +231,7 @@ td[contenteditable]{font-family:var(--font-mono);background:var(--accent-soft);b
     svg.querySelectorAll('circle').forEach(c=>{const r=data.find(d=>d.lb+'/'+d.m===c.dataset.k); c.addEventListener('mouseenter',e=>showTip(e,tipHtml(r))); c.addEventListener('mousemove',moveTip); c.addEventListener('mouseleave',hideTip);});
     const lg=document.getElementById('lg-pareto');
     lg.innerHTML=LB.map((l,i)=>`<button type="button" class="k ${hidden.has(l.k)?'dim':''}" data-lb="${l.k}"><span class="sw" style="background:${css(SER[i])}"></span>${l.k} lookback</button>`).join('')+
-      `<span class="size">size = merge limit: <span class="sw" style="width:6px;height:6px;background:var(--muted)"></span>1 … <span class="sw" style="width:14px;height:14px;background:var(--muted)"></span>256 · dashed = frontier</span>`;
+      `<span class="size">size = merge limit: <span class="sw" style="width:6px;height:6px;background:var(--muted)"></span>1 … <span class="sw" style="width:14px;height:14px;background:var(--muted)"></span>128 · dashed = frontier</span>`;
     lg.querySelectorAll('.k').forEach(b=>b.addEventListener('click',()=>{const k=b.dataset.lb; hidden.has(k)?hidden.delete(k):hidden.add(k); render();}));
   }
 
@@ -246,7 +252,7 @@ td[contenteditable]{font-family:var(--font-mono);background:var(--accent-soft);b
     series.forEach((s,si)=>{
       const colorIdx = mode==='L' ? si : si; const c=css(SER[colorIdx]);
       const dim = mode==='M' && hidden.has(s);
-      const pts=xs.map((x,i)=>{const r=data.find(d=> mode==='L' ? (d.lb===x && String(d.m)===s) : (String(d.m)===x && d.lb===s)); return {r, x:X(i), y:Y(val(r))};});
+      const pts=xs.map((x,i)=>({r:data.find(d=> mode==='L' ? (d.lb===x && String(d.m)===s) : (String(d.m)===x && d.lb===s)), x:X(i)})).filter(p=>p.r).map(p=>({...p, y:Y(val(p.r))}));
       g+=`<polyline fill="none" stroke="${c}" stroke-width="2" stroke-opacity="${dim?.25:1}" stroke-linejoin="round" points="${pts.map(p=>p.x+','+p.y).join(' ')}"/>`;
       pts.forEach(p=>{g+=`<circle data-k="${p.r.lb}/${p.r.m}" cx="${p.x}" cy="${p.y}" r="4" fill="${c}" fill-opacity="${dim?.25:1}" stroke="${css('--surface')}" stroke-width="2"/>`;});
     });
@@ -308,12 +314,10 @@ td[contenteditable]{font-family:var(--font-mono);background:var(--accent-soft);b
 
   perfSel.addEventListener('change',()=>render(false));
   normSel.addEventListener('change',()=>render(false));
-  document.getElementById('noise').addEventListener('input',e=>{noisePct=+e.target.value; build(); render();});
-  document.getElementById('reseed').addEventListener('click',()=>{regen(); render();});
   document.getElementById('reset').addEventListener('click',()=>{edits={}; render();});
   if(window.matchMedia){ window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>render(false)); }
   new MutationObserver(()=>render(false)).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
 
-  build(); render();
+  render();
 })();
 </script>

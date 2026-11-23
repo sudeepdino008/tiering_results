@@ -1,6 +1,6 @@
 # Matrix run: lookback × SSD merge limit (stage 17)
 
-Updated 2026-11-20T08:55:17Z. 23/24 cells done.
+Updated 2026-11-23T02:45:43Z. 23/23 cells done.
 
 Each cell: 10,000 chaintip blocks 25,400,001..25,410,000 from W = 25,400,000, demotion on, offline BALs, state cache on,
 `--tiering.cold-io-max-mbps=50`, erigon c604cf14, 64 GiB memory scope (page cache included), page caches dropped before the start.
@@ -17,6 +17,25 @@ Commitment data below block 24,091,854 is one 180 GB file (0-8192), and tiering 
 is 25,400,000 − 1,944,000 = 23,456,000, inside that file, so nothing could go to HDD. At W2 it is 24,186,000, above it.
 `6mo@W2/32` is the anchor: compared with `6mo/32` at W, it shows how much the block range alone changes the numbers.
 12mo would need W2 ≥ ~26.69M, beyond the data on this box (ends at 26,147,580).
+
+## Conclusions
+
+- **Lookback sets the speed.** With M ≥ 32: 48 Mgas/s (1mo), 79 (3mo), 91 (4mo), 139 (6mo), 149–153 (9mo@W2); all-SSD is 277.
+  A shorter lookback gives more HDD reads per block (HDD probes per block: 1,064 at 1mo/64, 286 at 6mo, 146 at 9mo@W2).
+- **M sets the SSD size.** 6mo: 729 → 511 → 265 → 210 → 164 GB for M = 1, 4, 32, 64, 128. Each merged file keeps one copy
+  of each changed trie node, so many small files keep many copies.
+- **The knee is M = 32.** Above 32, speed changes by ≤ 1 % (9mo@W2: +2.7 % at 128). M = 128 is the best cell for every
+  lookback: the least SSD at the same or better speed. Frontier: 1mo/64, 3mo/128, 4mo/128, 6mo/128, 9mo@W2/128.
+- **Small M does not pay.** M = 1 costs 50 % of the speed at 6mo and 58 % at 9mo@W2; M = 4 costs 11 % at 6mo and 5–6 % at
+  3mo/4mo. At 1mo, M has almost no effect (46.9–48.6), because HDD reads dominate. 1-step files cost a lot of SSD:
+  6mo/1 uses 729 GB and 9mo@W2/1 uses 1,073 GB, more than all-SSD (307 / 380 GB).
+- **Best trade-off at W:** 6mo/128 uses 46 % less SSD than all-SSD (164 vs 307 GB) at 50 % of its speed.
+  At W2, 9mo/128 uses 33 % less (254 vs 380 GB) at 153 Mgas/s.
+- **HDD placement changes the W2 numbers.** 6mo@W2/32 (99 Mgas/s) is slower than 6mo/32 at W (138) mainly because its cold
+  files are far apart on the HDD (long seeks), not because of the block range. In short tests with the same cold files
+  placed close together on the disk, 6mo@W2 gave 137–140 Mgas/s.
+
+Skipped: 1mo/32 and 1mo/128 (1mo is too slow), 9mo@W2/4 (not enough SSD space).
 
 
 ## Charts
@@ -58,7 +77,6 @@ is 25,400,000 − 1,944,000 = 23,456,000, inside that file, so nothing could go 
 | 23 | [9mo@W2/64](cells/9mo_m64_w2/) | 64 | 149.8 | 75.8 | 86.8 / 234.0 / 460.5 | 315.4 | 196.3 | 28 | 4,066 / 146 | 0 (0) | 0 | 1.11 | 0 / 0 / 0 / 64.0 |
 | 24 | [9mo@W2/128](cells/9mo_m128_w2/) | 128 | 153.1 | 77.0 | 83.8 / 222.9 / 452.9 | 253.8 | 196.3 | 17 | 3,163 / 146 | 0 (0) | 0 | 1.09 | 0 / 0 / 0 / 64.0 |
 | 25 | [9mo@W2/1](cells/9mo_m1_w2/) | 1 | 64.9 | 42.7 | 179.8 / 499.1 / 1,175.7 | 1,072.8 | 199.6 | 1,543 | 140,721 / 208 | 6 (5.2) | 4 | 1.97 | 0 / 0 / 0 / 64.0 |
-| 26 | 9mo@W2 | 4 | pending | | | | | | | | | | |
 
 Data: [`runs.csv`](runs.csv). Each cell folder has `layout_before.md`, `stats.json`, `metrics.md` + `images/`, and logs.
 

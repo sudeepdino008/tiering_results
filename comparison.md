@@ -13,3 +13,5 @@ Major results are at the top of each gist.
 | baseline_allssd_merged_6mo_w25400000_2026-10-23-3 | demote_tiered_32step_6mo_cap50_w25400000_2026-10-27-1 | [gist](https://gist.github.com/sudeepdino008/a32c1f06486d65a7cc2cfd751150cb1c) |
 | demote_tiered_4step_6mo_cap50_w25400000_2026-10-27-1 | demote_tiered_4step_3mo_cap50_w25400000_2026-10-28-1 | [gist](https://gist.github.com/sudeepdino008/a873fb7e8cb6b401a1ea9c8909eaed88) |
 | baseline_allssd_merged_6mo_w25400000_2026-10-23-3 | demote_tiered_4step_3mo_cap50_w25400000_2026-10-28-1 | [gist](https://gist.github.com/sudeepdino008/bfcee1769bac54dab2989c4879511993) |
+
+Lookback × merge limit matrix (stage 17, 23 cells): [conclusions](matrix_run/2026-11-16/README.md#conclusions).
