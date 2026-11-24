@@ -1,3 +1,5 @@
+## Conclusions
+
 Cold `.kv` files of each run are on `/sbackup` (sda1: the first 1 TiB of the HDD, the outer edge); the 2026-11-16 W2 cells had them on `/backup` at 1.85–6.0 TB.
 Same blocks, binary and flags as the 2026-11-16 W2 cells; only the HDD placement differs.
 

@@ -1,6 +1,6 @@
 # Matrix run: lookback × SSD merge limit (stage 17)
 
-Updated 2026-11-24T01:11:52Z. 3/3 cells done.
+Updated 2026-11-24T01:12:23Z. 3/3 cells done.
 
 Each cell: 10,000 chaintip blocks 25,400,001..25,410,000 from W = 25,400,000, demotion on, offline BALs, state cache on,
 `--tiering.cold-io-max-mbps=50`, erigon c604cf14, 64 GiB memory scope (page cache included), page caches dropped before the start.
@@ -18,6 +18,8 @@ Commitment data below block 24,091,854 is one 180 GB file (0-8192), and tiering 
 is 25,400,000 − 1,944,000 = 23,456,000, inside that file, so nothing could go to HDD. At W2 it is 24,186,000, above it.
 `6mo@W2/32` is the anchor: compared with `6mo/32` at W, it shows how much the block range alone changes the numbers.
 12mo would need W2 ≥ ~26.69M, beyond the data on this box (ends at 26,147,580).
+
+## Conclusions
 
 Cold `.kv` files of each run are on `/sbackup` (sda1: the first 1 TiB of the HDD, the outer edge); the 2026-11-16 W2 cells had them on `/backup` at 1.85–6.0 TB.
 Same blocks, binary and flags as the 2026-11-16 W2 cells; only the HDD placement differs.
