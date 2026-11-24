@@ -338,7 +338,7 @@ Each cell: 10,000 chaintip blocks 25,400,001..25,410,000 from W = 25,400,000, de
 `--tiering.cold-io-max-mbps=50`, erigon c604cf14, 64 GiB memory scope (page cache included), page caches dropped before the start.
 L = lookback (cold boundary = W − L), M = SSD merge limit for commitment files (`--tiering.commitment-hot-merge-steps`).
 Cold files are pre-merged and on HDD; hot files on SSD are merged up to M steps. All-SSD baseline (256-step merges):
-{BASELINE['mgas_s_per_block']} Mgas/s per block, SSD commitment {BASELINE['ssd_commit_gb']} GB (`{BASELINE['name']}`).
+{BASELINE['mgas_s_per_block']} Mgas/s per block (p50 / p5 / p1: 272.0 / 128.6 / 83.8), SSD commitment {BASELINE['ssd_commit_gb']} GB (`{BASELINE['name']}`).
 All-SSD commitment at W2 (default `seg retire` of `tv2_1s_base_w2`, size only, no run): {W2_SSD_GB} GB.
 Mgas/s per block = mean of the per-block value; p50/p5/p1 come from the `exec_block_mgas_per_sec` histogram
 (bucket edges 5, 10, 20, 30, 40, 50, 60, 80, 100, 125, 150, 200, 300; linear inside a bucket). SSD/HDD GB = commitment `.kv` bytes per tier at the run end.
