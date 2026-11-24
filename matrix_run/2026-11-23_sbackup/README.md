@@ -1,6 +1,6 @@
 # Matrix run: lookback × SSD merge limit (stage 17)
 
-Updated 2026-11-24T01:10:05Z. 3/3 cells done.
+Updated 2026-11-24T01:11:52Z. 3/3 cells done.
 
 Each cell: 10,000 chaintip blocks 25,400,001..25,410,000 from W = 25,400,000, demotion on, offline BALs, state cache on,
 `--tiering.cold-io-max-mbps=50`, erigon c604cf14, 64 GiB memory scope (page cache included), page caches dropped before the start.
@@ -19,6 +19,18 @@ is 25,400,000 − 1,944,000 = 23,456,000, inside that file, so nothing could go 
 `6mo@W2/32` is the anchor: compared with `6mo/32` at W, it shows how much the block range alone changes the numbers.
 12mo would need W2 ≥ ~26.69M, beyond the data on this box (ends at 26,147,580).
 
+Cold `.kv` files of each run are on `/sbackup` (sda1: the first 1 TiB of the HDD, the outer edge); the 2026-11-16 W2 cells had them on `/backup` at 1.85–6.0 TB.
+Same blocks, binary and flags as the 2026-11-16 W2 cells; only the HDD placement differs.
+
+| Cell | 2026-11-16 Mgas/s (mean / p5) | here Mgas/s (mean / p5) | commit p50 / p95 ms, 2026-11-16 → here |
+|---|---|---|---|
+| 6mo@W2/32 | 99.2 / 39.3 | 126.1 / 50.8 (+27 %) | 150.7 / 406.3 → 110.9 / 294.2 |
+| 6mo@W2/64 | not run | 126.0 / 51.2 | — → 111.0 / 294.1 |
+| 9mo@W2/128 | 153.1 / 63.5 | 164.5 / 69.8 (+7 %) | 83.8 / 452.9 → 72.6 / 194.5 |
+
+- Placement on the disk is a large part of the old 6mo@W2 slowdown. 6mo@W2/32 is still below 6mo/32 at W (138): at W2 it does 419 HDD probes per block, at W 286.
+- 6mo@W2: M = 32 and M = 64 give the same speed; M = 64 uses 52 GB less SSD (207 vs 259 GB).
+- M = 32 / 64 / 128 ≈ 6 / 12 / 23 days at W2 (measured ~1,250 blocks per step).
 
 ## Charts
 

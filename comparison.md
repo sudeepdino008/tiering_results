@@ -15,3 +15,4 @@ Major results are at the top of each gist.
 | baseline_allssd_merged_6mo_w25400000_2026-10-23-3 | demote_tiered_4step_3mo_cap50_w25400000_2026-10-28-1 | [gist](https://gist.github.com/sudeepdino008/bfcee1769bac54dab2989c4879511993) |
 
 Lookback × merge limit matrix (stage 17, 23 cells): [conclusions](matrix_run/2026-11-16/README.md#conclusions).
+W2 cells again with the cold files at the outer edge of the HDD (`/sbackup`): [conclusions](matrix_run/2026-11-23_sbackup/README.md#conclusions).
