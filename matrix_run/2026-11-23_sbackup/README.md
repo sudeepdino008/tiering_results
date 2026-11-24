@@ -1,6 +1,6 @@
 # Matrix run: lookback × SSD merge limit (stage 17)
 
-Updated 2026-11-24T01:12:23Z. 3/3 cells done.
+Updated 2026-11-24T05:31:45Z. 3/4 cells done, running 6mo/32.
 
 Each cell: 10,000 chaintip blocks 25,400,001..25,410,000 from W = 25,400,000, demotion on, offline BALs, state cache on,
 `--tiering.cold-io-max-mbps=50`, erigon c604cf14, 64 GiB memory scope (page cache included), page caches dropped before the start.
@@ -53,6 +53,7 @@ Same blocks, binary and flags as the 2026-11-16 W2 cells; only the HDD placement
 | 1 | [6mo@W2/32](cells/6mo_m32_w2/) | 32 | 126.1 / 121.1 / 50.8 / 30.9 | 67.7 | 110.9 / 294.2 / 610.4 | 258.5 | 261.6 | 36 | 5,248 / 419 | 0 (0) | 0 | 1.24 | 0 / 0 / 0 / 64.0 |
 | 2 | [6mo@W2/64](cells/6mo_m64_w2/) | 64 | 126.0 / 121.0 / 51.2 / 31.0 | 67.7 | 111.0 / 294.1 / 615.4 | 206.8 | 261.6 | 20 | 3,607 / 419 | 0 (0) | 0 | 1.24 | 0 / 0 / 0 / 64.0 |
 | 3 | [9mo@W2/128](cells/9mo_m128_w2/) | 128 | 164.5 / 159.9 / 69.8 / 43.5 | 80.4 | 72.6 / 194.5 / 398.5 | 253.8 | 196.3 | 17 | 3,161 / 146 | 0 (0) | 0 | 1.05 | 0 / 0 / 0 / 64.0 |
+| 4 | 6mo | 32 | running | | | | | | | | | | |
 
 Data: [`runs.csv`](runs.csv). Each cell folder has `layout_before.md`, `stats.json`, `metrics.md` + `images/`, and logs.
 
