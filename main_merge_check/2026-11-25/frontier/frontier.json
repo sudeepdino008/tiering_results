@@ -1,0 +1,51 @@
+{
+ "baseline": {
+  "mgas_s_per_block": 267,
+  "commit_p50_ms": 18.4,
+  "commit_p95_ms": 43.9,
+  "commit_p99_ms": 53.7,
+  "commit_worst_ms": 235.6,
+  "ssd_commit_gb": 311.67,
+  "name": "allssd",
+  "rc": 0,
+  "W": 25400000
+ },
+ "cells": {
+  "6mo/32": {
+   "mgas_s_per_block": 184.67,
+   "commit_p50_ms": 18.6,
+   "commit_p95_ms": 44.2,
+   "commit_p99_ms": 55.1,
+   "commit_worst_ms": 179.2,
+   "ssd_commit_gb": 269.64,
+   "rc": 0,
+   "W": 25400000,
+   "L": "6mo",
+   "M": 32
+  },
+  "6mo/64": {
+   "mgas_s_per_block": 184.16,
+   "commit_p50_ms": 18.7,
+   "commit_p95_ms": 44.3,
+   "commit_p99_ms": 54.2,
+   "commit_worst_ms": 194.1,
+   "ssd_commit_gb": 214.61,
+   "rc": 0,
+   "W": 25400000,
+   "L": "6mo",
+   "M": 64
+  },
+  "6mo/128": {
+   "mgas_s_per_block": 185.2,
+   "commit_p50_ms": 18.6,
+   "commit_p95_ms": 44.3,
+   "commit_p99_ms": 55.7,
+   "commit_worst_ms": 172.4,
+   "ssd_commit_gb": 168.83,
+   "rc": 0,
+   "W": 25400000,
+   "L": "6mo",
+   "M": 128
+  }
+ }
+}
