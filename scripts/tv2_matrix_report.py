@@ -26,12 +26,13 @@ def mlab(m):
 
 M_RADIUS = {1: 5, 4: 6.5, 32: 8, 64: 9.5, 128: 11}
 INK, INK2, MUTED, GRID, SURFACE, CRIT = '#141412', '#52514e', '#898781', '#e1e0d9', '#fcfcfb', '#d03b3b'
-BASELINE = {'mgas_s_per_block': 277, 'commit_p50_ms': 22.4, 'commit_p95_ms': 73.4, 'commit_p99_ms': 135.6, 'ssd_commit_gb': 307, 'name': 'baseline_allssd_merged_6mo_w25400000_2026-10-23-3'}
-BASE_UNIT = {'mgas_s_per_block': 'Mgas/s', 'commit_p50_ms': 'ms p50', 'commit_p95_ms': 'ms p95', 'commit_p99_ms': 'ms p99'}
+BASELINE = {'mgas_s_per_block': 277, 'commit_p50_ms': 22.4, 'commit_p95_ms': 73.4, 'commit_p99_ms': 135.6, 'commit_worst_ms': 392.6, 'ssd_commit_gb': 307, 'name': 'baseline_allssd_merged_6mo_w25400000_2026-10-23-3'}
+BASE_UNIT = {'mgas_s_per_block': 'Mgas/s', 'commit_p50_ms': 'ms p50', 'commit_p95_ms': 'ms p95', 'commit_p99_ms': 'ms p99', 'commit_worst_ms': 'ms worst'}
 W2_SSD_GB = 380  # all-SSD commitment at W2 after default seg retire; size only, no run
 FRONTIERS = [('mgas', 'mgas_s_per_block', 'Mgas/s per block (higher is better)', True),
              ('p50', 'commit_p50_ms', 'commitment p50 ms per block (lower is better)', False),
              ('p99', 'commit_p99_ms', 'commitment p99 ms per block (lower is better)', False)]
+WORST = ('worst', 'commit_worst_ms', 'commitment worst ms per block (lower is better)', False)
 COLS = ['order', 'L', 'W', 'lookback_blocks', 'M', 'mgas_s_per_block', 'mgas_s_p50', 'mgas_s_p5', 'mgas_s_p1', 'wall_mgas_s', 'commit_p50_ms', 'commit_p95_ms', 'commit_p99_ms',
         'ssd_commit_gb', 'hdd_commit_gb', 'hot_files', 'ssd_probes_per_block', 'hdd_probes_per_block', 'hdd_probe_share',
         'demotions', 'demoted_gb', 'cold_merges', 'duration_s', 'oom_kill', 'memory_peak_gb']
@@ -127,11 +128,17 @@ def stats(cell, run, dd, L, M, rc, W=W1):
     print(json.dumps({k: v for k, v in st.items() if k != 'error_excerpt'}))
 
 
+def worst_commit_ms(cell):
+    m = re.search(r'\| commitment time per block worst \| ([\d.,]+) (ms|s) \|', open(f'{cell}/metrics.md').read()) if os.path.exists(f'{cell}/metrics.md') else None
+    return None if m is None else round(float(m[1].replace(',', '')) * (1000 if m[2] == 's' else 1), 1)
+
+
 def load(mx):
     order = [l.split() for l in open(f'{mx}/order.txt') if l[0].isdigit()]
     rows = {}
     for p in glob.glob(f'{mx}/cells/*/stats.json'):
         s = json.load(open(p))
+        s.setdefault('commit_worst_ms', worst_commit_ms(os.path.dirname(p)))
         rows[(s['L'] + ('@W2' if s.get('W', W1) != W1 else ''), s['M'])] = s
     running = open(f'{mx}/running.txt').read().split() if os.path.exists(f'{mx}/running.txt') else []
     return order, rows, (running[0] + ('@W2' if running[2:] == ['w2'] else ''), int(running[1])) if len(running) >= 2 else None
@@ -229,7 +236,7 @@ def charts(mx, rows, running, n):
     fig.suptitle(f'Lookback × SSD merge limit: SSD cost vs speed {sub}', y=1.08, color=INK, fontsize=12)
     save(fig, mx, 'frontier')
     plt.close(fig)
-    for name, key, label, high in FRONTIERS:
+    for name, key, label, high in FRONTIERS + [WORST]:
         fig, ax = plt.subplots(figsize=(11, 7), facecolor=SURFACE)
         frontier(ax, key, label, high)
         fig.legend(handles=handles, loc='lower center', bbox_to_anchor=(0.5, 0.89), ncol=len(handles), frameon=False, fontsize=9, columnspacing=1.2, handletextpad=0.3)
@@ -359,6 +366,8 @@ is 25,400,000 − 1,944,000 = 23,456,000, inside that file, so nothing could go 
 ![frontier: commitment p50](frontier_p50.png)
 
 ![frontier: commitment p99](frontier_p99.png)
+
+![frontier: commitment worst](frontier_worst.png)
 
 ![trends](trends.png)
 
