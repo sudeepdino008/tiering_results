@@ -28,6 +28,7 @@ M_RADIUS = {1: 5, 4: 6.5, 32: 8, 64: 9.5, 128: 11}
 INK, INK2, MUTED, GRID, SURFACE, CRIT = '#141412', '#52514e', '#898781', '#e1e0d9', '#fcfcfb', '#d03b3b'
 BASELINE = {'mgas_s_per_block': 277, 'commit_p50_ms': 22.4, 'commit_p95_ms': 73.4, 'commit_p99_ms': 135.6, 'commit_worst_ms': 392.6, 'ssd_commit_gb': 307, 'name': 'baseline_allssd_merged_6mo_w25400000_2026-10-23-3'}
 BASE_UNIT = {'mgas_s_per_block': 'Mgas/s', 'commit_p50_ms': 'ms p50', 'commit_p95_ms': 'ms p95', 'commit_p99_ms': 'ms p99', 'commit_worst_ms': 'ms worst'}
+BASE_AT = 'W'
 W2_SSD_GB = 380  # all-SSD commitment at W2 after default seg retire; size only, no run
 FRONTIERS = [('mgas', 'mgas_s_per_block', 'Mgas/s per block (higher is better)', True),
              ('p50', 'commit_p50_ms', 'commitment p50 ms per block (lower is better)', False),
@@ -215,9 +216,9 @@ def charts(mx, rows, running, n):
             ax.plot([p[0] for p in front], [p[1] for p in front], ls='--', color=INK2, lw=1, zorder=4)
         if key in BASELINE:
             ax.scatter(BASELINE['ssd_commit_gb'], BASELINE[key], marker='s', s=70, facecolor='none', edgecolor=INK2, zorder=3)
-            ax.annotate(f'all-SSD baseline @W: {BASELINE["ssd_commit_gb"]} GB SSD, {BASELINE["mgas_s_per_block"]} Mgas/s' + ('' if key == 'mgas_s_per_block' else f', {BASELINE[key]:g} {BASE_UNIT[key]}'), (BASELINE['ssd_commit_gb'], BASELINE[key]), xytext=(6, -12), textcoords='offset points', fontsize=8, color=INK2)
+            ax.annotate(f'all-SSD baseline @{BASE_AT}: {BASELINE["ssd_commit_gb"]} GB SSD, {BASELINE["mgas_s_per_block"]} Mgas/s' + ('' if key == 'mgas_s_per_block' else f', {BASELINE[key]:g} {BASE_UNIT[key]}'), (BASELINE['ssd_commit_gb'], BASELINE[key]), xytext=(6, -12), textcoords='offset points', fontsize=8, color=INK2)
         ax.axvline(BASELINE['ssd_commit_gb'], color=MUTED, lw=0.8, ls=':')
-        if any('@W2' in L for (L, M) in done):
+        if W2_SSD_GB and any('@W2' in L for (L, M) in done):
             ax.axvline(W2_SSD_GB, color=MUTED, lw=0.8, ls='-.')
             ax.annotate(f'all-SSD baseline @W2: {W2_SSD_GB} GB SSD (size only, no run)', (W2_SSD_GB, 1), xycoords=('data', 'axes fraction'), xytext=(4, -12),
                         textcoords='offset points', fontsize=8, color=INK2)
@@ -226,8 +227,8 @@ def charts(mx, rows, running, n):
 
     handles = [Line2D([], [], marker='D' if '@W2' in L else 'o', ls='', color=L_COLOR[L], label=L) for L in GRID_LS if any(k[0] == L for k in rows) or L in LS] + \
               [Line2D([], [], marker='o', ls='', color=MUTED, markersize=M_RADIUS[M] * 0.9, label=mlab(M)) for M in MS] + \
-              [Line2D([], [], marker='s', ls='', markerfacecolor='none', color=INK2, label='all-SSD baseline @W'),
-               Line2D([], [], ls='-.', lw=0.8, color=MUTED, label='all-SSD baseline @W2 (size only)')]
+              [Line2D([], [], marker='s', ls='', markerfacecolor='none', color=INK2, label=f'all-SSD baseline @{BASE_AT}')] + \
+              ([Line2D([], [], ls='-.', lw=0.8, color=MUTED, label='all-SSD baseline @W2 (size only)')] if W2_SSD_GB else [])
     sub = '(colour = lookback, label = merge limit (M) as time span, dashed = Pareto frontier)'
     fig, axes = plt.subplots(1, 3, figsize=(19, 5.2), facecolor=SURFACE)
     for ax, f in zip(axes, FRONTIERS):

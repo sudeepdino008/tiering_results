@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Frontier charts (SSD commitment GB vs Mgas/s, commitment p50 / p99 / worst) for 10,000-block runs on one build.
-usage: tv2_head_frontier.py <out dir> <baseline report dir> <L>:<M>:<report dir> [...]   |   --selftest"""
+usage: [AT=W2] tv2_head_frontier.py <out dir> <baseline report dirs> <L>:<M>:<report dirs> [...]   |   --selftest
+<report dirs> is one dir or a comma-separated list of repeats; charts plot the mean with a min-max bar, frontier.json also keeps min and max."""
 import json, os, re, sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -25,18 +26,36 @@ def read(d):
             'ssd_commit_gb': float(ssd[0]) * {'GB': 1, 'TB': 1e3, 'MB': 1e-3}[ssd[1]], 'rc': 0, 'W': R.W1}
 
 
+def mean(dirs):
+    rs = [read(d) for d in dirs.split(',')]
+    out = {k: round(sum(r[k] for r in rs) / len(rs), 2) for k in rs[0]}
+    for k in ('mgas_s_per_block', 'commit_p50_ms', 'commit_p99_ms', 'commit_worst_ms'):
+        out[k + '_min'], out[k + '_max'] = min(r[k] for r in rs), max(r[k] for r in rs)
+    return dict(out, repeats=len(rs))
+
+
 def main(out, base, cells):
-    b = read(base)
-    R.BASELINE.update(b, name=os.path.basename(base))
+    b = mean(base)
+    R.BASELINE.update(b, name=os.path.basename(base.split(',')[0]))
     R.BASELINE['mgas_s_per_block'] = round(b['mgas_s_per_block'])
     rows = {}
     for c in cells:
         L, M, d = c.split(':', 2)
-        rows[(L, int(M))] = dict(read(d), L=L, M=int(M))
+        rows[(L, int(M))] = dict(mean(d), L=L, M=int(M))
     R.LS = R.GRID_LS = sorted({L for L, _ in rows})
     R.MS = sorted({M for _, M in rows})
+    R.BASE_AT, R.W2_SSD_GB = os.environ.get('AT', 'W'), None
+    keys = {f[2]: f[1] for f in R.FRONTIERS + [R.WORST]}
     style = R.style
-    R.style = lambda ax, *a: (style(ax, *a), ax.set_ylim(bottom=0))
+
+    def styled(ax, xlabel, ylabel):
+        k = keys.get(ylabel)
+        for s in list(rows.values()) + [R.BASELINE] if k else []:
+            if k + '_min' in s:
+                ax.vlines(s['ssd_commit_gb'], s[k + '_min'], s[k + '_max'], color=R.INK2, lw=1, zorder=2)
+        style(ax, xlabel, ylabel)
+        ax.set_ylim(0, ax.get_ylim()[1] * 1.12)
+    R.style = styled
     os.makedirs(out, exist_ok=True)
     R.charts(out, rows, None, len(rows))
     for f in ('trends', 'progress'):
