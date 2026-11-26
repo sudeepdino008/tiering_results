@@ -46,7 +46,7 @@ def pf(d):
 
 day, tags = sys.argv[1], sys.argv[2:]
 cols = {t: {**metrics(os.path.join(day, t)), **pf(os.path.join(day, t)),
-            'run checks': open(os.path.join(day, t, 'summary.txt')).read().split(' last block')[0]} for t in tags}
+            'run checks': open(os.path.join(day, t, 'summary.txt')).read().split(' last block')[0].strip()} for t in tags}
 keys = ROWS + [k for k in pf(os.path.join(day, tags[-1])) if k] + ['run checks']
 print('| metric | ' + ' | '.join(tags) + ' |')
 print('|---|' + '---|' * len(tags))
