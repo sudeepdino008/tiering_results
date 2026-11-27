@@ -1,0 +1,10 @@
+{
+ "blocks": 10000,
+ "np_mean_ms": 224.1,
+ "np_p50_ms": 193.8,
+ "np_p99_ms": 829.1,
+ "np_worst_ms": 1467.0,
+ "np_worst_block": 26137517,
+ "np_mgas_s_mean": 152.94,
+ "np_mgas_s_p50": 147.87
+}

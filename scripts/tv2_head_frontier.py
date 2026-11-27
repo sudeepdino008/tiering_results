@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Frontier charts (SSD commitment GB vs Mgas/s, commitment p50 / p99 / worst) for 10,000-block runs on one build.
+"""Frontier charts (SSD commitment GB vs Mgas/s and newPayload time per block p50 / p99 / worst) for 10,000-block runs on one build.
+newPayload time = the 'parallel done in=' span from <report dir>/newpayload.json (tv2_newpayload.py).
 usage: [AT=W2] tv2_head_frontier.py <out dir> <baseline report dirs> <L>:<M>:<report dirs> [...]   |   --selftest
 <report dirs> is one dir or a comma-separated list of repeats; charts plot the mean with a min-max bar, frontier.json also keeps min and max."""
 import json, os, re, sys
@@ -8,6 +9,11 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import tv2_matrix_report as R
 
 ROW = r'\| {} \| ([^|]+) \|'
+NP = ('np_p50_ms', 'np_p99_ms', 'np_worst_ms')
+R.FRONTIERS = [R.FRONTIERS[0], ('np_p50', 'np_p50_ms', 'newPayload time p50 ms per block (lower is better)', False),
+               ('np_p99', 'np_p99_ms', 'newPayload time p99 ms per block (lower is better)', False)]
+R.WORST = ('np_worst', 'np_worst_ms', 'newPayload time worst ms per block (lower is better)', False)
+R.BASE_UNIT.update(np_p50_ms='ms p50', np_p99_ms='ms p99', np_worst_ms='ms worst')
 
 
 def ms(v):
@@ -23,13 +29,14 @@ def read(d):
     return {'mgas_s_per_block': float(g('Mgas/s per block mean / p50 / p5 / p1').split(' / ')[0].replace(',', '')),
             'commit_p50_ms': ms(commit[0]), 'commit_p95_ms': ms(commit[2]), 'commit_p99_ms': ms(commit[3]),
             'commit_worst_ms': ms(g('commitment time per block worst')),
-            'ssd_commit_gb': float(ssd[0]) * {'GB': 1, 'TB': 1e3, 'MB': 1e-3}[ssd[1]], 'rc': 0, 'W': R.W1}
+            'ssd_commit_gb': float(ssd[0]) * {'GB': 1, 'TB': 1e3, 'MB': 1e-3}[ssd[1]], 'rc': 0, 'W': R.W1,
+            **{k: v for k, v in json.load(open(os.path.join(d, 'newpayload.json'))).items() if k in NP}}
 
 
 def mean(dirs):
     rs = [read(d) for d in dirs.split(',')]
     out = {k: round(sum(r[k] for r in rs) / len(rs), 2) for k in rs[0]}
-    for k in ('mgas_s_per_block', 'commit_p50_ms', 'commit_p99_ms', 'commit_worst_ms'):
+    for k in ('mgas_s_per_block',) + NP:
         out[k + '_min'], out[k + '_max'] = min(r[k] for r in rs), max(r[k] for r in rs)
     return dict(out, repeats=len(rs))
 
