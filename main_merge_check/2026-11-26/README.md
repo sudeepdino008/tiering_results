@@ -16,13 +16,23 @@ senders come from the read-ahead cache, the engine API work is not timed, the re
 build / merge / demotion runs about 36 times more often per block than at the tip (blocks back to back, not 12 s slots).
 The commitment time rows below count only the fold, not the warmup: do not use them alone.
 
+## Block processing time: worst case
+
 ![frontier: block processing time worst](frontier/frontier_bpt_worst.png)
+
+## Block processing time: p99
 
 ![frontier: block processing time p99](frontier/frontier_bpt_p99.png)
 
+## Block processing time: p50
+
 ![frontier: block processing time p50](frontier/frontier_bpt_p50.png)
 
+## Throughput: Mgas/s
+
 ![frontier: Mgas/s](frontier/frontier_mgas.png)
+
+## All metrics
 
 | metric | w2_allssd_r1 | w2_allssd_r2 | w2_allssd_r3 | w2_m32_r1 | w2_m32_r2 | w2_m32_r3 | w2_m64_r1 | w2_m64_r2 | w2_m64_r3 | w2_m128_r1 | w2_m128_r2 | w2_m128_r3 |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|

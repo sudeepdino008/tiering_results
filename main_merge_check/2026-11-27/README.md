@@ -7,13 +7,23 @@ In `../2026-11-26` the files were spread over about 8 GB to 1.07 TB of the parti
 All-SSD baseline in the charts: the 3 `w2_allssd_rN` runs of `../2026-11-26` (the cold layout does not apply to them).
 block processing time: see `../2026-11-26/README.md`.
 
+## Block processing time: worst case
+
 ![frontier: block processing time worst](frontier/frontier_bpt_worst.png)
+
+## Block processing time: p99
 
 ![frontier: block processing time p99](frontier/frontier_bpt_p99.png)
 
+## Block processing time: p50
+
 ![frontier: block processing time p50](frontier/frontier_bpt_p50.png)
 
+## Throughput: Mgas/s
+
 ![frontier: Mgas/s](frontier/frontier_mgas.png)
+
+## All metrics
 
 | metric | M=32 spread (3 runs) | M=32 contiguous | M=64 spread (3 runs) | M=64 contiguous | M=128 spread (3 runs) | M=128 contiguous | W, M=64 (`../2026-11-25/long_m64`) |
 |---|---|---|---|---|---|---|---|

@@ -5,9 +5,15 @@ Same blocks compared per position: all-SSD vs tiered 6mo M=64, block processing 
 W2: `../2026-11-26/w2_allssd_r1` vs `../2026-11-27/w2c_m64` (contiguous cold layout). Data: `w_vs_w2/summary.json`; script: `scripts/tv2_w_vs_w2.py`.
 Extra = tiered minus all-SSD for the same block. The two runs are separate, so a block can come out negative (run-to-run noise).
 
+## Extra time per block from the HDD (distribution)
+
 ![extra time per block](w_vs_w2/extra_cdf.png)
 
+## Extra time per 1,000-block window
+
 ![extra time per 1,000 blocks](w_vs_w2/extra_windows.png)
+
+## All metrics
 
 | | W | W2 |
 |---|---|---|
