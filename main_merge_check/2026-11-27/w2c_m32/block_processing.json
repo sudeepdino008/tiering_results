@@ -1,0 +1,10 @@
+{
+ "blocks": 10000,
+ "bpt_mean_ms": 213.5,
+ "bpt_p50_ms": 185.0,
+ "bpt_p99_ms": 781.9,
+ "bpt_worst_ms": 1367.0,
+ "bpt_worst_block": 26137517,
+ "bpt_mgas_s_mean": 159.78,
+ "bpt_mgas_s_p50": 155.28
+}
